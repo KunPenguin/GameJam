@@ -9,6 +9,8 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
+/.codely.packages/
+/.codely-cli/
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
