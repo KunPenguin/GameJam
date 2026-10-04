@@ -366,6 +366,8 @@ GameObject:
   - component: {fileID: 109356467}
   - component: {fileID: 109356466}
   - component: {fileID: 109356465}
+  - component: {fileID: 109356469}
+  - component: {fileID: 109356468}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: Player
@@ -461,6 +463,16 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   fireInterval: 0.15
   timer: 0
+  damage: 1
+  pierce: 0
+  lifesteal: 0
+  bulletSize: 0
+  heat: 0
+  bounce: 0
+  bulletsPerWave: 1
+  waveCount: 1
+  spreadAngle: 0
+  waveSpacing: 0.3
 --- !u!114 &109356466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,6 +514,56 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &109356468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109356462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cbc0df7d0c4c7a45a45813498d5908f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 20
+  currentHp: 20
+  dead: 0
+--- !u!58 &109356469
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109356462}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &179274705
 GameObject:
   m_ObjectHideFlags: 0
