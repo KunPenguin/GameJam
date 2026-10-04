@@ -7,13 +7,16 @@ public class WaterWisp : MonoBehaviour      //依旧填写一些数值，这里�
                                             //还有一点，我这个敌人随机刷新还没搞，等你们其他敌人的刷新弄好了，就直接复制粘贴给炮塔吧，谢谢
 {
     //1.生命值相关,这些数值我就先随便填一些，你们后面再改
+    [Header("总生命")]
     public int maxHp = 10;
     public int currentHp;                   //当前生命值
     //2.移动相关，虽然我这个好像根本不用动吧。。。无所谓先填一个
     public float moveSpeed = 2f;
     //3.攻击相关
     public float range = 5f;
+    [Header("炮塔攻速")]
     public float fireRate = 1f;             //炮塔攻速
+    [Header("子弹速度")]
     public float bulletSpeed = 5f;          //子弹速度      
     public float spawnOffset = 0.8f;        //子弹生成的偏移
     //4.子弹的预制体
