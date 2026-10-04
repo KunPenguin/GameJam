@@ -73,6 +73,17 @@ public class PlayerShoot : MonoBehaviour
     //    shoot.Fire(2f, 0.1f, 0.5f, 0f, 3, 1, 5, 30f);
     //意思就是：穿透2、吸血10%、子弹大50%、热力值0、弹射3次、1波、每波5发、散射30度
     //====================================================================
+    /// <summary>
+    /// 这是一个负责掌管开火的函数每个变量从左到右分别是穿透，吸血，子弹大小，热力值，弹射，波数，发数，散射角度
+    /// </summary>
+    /// <param name="pierce"></param>
+    /// <param name="lifesteal"></param>
+    /// <param name="bulletSize"></param>
+    /// <param name="heat"></param>
+    /// <param name="bounce"></param>
+    /// <param name="waveCount"></param>
+    /// <param name="bulletsPerWave"></param>
+    /// <param name="spreadAngle"></param>
     public void Fire(float pierce, float lifesteal, float bulletSize, float heat, int bounce, int waveCount, int bulletsPerWave, float spreadAngle)
     {
         //忘了拖预制体时给个提示，免得以为是脚本坏了
