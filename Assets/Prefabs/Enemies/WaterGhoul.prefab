@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3571028065419289197}
   - component: {fileID: 2396008357744278167}
   - component: {fileID: 7334058994287873555}
+  - component: {fileID: 2861150420547060505}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: WaterGhoul
@@ -30,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 2773762685130925568}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.33, y: -1.54, z: 0}
-  m_LocalScale: {x: 0.16427448, y: 0.1571723, z: 1}
+  m_LocalPosition: {x: 5.3486, y: -1.5864, z: 0}
+  m_LocalScale: {x: 0.16790494, y: 0.14810348, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -168,5 +169,17 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 211.6, y: 10.24}
+  m_Size: {x: 11.9, y: 10.24}
   m_Direction: 0
+--- !u!114 &2861150420547060505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2773762685130925568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8dd273a4cf666459e1dbef4abd4862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
