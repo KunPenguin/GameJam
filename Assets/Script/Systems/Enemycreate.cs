@@ -1,3 +1,4 @@
+//这是一个掌控刷怪的脚本
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

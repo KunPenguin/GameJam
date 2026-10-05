@@ -20,6 +20,10 @@ public class GameOverPanel : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;//恢复时间流动
+        if (GameData.Instance != null)
+        {
+            GameData.Instance.currentDay = 1;
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//重置其所在场景
 
     }

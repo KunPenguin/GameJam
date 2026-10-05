@@ -10,8 +10,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHp = 20f;//最大血量（基础血量 20）
     public float currentHp = 20f;//当前血量
-    public bool dead = false;//血量归零后就不再扣血了（死亡之后要做什么，等以后再加）
-
+    public bool dead = false;//血量归零后就不再扣血了（死亡之后跳出死亡画面）
+    public GameOverPanel gameOverPanel;
     void Start()
     {
         //开始游戏时把血回满，并打印一次，方便确认脚本挂上了
@@ -36,6 +36,14 @@ public class PlayerHealth : MonoBehaviour
         {
             dead = true;
             Debug.Log("玩家血量归零");
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.Show(); // 弹出结束面板并暂停时间
+            }
+            else
+            {
+                Debug.LogWarning("PlayerHealth 没有绑定 GameOverPanel！");
+            }
         }
     }
 

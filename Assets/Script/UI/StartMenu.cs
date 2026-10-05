@@ -9,6 +9,11 @@ public class StartMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");//跳转到游戏场景
+        // 每次从主菜单开始新游戏，都重置天数
+        if (GameData.Instance != null)
+        {
+            GameData.Instance.currentDay = 1;
+        }
+        SceneManager.LoadScene("GameScene");
     }
 }

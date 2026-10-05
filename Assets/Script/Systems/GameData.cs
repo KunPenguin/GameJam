@@ -1,3 +1,6 @@
+//这是一个被用来存放游戏内一部分无关角色怪物地图的数据的脚本
+//目前有：
+//1.当前日期
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +13,12 @@ public class GameData : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+        }
+        else Destroy(gameObject);
     }
 }
