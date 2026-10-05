@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 902282973}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.02, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2042,6 +2042,63 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1001 &1116062449
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6563768376633882071, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_Name
+      value: WaterGrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
 --- !u!1001 &1353747700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2098,14 +2155,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2396008357744278167, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
       propertyPath: m_Name
       value: WaterGhoul
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2861150420547060505, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1985258871}
   m_SourcePrefab: {fileID: 100100000, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
 --- !u!1 &1851113733
 GameObject:
@@ -2248,83 +2313,27 @@ Transform:
   - {fileID: 902282974}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2433756964255799285
-PrefabInstance:
+--- !u!1 &1985258864 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+  m_PrefabInstance: {fileID: 1353747700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1985258871
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6536515919994703760, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6536515919994703760, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6536515919994703760, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 59
-      objectReference: {fileID: 0}
-    - target: {fileID: 6563768376633882071, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_Name
-      value: watergrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 7169682184354038981, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7169682184354038981, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: maxDepth
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180824855203697079, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985258864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e487ab0512b746042aa78d78b87538fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  moveSpeed: 0
+  maxHp: 10
+  currentHp: 0
 --- !u!1001 &5103907345181719184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2399,4 +2408,4 @@ SceneRoots:
   - {fileID: 1112893669}
   - {fileID: 1353747700}
   - {fileID: 1956277298}
-  - {fileID: 2433756964255799285}
+  - {fileID: 1116062449}

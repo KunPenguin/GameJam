@@ -16,6 +16,7 @@ public class Enemymove_Ghost : MonoBehaviour
     public int maxHp = 10;
     public int currentHp;
     private EnemyState enemyState;
+    public float damage = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,5 +45,15 @@ public class Enemymove_Ghost : MonoBehaviour
         }
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
+    }
+    void OnTriggerEnter2D(Collider2D other)  //攻击
+    {
+        if (other.CompareTag("Player"))     //撞到的tag是不是player
+        {
+            Debug.Log("玩家被击中！");
+            //新增：真的扣玩家血（调用玩家身上 PlayerHealth 脚本的 TakeDamage）
+            other.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+
+        }
     }
 }

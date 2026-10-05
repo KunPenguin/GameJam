@@ -123,5 +123,5 @@ MonoBehaviour:
   tilePrefab: {fileID: 3972108634428432100}
   growOnStart: 1
   depth: 0
-  maxDepth: 3
+  maxDepth: 66
   time: 0.2
