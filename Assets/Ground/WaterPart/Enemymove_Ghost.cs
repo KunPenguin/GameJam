@@ -27,7 +27,6 @@ public class Enemymove_Ghost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         chase();
     }
     
@@ -45,8 +44,5 @@ public class Enemymove_Ghost : MonoBehaviour
         }
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
-
-
-
     }
 }

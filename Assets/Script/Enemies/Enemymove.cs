@@ -25,5 +25,9 @@ public class EnemyMove_Ghost : MonoBehaviour
         if (player == null) return;
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction* moveSpeed;
+        if(currentHp<=0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
