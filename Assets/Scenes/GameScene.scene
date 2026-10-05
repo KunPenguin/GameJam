@@ -1153,6 +1153,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2396008357744278167, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
       propertyPath: m_Name
       value: WaterGhoul
