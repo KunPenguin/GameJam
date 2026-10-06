@@ -63,11 +63,21 @@ public class WaterWisp : MonoBehaviour              //依旧填写一些数值�
         Instantiate(bulletPrefab, spawnPos, Quaternion.Euler(0, 0, angle));   //instantiarte是克隆一个预制体（子弹）S+Q两个就是使子弹朝向玩家运动
     }
 
-    // ★需求2：被打中时扣 finalDamage 的值，而不是减1
     public void OnHit(float finalDamage)
     {
         currentHp -= finalDamage;
         if (currentHp <= 0f) Destroy(gameObject);
         //应该炮塔是写完了，需要啥功能欢迎添加，与啥不懂的来qq私我就行了
+    
+   
+    
+        currentHp -= finalDamage;
+        Debug.Log("炮塔受到伤害：" + finalDamage + "，剩余血量：" + currentHp);
+
+        if (currentHp <= 0f)
+        {
+            Debug.Log("炮塔死亡！");
+            Destroy(gameObject);
+        }
     }
 }

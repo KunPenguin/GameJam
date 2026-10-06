@@ -6,8 +6,8 @@ public class HighWaterWisp : MonoBehaviour
 {
     //1.生命值相关                             //基础面板
     [Header("总生命")]
-    public int maxHp = 10;
-    public int currentHp;
+    public float maxHp = 10;
+    public float currentHp;
     //2.移动相关
     public float moveSpeed = 2f;
     //3.攻击相关
@@ -79,9 +79,21 @@ public class HighWaterWisp : MonoBehaviour
         return new Vector2(v.x * c - v.y * s, v.x * s + v.y * c);
     }
 
-    public void OnHit()
+    public void OnHit(float finalDamage)
     {
-        currentHp--;
-        if (currentHp <= 0) Destroy(gameObject);
+        currentHp -= finalDamage;
+        if (currentHp <= 0f) Destroy(gameObject);
+        //应该炮塔是写完了，需要啥功能欢迎添加，与啥不懂的来qq私我就行了
+
+
+
+        currentHp -= finalDamage;
+        Debug.Log("炮塔受到伤害：" + finalDamage + "，剩余血量：" + currentHp);
+
+        if (currentHp <= 0f)
+        {
+            Debug.Log("炮塔死亡！");
+            Destroy(gameObject);
+        }
     }
 }
