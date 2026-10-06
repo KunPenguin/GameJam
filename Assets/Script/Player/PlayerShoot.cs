@@ -4,6 +4,7 @@
 //需要组件：不需要额外组件；但要先把水弹预制体拖到下面 Inspector 的 bulletPrefab 上
 //          另外建议同一个物体上挂上 PlayerHealth（吸血要回血用），没挂也不会报错，只是吸不了血
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class PlayerShoot : MonoBehaviour
     public Transform firePoint;//枪口位置（可以不填，不填就从玩家中心发射）
     public float fireInterval = 0.15f;//射速：隔多少秒打一发，越小打得越快
     public float timer;//运行时的冷却计时，不用手动改
+
+    //当前玩家装备的模块列表
+    //此处不用手动调整，UI做好后，这个列表直接由UI管理
+
 
     //========== 下面这 9 个是"这一枪"的数值，按住左键发射时就按这里的值 ==========
     //（它们将来代表"模块链跑完之后"的最终数值：模块会在这里做加法/乘法改动）

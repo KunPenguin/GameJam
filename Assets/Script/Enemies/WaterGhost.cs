@@ -13,8 +13,8 @@ public class WaterGhost : MonoBehaviour
     [Header("速度")]
     public float moveSpeed;
     [Header("总生命")]
-    public int maxHp = 10;
-    public int currentHp;
+    public float maxHp = 10;
+    public float currentHp;
     private EnemyState enemyState;
     public float damage = 1f;
     // Start is called before the first frame update
@@ -54,6 +54,19 @@ public class WaterGhost : MonoBehaviour
             //新增：真的扣玩家血（调用玩家身上 PlayerHealth 脚本的 TakeDamage）
             other.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
 
+        }
+    }
+    // 被玩家水弹打中时调用
+    // 为什么加这个：水弹会通过 SendMessage("OnHit", 伤害值) 来通知敌人。
+    public void OnHit(float finalDamage)
+    {
+        currentHp -= finalDamage;
+        Debug.Log("水鬼受到伤害：" + finalDamage + "，剩余血量：" + currentHp);
+
+        if (currentHp <= 0f)
+        {
+            Debug.Log("水鬼死亡！");
+            Destroy(gameObject);
         }
     }
 }

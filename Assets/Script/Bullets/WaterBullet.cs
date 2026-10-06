@@ -78,9 +78,10 @@ public class WaterBullet : MonoBehaviour
             return;
         }
 
-        //1.打印日志，并通知敌人"你被打中了"（敌人自己决定扣血还是死亡）
-        Debug.Log("水弹打中敌人：" + other.name);
-        other.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
+        // 从 Setup 里存下来的伤害值，把 this.damage 传给敌人
+        // SendMessage 的第二个参数，会把数据传给目标的 OnHit 方法
+        other.SendMessage("OnHit", this.damage, SendMessageOptions.DontRequireReceiver);
+        Destroy(gameObject);
 
         //2.吸血：回复量 = 伤害 × 吸血比例
         if (playerHealth != null && lifesteal > 0f)
