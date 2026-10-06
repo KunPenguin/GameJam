@@ -8,14 +8,16 @@ using UnityEngine;
 
 public class WaterBullet : MonoBehaviour
 {
+    private AttackContext ctx;
+
     public float speed = 14f;//飞行速度（单位/秒）
     public float lifeTime = 2.5f;//最长存活时间（秒），到时间自动销毁
     public Rigidbody2D rb;//刚体组件（Inspector 里留空的话，会自动找自己身上的）
     public float aliveTime;//运行时的存活计时，不用手动改
 
     //========== 下面这些是"这一枪"带过来的数值，由 PlayerShoot 生成子弹时写入 ==========
-    public int damage = 1;//伤害（现在只用来算吸血）
-    public float pierceLeft = 1f;//还能再命中几个敌人（初始值 = 穿透数 + 1）
+    public float damage = 1;//伤害（现在只用来算吸血）
+    public float pierceLeft = 0f;//还能再命中几个敌人（初始值 = 穿透数 + 1）
     public float lifesteal = 0f;//吸血比例（0.1 = 10%）
     public float bulletSize = 0f;//子弹大小加成（生成时已经放大过了，这里只是记录一下）
     public float heat = 0f;//热力值（现在只是存着，还没有实际效果）
@@ -37,19 +39,19 @@ public class WaterBullet : MonoBehaviour
     }
 
     //由 PlayerShoot 在生成子弹时调用：把这一枪的数值交给这颗子弹
-    public void Setup(int newDamage, float newPierce, float newLifesteal, float newBulletSize, float newHeat, int newBounce, PlayerHealth newPlayerHealth)
+    public void Setup(AttackContext ctx, PlayerHealth health)
     {
-        damage = newDamage;
-        pierceLeft = newPierce + 1f;//穿透 2 = 能命中 3 个敌人
-        lifesteal = newLifesteal;
-        bulletSize = newBulletSize;
-        heat = newHeat;
-        bounceLeft = newBounce;
-        playerHealth = newPlayerHealth;
+        // 从数据包里取值
+        damage = ctx.damage;//伤害
+        pierceLeft = ctx.pierce + 1f; // 穿透2 = 能命中3个敌人
+        lifesteal = ctx.lifesteal;//吸血
+        bulletSize = ctx.bulletSize;//子弹大小
+        heat = ctx.heat;//热力值
+        bounceLeft = ctx.bounce;//弹射
+        playerHealth = health;//生命值
 
-        //子弹大小：变成 (1 + 子弹大小) 倍
-        //Setup 只在刚生成时调用一次，所以这里乘的就是预制体原本的大小
-        transform.localScale = transform.localScale * (1f + newBulletSize);
+        // 子弹大小
+        transform.localScale = transform.localScale * (1f + bulletSize);
     }
 
     void Update()
@@ -81,7 +83,6 @@ public class WaterBullet : MonoBehaviour
         // 从 Setup 里存下来的伤害值，把 this.damage 传给敌人
         // SendMessage 的第二个参数，会把数据传给目标的 OnHit 方法
         other.SendMessage("OnHit", this.damage, SendMessageOptions.DontRequireReceiver);
-        Destroy(gameObject);
 
         //2.吸血：回复量 = 伤害 × 吸血比例
         if (playerHealth != null && lifesteal > 0f)
@@ -106,7 +107,7 @@ public class WaterBullet : MonoBehaviour
             bool found = TurnToNearestEnemy();
             if (found)
             {
-                bounceLeft = bounceLeft - 1;
+                bounceLeft--;
                 Debug.Log("水弹弹射，转向下一个敌人（还能弹 " + bounceLeft + " 次）");
                 return;
             }
