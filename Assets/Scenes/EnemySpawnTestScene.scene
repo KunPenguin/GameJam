@@ -2009,7 +2009,7 @@ Transform:
   m_GameObject: {fileID: 1112893667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.78, y: 6.98, z: 0}
+  m_LocalPosition: {x: -6.54, y: 1.56, z: 0}
   m_LocalScale: {x: 0.19740386, y: 0.18087855, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2151,11 +2151,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterGhoul
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177506538}
   m_SourcePrefab: {fileID: 100100000, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+--- !u!1 &1177506537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+  m_PrefabInstance: {fileID: 1177506536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1177506538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177506537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e487ab0512b746042aa78d78b87538fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  moveSpeed: 5
+  maxHp: 10
+  currentHp: 0
+  damage: 1
 --- !u!1 &1851113733
 GameObject:
   m_ObjectHideFlags: 0
