@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemymove_Ghost : MonoBehaviour
+public class WaterGhost : MonoBehaviour
 {
     public enum EnemyState
     { chase,attack,hurt,dead}
