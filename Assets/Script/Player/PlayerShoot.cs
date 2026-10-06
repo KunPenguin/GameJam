@@ -22,6 +22,12 @@ public class PlayerShoot : MonoBehaviour
     //此处不用手动调整，UI做好后，这个列表直接由UI管理
     public List<WeaponModule> equippedModules = new List<WeaponModule>();
 
+    //临时测试用开火模组，真正的模组列表会随UI补充
+    private void Start()
+    {
+        equippedModules.Add(new Test_FireModule());   // 开火
+    }
+
     void Update()
     {
         //计时器一直往下减，减到 0 以下就可以再打一发
