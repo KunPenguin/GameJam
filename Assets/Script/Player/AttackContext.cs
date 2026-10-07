@@ -7,6 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class AttackContext
 {
+    public float bulletSpeed = 14f;// 子弹飞行速度
+    public float bulletLife = 2.5f;// 子弹存活秒数
     public float damage;//伤害
     public float pierce;//穿透
     public float lifesteal;//吸血
@@ -33,6 +35,8 @@ public class AttackContext
         copy.bulletsPerWave = this.bulletsPerWave;
         copy.spreadAngle = this.spreadAngle;
         copy.waveSpacing = this.waveSpacing;
+        copy.bulletSpeed = this.bulletSpeed;
+        copy.bulletLife = this.bulletLife;
         copy.isFireTrigger = false; // 复印件永远从“未开火”开始
         return copy;
     }
