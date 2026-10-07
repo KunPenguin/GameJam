@@ -24,8 +24,10 @@ public class PlayerShoot : MonoBehaviour
 
     //临时测试用开火模组，真正的模组列表会随UI补充
     private void Start()
-    {
+    {       
+        equippedModules.Add(new Test_PierceModule());
         equippedModules.Add(new Test_FireModule());   // 开火
+
     }
 
     void Update()
