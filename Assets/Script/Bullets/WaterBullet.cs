@@ -49,8 +49,6 @@ public class WaterBullet : MonoBehaviour
         heat = ctx.heat;//热力值
         bounceLeft = ctx.bounce;//弹射
         playerHealth = health;//生命值
-        speed = ctx.bulletSpeed;//弹速
-        lifeTime = ctx.bulletLife;//存活时间
 
         // 子弹大小
         transform.localScale = transform.localScale * (1f + bulletSize);

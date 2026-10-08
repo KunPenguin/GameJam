@@ -6,8 +6,6 @@ public abstract class WeaponModule
 {
     public string displayName = "未命名模块";
     public string description = "（还没写说明）";
-    public bool isFireModule = false; // 是否是开火模块，开火模块会触发 Fire 函数
-    public System.Action<AttackContext> preFire = null;// "只有这一枪才生效"的改动，先放在这里面，等真的发射时执行
     // 这是"虚拟方法"，需要子类用 override 来重写它
     public abstract void Apply(AttackContext ctx);
 }

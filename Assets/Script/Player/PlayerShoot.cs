@@ -27,6 +27,7 @@ public class PlayerShoot : MonoBehaviour
     {       
         equippedModules.Add(new Test_PierceModule());
         equippedModules.Add(new Test_FireModule());   // 开火
+
     }
 
     void Update()
@@ -60,10 +61,10 @@ public class PlayerShoot : MonoBehaviour
             module.Apply(ctx);
 
             // 3. 遇到开火节点，就用当前累积的状态发射一次
-            if (module.isFireModule)
+            if (ctx.isFireTrigger)
             {
-                Fire(ctx, module.preFire);//将ctx里的值一个一个填入fire中，并将一次性改变项也传入
-                module.isFireModule = false;
+                Fire(ctx);//将ctx里的值一个一个填入fire中
+                ctx.isFireTrigger = false;
             }
         }
     }
@@ -78,7 +79,7 @@ public class PlayerShoot : MonoBehaviour
     /// 这是一个管控开火时最终属性的函数，无特殊情况只管调用，要改先去跟队长讨论一下
     /// </summary>
     /// <param name="ctx"></param>
-    public void Fire(AttackContext ctx, System.Action<AttackContext> preFire = null)
+    public void Fire(AttackContext ctx)
     {
         //忘了拖预制体时给个提示，免得以为是脚本坏了
         if (bulletPrefab == null)
@@ -118,15 +119,6 @@ public class PlayerShoot : MonoBehaviour
             //这一波里的每一发子弹
             for (int i = 0; i < ctx.bulletsPerWave; i++)
             {
-                //发射前子弹获取一次列表的复印件，保证一次性改变项只在这一发子弹上生效
-                AttackContext oneShot = ctx.Clone();
-
-                //执行一次性改变项（如果有的话）
-                if (preFire != null)
-                {
-                    preFire(oneShot);
-                }
-
                 //散射：把这一波的子弹在 spreadAngle 里均匀铺开
                 float t = 0f;
                 if (ctx.bulletsPerWave > 1)
@@ -135,7 +127,7 @@ public class PlayerShoot : MonoBehaviour
                 }
                 float angle = aimAngle + t * ctx.spreadAngle;
 
-                SpawnOneBullet(wavePosition, angle, oneShot);
+                SpawnOneBullet(wavePosition, angle, ctx);
             }
         }
 
@@ -145,7 +137,6 @@ public class PlayerShoot : MonoBehaviour
     //生成一颗水弹，并把这一枪的数值交给它
     void SpawnOneBullet(Vector3 position, float angle, AttackContext ctx)
     {
-        Debug.Log("子弹实际拿到的伤害 = " + ctx.damage);
         GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.Euler(0f, 0f, angle));
 
         WaterBullet bulletScript = bullet.GetComponent<WaterBullet>();
