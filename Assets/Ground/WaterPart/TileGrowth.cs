@@ -10,7 +10,8 @@ public class TileGrowth : MonoBehaviour
     [Header("要蔓延的预制体（把地块自己的预制体拖进来）")]
     public GameObject tilePrefab;
     public bool growOnStart = true;
-
+    [Header("这些层会挡住水的蔓延（勾 DeepWater / 其他不想被淹的层）")]
+    public LayerMask blockLayers;
     [Header("我是第几代（种子保持 0，不用手改）")]
     public int depth = 0;
     [Header("长几圈（1 = 上下左右各一个，2 = 再外一圈…）")]
@@ -100,7 +101,14 @@ public class TileGrowth : MonoBehaviour
 
     private bool ExistsAt(Vector2Int pos)
     {
-        return transform.parent.Find(TileName(pos)) != null;
+        // ① 已经有同名地块了 → 拦住（原来的逻辑，不动）
+        if (transform.parent.Find(TileName(pos)) != null) return true;
+
+        // ② 那一格上有深水/障碍物 → 也拦住（新加的）
+        Vector2 point = new Vector2(pos.x, pos.y);
+        if (Physics2D.OverlapPoint(point, blockLayers) != null) return true;
+
+        return false;
     }
 
     private static string TileName(Vector2Int pos)
