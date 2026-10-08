@@ -6,15 +6,18 @@ TagManager:
   tags:
   - Enemy
   - Damaged Facility
+  - Water
+  - Players
+  - DeepWater
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Deepwater
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 

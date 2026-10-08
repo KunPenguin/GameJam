@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6370703815694042144}
   - component: {fileID: 617711152688011164}
   - component: {fileID: 6302116806262409554}
-  m_Layer: 0
+  m_Layer: 7
   m_HasEditorInfo: 1
   m_Name: WaterWisp
   m_TagString: Enemy
