@@ -2571,6 +2571,18 @@ PrefabInstance:
       propertyPath: blockLayers.m_Bits
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: farenemy
+      value: 
+      objectReference: {fileID: 6531486566904636385, guid: 42d4bb16cb4643741a03872e616b1611, type: 3}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: Highfarenemy
+      value: 
+      objectReference: {fileID: 9023161931422972613, guid: 523528b768578fe4fb20cc755cc87492, type: 3}
     - target: {fileID: 3972108634428432100, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
       propertyPath: m_Name
       value: water
