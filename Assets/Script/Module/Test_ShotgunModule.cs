@@ -19,12 +19,12 @@ public class Test_ShotgunModule : WeaponModule
         ctx.spreadAngle = ctx.spreadAngle + 18f;
 
         // ===== 第二段：一次性改变（只有这一枪生效） =====
-        preFire = delegate (AttackContext oneShot)
+        preFire = delegate (AttackContext Shot)
         {
             // 注意改的是 oneShot（复印件），不是 ctx（原件）
             // 所以这个伤害折扣不会影响后面的模块
-            oneShot.damage = oneShot.damage * 0.6f;
-            ctx.bulletsPerWave = ctx.bulletsPerWave + 2;
+            Shot.damage = Shot.damage * 0.6f;
+            Shot.bulletsPerWave = Shot.bulletsPerWave + 2;
         };
 
         // ===== 第三段：通知管道"我要开火了" =====

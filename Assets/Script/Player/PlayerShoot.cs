@@ -8,6 +8,11 @@ using System.Collections.Generic;//为了使用列表功能而引入
 
 public class PlayerShoot : MonoBehaviour
 {
+    [Header("模块发射间隔（纯视觉，不影响数值）")]
+    public float moduleFireGap = 0.05f;   // 开火模块之间错开多久（秒）
+
+    private List<PendingShot> shotQueue = new List<PendingShot>();
+    private float queueTimer = 0f;
     public GameObject bulletPrefab;//水弹预制体（必填！把 Assets/Prefabs/Bullets 里的水弹预制体拖到这里）
     public Transform firePoint;//枪口位置（可以不填，不填就从玩家中心发射）
     public float fireInterval = 0.15f;//射速：隔多少秒打一发，越小打得越快
@@ -24,6 +29,14 @@ public class PlayerShoot : MonoBehaviour
 
     //临时测试用开火模组，真正的模组列表会随UI补充
     //模块的执行顺序 = 列表里的顺序，顺序不同效果完全不同
+
+    // 一份"待发射"的快照
+    private class PendingShot
+    {
+        public AttackContext data;                    // 这一枪的数据包（已克隆）
+        public System.Action<AttackContext> preFire;  // 这一枪的一次性改动（快照）
+    }
+
     private void Start()
     {       
         equippedModules.Add(new Test_PierceModule());    // 1. 穿透 +1（永久改变）
@@ -31,8 +44,28 @@ public class PlayerShoot : MonoBehaviour
         equippedModules.Add(new Test_FireModule());      // 3. 开火
     }
 
+    //实现每枪每个模块之间的微小时间间隔
+    void AdvanceQueue()
+    {
+        if (shotQueue.Count == 0)
+        {
+            queueTimer = 0f;
+            return;
+        }
+
+        queueTimer = queueTimer - Time.deltaTime;
+        if (queueTimer > 0f) return;
+
+        PendingShot p = shotQueue[0];
+        shotQueue.RemoveAt(0);
+        Fire(p.data, p.preFire);
+
+        queueTimer = moduleFireGap;    // 下一枪隔这么久
+    }
+
     void Update()
     {
+        AdvanceQueue();
         //计时器一直往下减，减到 0 以下就可以再打一发
         timer = timer - Time.deltaTime;
 
@@ -66,8 +99,11 @@ public class PlayerShoot : MonoBehaviour
             // 如果这个模块是开火模块，就用当前累积的状态发射一次
             if (module.isFireModule)
             {
-                // 把模块贴的"一次性便条"一起传进去（preFire 可能是 null，表示没有一次性改动）
-                Fire(ctx, module.preFire);
+                PendingShot p = new PendingShot();  //实现待发射列表，
+                p.data = ctx.Clone();            // 快照数据包
+                p.preFire = module.preFire;      // 快照委托（关键，别漏）
+                shotQueue.Add(p);
+
 
                 // 把模块自己的扳机扳回去。
                 // 必须复位，否则这个模块下一帧还会触发，变成自动连发。
