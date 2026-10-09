@@ -117,7 +117,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &448595153369483142
 CircleCollider2D:
@@ -170,3 +170,11 @@ MonoBehaviour:
   lifeTime: 2.5
   rb: {fileID: 0}
   aliveTime: 0
+  damage: 1
+  pierceLeft: 0
+  lifesteal: 0
+  bulletSize: 0
+  heat: 0
+  bounceLeft: 0
+  playerHealth: {fileID: 0}
+  lastHitEnemy: {fileID: 0}

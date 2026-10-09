@@ -8,10 +8,9 @@ using UnityEngine;
 
 public class WaterBullet : MonoBehaviour
 {
-    private AttackContext ctx;
 
-    public float speed = 14f;//飞行速度（单位/秒）
-    public float lifeTime = 2.5f;//最长存活时间（秒），到时间自动销毁
+    public float speed = 14f;//飞行速度（单位/秒），此处修改不奏效，只是保底数值
+    public float lifeTime = 2.5f;//最长存活时间（秒），到时间自动销毁，此处修改不奏效，请前往Player的inspector更改
     public Rigidbody2D rb;//刚体组件（Inspector 里留空的话，会自动找自己身上的）
     public float aliveTime;//运行时的存活计时，不用手动改
 
@@ -49,6 +48,8 @@ public class WaterBullet : MonoBehaviour
         heat = ctx.heat;//热力值
         bounceLeft = ctx.bounce;//弹射
         playerHealth = health;//生命值
+        speed = ctx.bulletSpeed;//弹速
+        lifeTime = ctx.lifeTime;//子弹存在时间
 
         // 子弹大小
         transform.localScale = transform.localScale * (1f + bulletSize);

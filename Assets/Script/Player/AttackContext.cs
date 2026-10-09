@@ -17,6 +17,8 @@ public class AttackContext
     public int bulletsPerWave;//每波子弹数
     public float spreadAngle;//散射角
     public float waveSpacing;//每波子弹时间间距
+    public float bulletSpeed;//子弹速度
+    public float lifeTime;//子弹存在时间
     public bool isFireTrigger = false; // 【核心】是否遇到开火节点
 
     // 克隆方法：复制一份全新的数据包，以免每次开火对数值的影响不重置
@@ -33,6 +35,8 @@ public class AttackContext
         copy.bulletsPerWave = this.bulletsPerWave;
         copy.spreadAngle = this.spreadAngle;
         copy.waveSpacing = this.waveSpacing;
+        copy.lifeTime=this.lifeTime;
+        copy.bulletSpeed = this.bulletSpeed;
         copy.isFireTrigger = false; // 复印件永远从“未开火”开始
         return copy;
     }

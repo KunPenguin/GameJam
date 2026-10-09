@@ -99,10 +99,12 @@ public class PlayerShoot : MonoBehaviour
         Vector2 aimDir = mouseWorld - transform.position;
         aimDir = aimDir.normalized;
         float aimAngle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
-
+        //1.5.在此处克隆数据包
+        AttackContext shot = ctx.Clone();
+        if(preFire != null)preFire(shot);
         //2.哪怕波数与每波子弹数为0甚至为负也至少打一发
-        if (ctx.bulletsPerWave < 1) ctx.bulletsPerWave = 1;
-        if (ctx.waveCount < 1) ctx.waveCount = 1;
+        if (shot.bulletsPerWave < 1) shot.bulletsPerWave = 1;
+        if (shot.waveCount < 1) shot.waveCount = 1;
 
         //3.子弹从哪儿出生（没填枪口就用玩家自己的位置）
         Vector3 startPosition = transform.position;
@@ -116,40 +118,30 @@ public class PlayerShoot : MonoBehaviour
         Vector2 sideDir = new Vector2(-aimDir.y, aimDir.x);
 
         //5.一波一波地生成子弹
-        for (int wave = 0; wave < ctx.waveCount; wave++)
+        for (int wave = 0; wave < shot.waveCount; wave++)
         {
             //这一波相对"正中间那一波"的偏移量（波数=1 时偏移就是 0）
-            float offset = (wave - (ctx.waveCount - 1) * 0.5f) * ctx.waveSpacing;
+            float offset = (wave - (shot.waveCount - 1) * 0.5f) * shot.waveSpacing;
             Vector3 wavePosition = startPosition + (Vector3)(sideDir * offset);
 
             //这一波里的每一发子弹
-            for (int i = 0; i < ctx.bulletsPerWave; i++)
+            for (int i = 0; i < shot.bulletsPerWave; i++)
             {
-                // ===== 关键：每一发子弹单独克隆一份"复印件" =====
-                // 为什么：一次性改变只该作用在这一枪上，不能污染原来的 ctx
-                AttackContext oneShot = ctx.Clone();
-
-                // 执行一次性改变项（如果有的话）——改的是复印件
-                if (preFire != null)
-                {
-                    preFire(oneShot);
-                }
-
                 //散射：把这一波的子弹在 spreadAngle 里均匀铺开
                 float t = 0f;
-                if (ctx.bulletsPerWave > 1)
+                if (shot.bulletsPerWave > 1)
                 {
-                    t = (float)i / (ctx.bulletsPerWave - 1) - 0.5f;//算出来是 -0.5 到 +0.5
+                    t = (float)i / (shot.bulletsPerWave - 1) - 0.5f;//算出来是 -0.5 到 +0.5
                 }
                 float angle = aimAngle + t * ctx.spreadAngle;
+                SpawnOneBullet(wavePosition, angle, shot);
 
-                // 注意：传的是 oneShot（复印件），不是 ctx（原件）。
+                // 注意：传的是 Shot（复印件），不是 ctx（原件）。
                 // 传错的话，上面 preFire 的改动就全白做了。
-                SpawnOneBullet(wavePosition, angle, oneShot);
             }
         }
 
-        Debug.Log("发射！波数 " + ctx.waveCount + "，每波 " + ctx.bulletsPerWave + " 发，散射 " + ctx.spreadAngle + " 度，这一次共 " + (ctx.waveCount * ctx.bulletsPerWave) + " 发");
+        Debug.Log("发射！波数 " + shot.waveCount + "，每波 " + shot.bulletsPerWave + " 发，散射 " + shot.spreadAngle + " 度，这一次共 " + (shot.waveCount * shot.bulletsPerWave) + " 发");
     }
 
     //生成一颗水弹，并把这一枪的数值交给它

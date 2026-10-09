@@ -169,3 +169,4 @@ MonoBehaviour:
   speed: 5
   lifeTime: 3
   rb: {fileID: 6591603367540398301}
+  finalDamage: 1
