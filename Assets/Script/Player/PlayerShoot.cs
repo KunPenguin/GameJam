@@ -23,11 +23,12 @@ public class PlayerShoot : MonoBehaviour
     public List<WeaponModule> equippedModules = new List<WeaponModule>();
 
     //临时测试用开火模组，真正的模组列表会随UI补充
+    //模块的执行顺序 = 列表里的顺序，顺序不同效果完全不同
     private void Start()
     {       
-        equippedModules.Add(new Test_PierceModule());
-        equippedModules.Add(new Test_FireModule());   // 开火
-
+        equippedModules.Add(new Test_PierceModule());    // 1. 穿透 +1（永久改变）
+        equippedModules.Add(new Test_ShotgunModule());   // 2. 子弹+2、散射+18°（永久）；单发伤害×0.6（一次性）
+        equippedModules.Add(new Test_FireModule());      // 3. 开火
     }
 
     void Update()
@@ -52,34 +53,39 @@ public class PlayerShoot : MonoBehaviour
     //====================================================================
     public void FireByModules()
     {
-        // 更新列表状态，保证每一次点鼠标发射，都从零开始累积状态，防止上一枪的属性残留到这一枪。
+        // 每一次按鼠标都从"基础模板"重新克隆一份，
+        // 防止上一枪累积的属性残留到这一枪
         AttackContext ctx = baseContext.Clone();
 
-        // 2. 依次遍历所有模块
+        // 依次遍历所有模块
         foreach (var module in equippedModules)
         {
+            // 让模块干活：改数据包（永久改变会留在 ctx 里，传给后面的模块）
             module.Apply(ctx);
 
-            // 3. 遇到开火节点，就用当前累积的状态发射一次
-            if (ctx.isFireTrigger)
+            // 如果这个模块是开火模块，就用当前累积的状态发射一次
+            if (module.isFireModule)
             {
-                Fire(ctx);//将ctx里的值一个一个填入fire中
-                ctx.isFireTrigger = false;
+                // 把模块贴的"一次性便条"一起传进去（preFire 可能是 null，表示没有一次性改动）
+                Fire(ctx, module.preFire);
+
+                // 把模块自己的扳机扳回去。
+                // 必须复位，否则这个模块下一帧还会触发，变成自动连发。
+                module.isFireModule = false;
             }
         }
     }
 
     //====================================================================
     //开火函数：一次发射
-    //模块（或任何别的脚本）想打出自己的效果时，直接调用这个函数就行，例如：
-    //    shoot.Fire(2f, 0.1f, 0.5f, 0f, 3, 1, 5, 30f);
-    //意思就是：穿透2、吸血10%、子弹大50%、热力值0、弹射3次、1波、每波5发、散射30度
+    //模块（或任何别的脚本）想打出自己的效果时，直接调用这个函数就行
     //====================================================================
     /// <summary>
     /// 这是一个管控开火时最终属性的函数，无特殊情况只管调用，要改先去跟队长讨论一下
     /// </summary>
-    /// <param name="ctx"></param>
-    public void Fire(AttackContext ctx)
+    /// <param name="ctx">这一枪的数据包（只管"子弹长什么样"）</param>
+    /// <param name="preFire">"只有这一枪才生效"的改动；没有就传 null</param>
+    public void Fire(AttackContext ctx, System.Action<AttackContext> preFire = null)
     {
         //忘了拖预制体时给个提示，免得以为是脚本坏了
         if (bulletPrefab == null)
@@ -119,6 +125,16 @@ public class PlayerShoot : MonoBehaviour
             //这一波里的每一发子弹
             for (int i = 0; i < ctx.bulletsPerWave; i++)
             {
+                // ===== 关键：每一发子弹单独克隆一份"复印件" =====
+                // 为什么：一次性改变只该作用在这一枪上，不能污染原来的 ctx
+                AttackContext oneShot = ctx.Clone();
+
+                // 执行一次性改变项（如果有的话）——改的是复印件
+                if (preFire != null)
+                {
+                    preFire(oneShot);
+                }
+
                 //散射：把这一波的子弹在 spreadAngle 里均匀铺开
                 float t = 0f;
                 if (ctx.bulletsPerWave > 1)
@@ -127,7 +143,9 @@ public class PlayerShoot : MonoBehaviour
                 }
                 float angle = aimAngle + t * ctx.spreadAngle;
 
-                SpawnOneBullet(wavePosition, angle, ctx);
+                // 注意：传的是 oneShot（复印件），不是 ctx（原件）。
+                // 传错的话，上面 preFire 的改动就全白做了。
+                SpawnOneBullet(wavePosition, angle, oneShot);
             }
         }
 
