@@ -133,7 +133,7 @@ public class PlayerShoot : MonoBehaviour
                 {
                     t = (float)i / (shot.bulletsPerWave - 1) - 0.5f;//算出来是 -0.5 到 +0.5
                 }
-                float angle = aimAngle + t * ctx.spreadAngle;
+                float angle = aimAngle + t * shot.spreadAngle;
                 SpawnOneBullet(wavePosition, angle, shot);
 
                 // 注意：传的是 Shot（复印件），不是 ctx（原件）。
@@ -145,7 +145,7 @@ public class PlayerShoot : MonoBehaviour
     }
 
     //生成一颗水弹，并把这一枪的数值交给它
-    void SpawnOneBullet(Vector3 position, float angle, AttackContext ctx)
+    void SpawnOneBullet(Vector3 position, float angle, AttackContext shot)
     {
         GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.Euler(0f, 0f, angle));
 
@@ -157,6 +157,6 @@ public class PlayerShoot : MonoBehaviour
         }
 
         //把数值传给这颗子弹；吸血要回血，所以顺便把玩家身上的 PlayerHealth 也交给它
-        bulletScript.Setup(ctx, GetComponent<PlayerHealth>());
+        bulletScript.Setup(shot, GetComponent<PlayerHealth>());
     }
 }
