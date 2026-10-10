@@ -81,6 +81,13 @@ public class WaterBullet : MonoBehaviour
             return;
         }
 
+        // 触发当前被打中敌人的受击闪白效果，新增的！
+        EnemyHitEffect effect = other.GetComponent<EnemyHitEffect>();
+        if (effect != null)
+        {
+            effect.FlashWhite(0.1f); // 闪白 0.1 秒
+        }
+
         // 从 Setup 里存下来的伤害值，把 this.damage 传给敌人
         // SendMessage 的第二个参数，会把数据传给目标的 OnHit 方法
         other.SendMessage("OnHit", this.damage, SendMessageOptions.DontRequireReceiver);

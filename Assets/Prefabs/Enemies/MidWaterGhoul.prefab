@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8478180920384111067}
   - component: {fileID: 4105931618171211414}
   - component: {fileID: 4962827280678314951}
+  - component: {fileID: 4124568619025278517}
   m_Layer: 7
   m_HasEditorInfo: 1
   m_Name: MidWaterGhoul
@@ -60,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: defe5d43dc42e0545a1d758fcab23efb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,3 +172,15 @@ MonoBehaviour:
   maxHp: 15
   currentHp: 0
   damage: 3
+--- !u!114 &4124568619025278517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273040943284710431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8885f25602fcedf42aa6d61875087de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
