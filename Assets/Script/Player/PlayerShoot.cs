@@ -39,9 +39,45 @@ public class PlayerShoot : MonoBehaviour
 
     private void Start()
     {       
-        equippedModules.Add(new Test_PierceModule());    // 1. 穿透 +1（永久改变）
-        equippedModules.Add(new Test_ShotgunModule());   // 2. 子弹+2、散射+18°（永久）；单发伤害×0.6（一次性）
-        equippedModules.Add(new Test_FireModule());      // 3. 开火
+        RefreshModules();
+    }
+
+    /// <summary>
+    /// 重新刷新模块列表：清空原来的列表，重新从 GameData 里读取装备的模块
+    /// 每次模块面板关闭时都要调用这个函数，保证模块链是最新的
+    /// </summary>
+    public void RefreshModules()
+    {
+        //  先清空原来的模块列表
+        // 不清空的话，每次刷新都会越加越多
+        equippedModules.Clear();
+
+        //  GameData 不在就什么都不做
+        // 比如直接打开 GameScene 测试时，场景里可能没有挂 GameData 的物体
+        if (GameData.Instance == null)
+        {
+            Debug.LogWarning("GameData不存在，检查场景中有没有挂GameData的物体或有没有从StartScene加载");
+            return;
+        }
+
+        //  遍历8个插槽，把不为空的模块名都造出来，放进模块链里
+        string[] slots = GameData.Instance.equipped;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            // 空插槽跳过
+            if (string.IsNullOrEmpty(slots[i])) continue;
+
+            // 按名字造一个全新的模块
+            WeaponModule m = ModuleBook.Create(slots[i]);
+
+            // 造不出来（名字写错、ModuleBook里没登记）就跳过
+            // 这个判断不能省：null 混进列表，开火时会空引用报错
+            if (m == null) continue;
+
+            equippedModules.Add(m);
+        }
+
+        Debug.Log("模块链刷新完成，共 " + equippedModules.Count + " 个模块");
     }
 
     //实现每枪每个模块之间的微小时间间隔
