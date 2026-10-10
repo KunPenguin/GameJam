@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2396008357744278167}
   - component: {fileID: 7334058994287873555}
   - component: {fileID: 1399964395125936768}
+  - component: {fileID: 1743453972937269795}
   m_Layer: 7
   m_HasEditorInfo: 1
   m_Name: WaterGhoul
@@ -60,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: defe5d43dc42e0545a1d758fcab23efb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,3 +172,15 @@ MonoBehaviour:
   maxHp: 10
   currentHp: 0
   damage: 1
+--- !u!114 &1743453972937269795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2773762685130925568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8885f25602fcedf42aa6d61875087de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
