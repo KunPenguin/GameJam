@@ -99,22 +99,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3972108634428432100}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8c1163be75cf454f8650816876ec408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeenemy1: {fileID: 3452446305460681580, guid: 330b78b3cfa567c46a574af25aaa6409, type: 3}
-  closeenemy2: {fileID: 273040943284710431, guid: 8460b9e77bfdeff4f8919f1899ee0d9b, type: 3}
-  closeenemy3: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+  closeenemy: {fileID: 0}
+  Midcloseenemy: {fileID: 0}
+  Highcloseenemy: {fileID: 0}
   farenemy: {fileID: 9023161931422972613, guid: 523528b768578fe4fb20cc755cc87492, type: 3}
+  Midfarenemy: {fileID: 0}
+  Highfarenemy: {fileID: 0}
   spawnRate: 2
   time: 10
   middletime: 30
-  P: 0
-  A: 0
-  B: 0
-  C: 0
+  P: 0.3
+  A: 0.5
+  B: 0.3
+  C: 0.3
+  D: 0.2
 --- !u!114 &-6578988923150009430
 MonoBehaviour:
   m_ObjectHideFlags: 0

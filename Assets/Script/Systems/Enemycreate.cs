@@ -25,9 +25,9 @@ public class enemycreate : MonoBehaviour
     public float A;
     [Header("生成mid近战怪物的概率")]
     public float B;
-    [Header("生成Mid远程怪物的概率（远程怪物间的概率）")]
+    [Header("生成远程怪物的概率（远程怪物间的概率）")]
     public float C;
-    [Header("生成high远程怪物的概率（远程怪物间的概率）")]
+    [Header("生成Mid远程怪物的概率（远程怪物间的概率）")]
     public float D;
 
     // Start is called before the first frame update
@@ -71,9 +71,7 @@ public class enemycreate : MonoBehaviour
         }
     void shengcheng()
     {
-        if (N == true) return;
-        else
-        {
+        
             float r1 = Random.value;
             float r2 = Random.value;
             float r3 = Random.value;
@@ -90,7 +88,7 @@ public class enemycreate : MonoBehaviour
                 }
                      else Instantiate(Highcloseenemy, transform.position, Quaternion.identity);
             }
-            else
+            else if(N==false)
             {
                 if (r3 < C)
                 {
@@ -103,7 +101,7 @@ public class enemycreate : MonoBehaviour
                      else Instantiate(Highfarenemy, transform.position, Quaternion.identity);
                 N = true;
             }
-        }
+        
     }
  }
 

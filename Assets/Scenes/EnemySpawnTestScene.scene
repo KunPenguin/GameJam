@@ -2574,15 +2574,31 @@ PrefabInstance:
     - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
       propertyPath: farenemy
       value: 
-      objectReference: {fileID: 6531486566904636385, guid: 42d4bb16cb4643741a03872e616b1611, type: 3}
+      objectReference: {fileID: 1794863255233613575, guid: 5734752c6582cb54396882ce0983e136, type: 3}
     - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: closeenemy
+      value: 
+      objectReference: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: Midfarenemy
+      value: 
+      objectReference: {fileID: 6531486566904636385, guid: 42d4bb16cb4643741a03872e616b1611, type: 3}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
       propertyPath: Highfarenemy
       value: 
       objectReference: {fileID: 9023161931422972613, guid: 523528b768578fe4fb20cc755cc87492, type: 3}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: Midcloseenemy
+      value: 
+      objectReference: {fileID: 273040943284710431, guid: 8460b9e77bfdeff4f8919f1899ee0d9b, type: 3}
+    - target: {fileID: 665921999753942221, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
+      propertyPath: Highcloseenemy
+      value: 
+      objectReference: {fileID: 3452446305460681580, guid: 330b78b3cfa567c46a574af25aaa6409, type: 3}
     - target: {fileID: 3972108634428432100, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
       propertyPath: m_Name
       value: water
