@@ -11,7 +11,7 @@ public class GameData : MonoBehaviour
     [Header("当前天数（非测试别手动改）")]
     public int currentDay = 1;//当前天数
 
-    [Header("模块链：8个插槽（空的用空字符串）")]
+    [Header("模块链：8个插槽（千万别手动改）")]
     public string[] equipped = new string[]
     {
         "Test_FireModule",   // 第1格：开局自带的基础开火模块
@@ -20,7 +20,7 @@ public class GameData : MonoBehaviour
     };
 
 
-    [Header("背包：3个格子（空的用空字符串）")]
+    [Header("背包：3个格子（千万别手动改）")]
     public string[] backpack = new string[] { "", "", "" };
 
 
