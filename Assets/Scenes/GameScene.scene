@@ -459,21 +459,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8703168575c1b14ab7135305c393c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moduleFireGap: 0.05
   bulletPrefab: {fileID: 2469700867511535609, guid: 63a93176cb97d774cbd7b4d1059548e3, type: 3}
   firePoint: {fileID: 0}
-  fireInterval: 0.15
+  fireInterval: 0.4
   timer: 0
   baseContext:
-    damage: 0
+    damage: 1
     pierce: 0
     lifesteal: 0
     bulletSize: 0
     heat: 0
     bounce: 0
-    waveCount: 0
-    bulletsPerWave: 0
+    waveCount: 1
+    bulletsPerWave: 1
     spreadAngle: 0
     waveSpacing: 0
+    bulletSpeed: 15
+    lifeTime: 2.5
     isFireTrigger: 0
 --- !u!114 &109356466
 MonoBehaviour:
