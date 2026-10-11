@@ -890,14 +890,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDay: 1
   equipped:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - Test_FireModule
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   backpack:
   - 
   - 

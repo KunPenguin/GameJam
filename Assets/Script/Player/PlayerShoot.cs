@@ -101,6 +101,18 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
+        // 临时测试：按 P 打开面板
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (ModulePanelUI.Instance != null)
+            {
+                ModulePanelUI.Instance.Open();
+            }
+            else
+            {
+                Debug.LogWarning("场景里没有 ModulePanelUI，检查 ModulePanel 物体上有没有挂脚本");
+            }
+        }
         AdvanceQueue();
         //计时器一直往下减，减到 0 以下就可以再打一发
         timer = timer - Time.deltaTime;
