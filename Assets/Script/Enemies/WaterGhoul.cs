@@ -10,9 +10,9 @@ public class WaterGhoul : MonoBehaviour
     private Rigidbody2D rb;
     public Transform player;
     private int facingDirection = -1;
-    [Header("ËÙ¶È")]
+    [Header("é€Ÿåº¦")]
     public float moveSpeed;
-    [Header("×ÜÉúÃü")]
+    [Header("æ€»ç”Ÿå‘½")]
     public float maxHp = 10;
     public float currentHp;
     private EnemyState enemyState;
@@ -46,26 +46,28 @@ public class WaterGhoul : MonoBehaviour
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
     }
-    void OnTriggerEnter2D(Collider2D other)  //¹¥»÷
+    void OnTriggerEnter2D(Collider2D other)  //æ”»å‡»
     {
-        if (other.CompareTag("Player"))     //×²µ½µÄtagÊÇ²»ÊÇplayer
+        if (other.CompareTag("Player"))     //æ’åˆ°çš„tagæ˜¯ä¸æ˜¯player
         {
-            Debug.Log("Íæ¼Ò±»»÷ÖĞ£¡");
-            //ĞÂÔö£ºÕæµÄ¿ÛÍæ¼ÒÑª£¨µ÷ÓÃÍæ¼ÒÉíÉÏ PlayerHealth ½Å±¾µÄ TakeDamage£©
+            Debug.Log("ç©å®¶è¢«å‡»ä¸­ï¼");
+            //æ–°å¢ï¼šçœŸçš„æ‰£ç©å®¶è¡€ï¼ˆè°ƒç”¨ç©å®¶èº«ä¸Š PlayerHealth è„šæœ¬çš„ TakeDamageï¼‰
             other.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
 
         }
     }
-    // ±»Íæ¼ÒË®µ¯´òÖĞÊ±µ÷ÓÃ
-    // ÎªÊ²Ã´¼ÓÕâ¸ö£ºË®µ¯»áÍ¨¹ı SendMessage("OnHit", ÉËº¦Öµ) À´Í¨ÖªµĞÈË¡£
+    // è¢«ç©å®¶æ°´å¼¹æ‰“ä¸­æ—¶è°ƒç”¨
+    // ä¸ºä»€ä¹ˆåŠ è¿™ä¸ªï¼šæ°´å¼¹ä¼šé€šè¿‡ SendMessage("OnHit", ä¼¤å®³å€¼) æ¥é€šçŸ¥æ•Œäººã€‚
     public void OnHit(float finalDamage)
     {
         currentHp -= finalDamage;
-        Debug.Log("Ë®¹íÊÜµ½ÉËº¦£º" + finalDamage + "£¬Ê£ÓàÑªÁ¿£º" + currentHp);
+        Debug.Log("æ°´é¬¼å—åˆ°ä¼¤å®³ï¼š" + finalDamage + "ï¼Œå‰©ä½™è¡€é‡ï¼š" + currentHp);
 
         if (currentHp <= 0f)
         {
-            Debug.Log("Ë®¹íËÀÍö£¡");
+            //æ–°å¢ï¼šæ’­æ”¾"æ€ªç‰©æ­»äº¡"éŸ³æ•ˆï¼ˆå¿…é¡»åœ¨ Destroy ä¹‹å‰è°ƒç”¨ï¼‰
+            if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyDeath();
+            Debug.Log("æ°´é¬¼æ­»äº¡ï¼");
             Destroy(gameObject);
         }
     }

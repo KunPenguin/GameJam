@@ -61,12 +61,19 @@ public class WaterWisp : MonoBehaviour              //依旧填写一些数值�
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         Instantiate(bulletPrefab, spawnPos, Quaternion.Euler(0, 0, angle));   //instantiarte是克隆一个预制体（子弹）S+Q两个就是使子弹朝向玩家运动
+        //新增：播放"怪物远程攻击"音效
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyAttack();
     }
 
     public void OnHit(float finalDamage)
     {
         currentHp -= finalDamage;
-        if (currentHp <= 0f) Destroy(gameObject);
+        if (currentHp <= 0f)
+        {
+            //新增：播放"怪物死亡"音效（必须在 Destroy 之前调用）
+            if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyDeath();
+            Destroy(gameObject);
+        }
         //应该炮塔是写完了，需要啥功能欢迎添加，与啥不懂的来qq私我就行了
         Debug.Log("炮塔受到伤害：" + finalDamage + "，剩余血量：" + currentHp);
     }

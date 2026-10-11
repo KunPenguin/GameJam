@@ -58,6 +58,8 @@ public class HighWaterWisp : MonoBehaviour
     void Fire()
     {
         if (bulletPrefab == null || player == null) return;
+        //新增：播放"怪物远程攻击"音效
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyAttack();
         Vector2 dir = (player.position - transform.position).normalized;
 
         FireOne(dir);                          // 中间
@@ -82,7 +84,12 @@ public class HighWaterWisp : MonoBehaviour
     public void OnHit(float finalDamage)
     {
         currentHp -= finalDamage;
-        if (currentHp <= 0f) Destroy(gameObject);
+        if (currentHp <= 0f)
+        {
+            //新增：播放"怪物死亡"音效（必须在 Destroy 之前调用）
+            if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyDeath();
+            Destroy(gameObject);
+        }
         //应该炮塔是写完了，需要啥功能欢迎添加，与啥不懂的来qq私我就行了
         Debug.Log("炮塔受到伤害：" + finalDamage + "，剩余血量：" + currentHp);
     }
