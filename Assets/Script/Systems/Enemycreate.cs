@@ -12,7 +12,7 @@ public class enemycreate : MonoBehaviour
     public GameObject Midfarenemy;
     public GameObject Highfarenemy;
     public float spawnRate = 2;
-    private float timer = 0;
+    private float timer = 0,currentDay,o;
     private float a,b;//time的载体
     private bool N=false;
     [Header("每波数量为time/spawnRate")]
@@ -29,7 +29,10 @@ public class enemycreate : MonoBehaviour
     public float C;
     [Header("生成Mid远程怪物的概率（远程怪物间的概率）")]
     public float D;
-
+    [Header("随天数所增长的倍率")]
+    public float E;
+    [Header("刷怪量")]
+    public int number=0;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,8 +40,13 @@ public class enemycreate : MonoBehaviour
         time = Random.Range(0.5f, 1.5f);
         a = time;
         b = middletime;
+        
     }
-
+    void Awake()
+    {
+       currentDay= GameData.currentDay;
+        o = currentDay;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -62,13 +70,20 @@ public class enemycreate : MonoBehaviour
             else
             {
                 shengcheng();
+                number++;
                 timer = 0;
-            middletime = Random.Range(0.5f, 1.5f);
-            time = Random.Range(0.5f, 1.5f);
-            a = time;
-            b = middletime;
+                middletime = Random.Range(0.5f, 1.5f);
+                time = Random.Range(0.5f, 1.5f);
+                a = time;
+                b = middletime;
+            }
+            if(o!= currentDay)
+        {
+            Debug.Log(number);
+            number = 0;
+            o++;
         }
-        }
+     }
     void shengcheng()
     {
         
