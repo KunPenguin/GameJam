@@ -44,7 +44,7 @@ public class enemycreate : MonoBehaviour
     }
     void Awake()
     {
-       currentDay= GameData.currentDay;
+       currentDay= (GameData.Instance != null) ? GameData.Instance.currentDay : 1; ;
         o = currentDay;
     }
     // Update is called once per frame

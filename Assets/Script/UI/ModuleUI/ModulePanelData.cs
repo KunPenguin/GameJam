@@ -24,7 +24,7 @@ public static class ModulePanelData
         if(area == ModuleArea.Backpack)
         {
             if (!CheckLength(GameData.Instance != null ? GameData.Instance.backpack.Length : 0, index, area)) return "";
-            return reward[index];
+            return GameData.Instance.backpack[index];
         }
         if(area == ModuleArea.Reward)
         {

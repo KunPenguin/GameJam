@@ -23,6 +23,13 @@ public class PlayerShoot : MonoBehaviour
 
     //原本存在于此的9个变量的初始化被删了，因为AttackContext脚本将承担这个工作
 
+    // 静态入口：别的脚本（比如模块面板）通过它找到玩家身上的这个脚本
+    public static PlayerShoot Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     //当前玩家装备的模块列表
     //此处不用手动调整，UI做好后，这个列表直接由UI管理
     public List<WeaponModule> equippedModules = new List<WeaponModule>();

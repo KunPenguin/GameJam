@@ -9,7 +9,7 @@ public class GameData : MonoBehaviour
 {
     public static GameData Instance;
     [Header("当前天数（非测试别手动改）")]
-    public static int currentDay = 1;//当前天数  
+    public int currentDay = 1;//当前天数  
     [Header("模块链：8个插槽（千万别手动改）")]
     public string[] equipped = new string[]
     {

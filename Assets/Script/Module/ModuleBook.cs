@@ -103,4 +103,19 @@ public static class ModuleBook
             Debug.Log("【" + m.displayName + "】" + m.description);
         }
     }
+
+    /// <summary>
+    /// 这个种类的模块是不是"开火模块"（决定卡片横条用哪套图）。
+    /// 做法：造一个临时实例、跑一次 Apply，看它有没有把扳机按下去。
+    /// 注意：Apply 只改传进去的临时数据包，不会影响任何游戏状态。
+    /// </summary>
+    public static bool IsFireType(string typeName)
+    {
+        WeaponModule m = Create(typeName);
+        if (m == null) return false;
+
+        AttackContext temp = new AttackContext();
+        m.Apply(temp);            // 开火模块在这里会把 isFireModule 设成 true
+        return m.isFireModule;
+    }
 }   
