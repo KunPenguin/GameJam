@@ -142,7 +142,6 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (barNameText != null)
         {
             barNameText.text = display;
-            Debug.Log(">>> [格" + (int)area + "-" + index + "] 把横条文字设成【" + display + "】");
         }
     }
 

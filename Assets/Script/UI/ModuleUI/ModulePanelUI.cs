@@ -243,7 +243,7 @@ public class ModulePanelUI : MonoBehaviour
     {
         if (cell == null)
         {
-            // 【新】候选阶段：点卡片 = 选它
+            // 候选阶段：点卡片 = 选它
             if (inCandidateStage)
             {
                 OnCandidateClicked(cell);
