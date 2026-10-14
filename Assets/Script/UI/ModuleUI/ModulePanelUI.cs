@@ -4,12 +4,31 @@ using UnityEngine;
 
 public class ModulePanelUI : MonoBehaviour
 {
-    // 静态入口
-    public static ModulePanelUI Instance;
+
+    // ===== 静态入口 =====
+    // 用一个"私有字段"存真正的实例
+    private static ModulePanelUI instance;
+
+    // 对外暴露的"属性"：别人取的时候，如果发现是空的，就自己去场景里找一遍
+    // 为什么要这样：原来只靠 Awake() 登记一次，一旦 Awake 没跑到（物体没激活、
+    // 组件被禁用、组件变成Missing Script），Instance 就永远是 null，
+    // 而且你很难查。改成"取的时候自动补救"就不会再出现这个问题。
+    public static ModulePanelUI Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // 在场景里找一个（找不到就还是 null，调用方自己判空）
+                instance = FindObjectOfType<ModulePanelUI>();
+            }
+            return instance;
+        }
+    }
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
     }
 
     [Header("整个面板（控制显示与隐藏）")]
