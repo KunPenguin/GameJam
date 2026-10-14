@@ -120,9 +120,6 @@ public class ModulePanelUI : MonoBehaviour
     /// </summary>
     private void RefreshAllText()
     {
-        Debug.Log(">>> RefreshAllText：面板打开的刷新开始，cells = "
-                  + (cells == null ? "null" : cells.Length.ToString()));
-
         if (cells == null) return;
 
         for (int i = 0; i < cells.Length; i++)
@@ -243,14 +240,14 @@ public class ModulePanelUI : MonoBehaviour
     {
         if (cell == null)
         {
-            // 候选阶段：点卡片 = 选它
-            if (inCandidateStage)
-            {
-                OnCandidateClicked(cell);
-                return;
-            }
-
             Debug.LogWarning("OnCellClicked 收到的格子是 null，检查 Button 的参数槽有没有拖 ModuleCell");
+            return;
+        }
+
+        // 候选阶段：点卡片 = 选它
+        if (inCandidateStage)
+        {
+            OnCandidateClicked(cell);
             return;
         }
 
