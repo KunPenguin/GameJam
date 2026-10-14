@@ -25,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
         if (dead) return;
 
         currentHp = currentHp - damage;
+        DeviceRepair.NotifyPlayerDamaged();
         if (currentHp < 0f)
         {
             currentHp = 0f;

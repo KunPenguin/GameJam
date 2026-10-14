@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 6731968250409804548}
   - component: {fileID: 8020947734161611303}
   - component: {fileID: 1437010189249471006}
+  - component: {fileID: 5976218642308356487}
+  - component: {fileID: 2234478759879921535}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: Trident
@@ -61,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 2630350833222020198}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6290731, y: 0.51731133, z: 0.12502706}
+  m_LocalPosition: {x: -0.95, y: 0.49, z: 0.12502706}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -137,6 +139,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3972108634428432100, guid: 7fa1731a9aa580540bb8bd7be76fe2ac, type: 3}
   growOnStart: 1
+  blockLayers:
+    serializedVersion: 2
+    m_Bits: 8
   depth: 0
   maxDepth: 3
   time: 0.2
+--- !u!58 &5976218642308356487
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2630350833222020198}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.03, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.48
+--- !u!114 &2234478759879921535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2630350833222020198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9817ae442b633bb4faa2a4181e05ca41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  repairRadius: 5
+  playerTag: Player
+  repairSeconds: 5
+  waterRoot: {fileID: 4810676002028842603}
+  showBarOnScreen: 1
+  showBarOnlyWhenRepairing: 1
+  debugKey: 1
+  CompleteDevice: {fileID: 4717977098589585144, guid: 1a49e6108f2b9ac4283e71cb7909f462, type: 3}
