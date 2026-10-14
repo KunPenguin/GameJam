@@ -117,7 +117,9 @@ public class PlayerShoot : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("场景里没有 ModulePanelUI，检查 ModulePanel 物体上有没有挂脚本");
+                // 找一下场景里到底有没有（不管激活与否）
+                ModulePanelUI found = FindObjectOfType<ModulePanelUI>(true);
+                Debug.Log("按P失败。场景里能搜到的 ModulePanelUI = " + (found == null ? "一个都没有" : found.gameObject.name));
             }
         }
         AdvanceQueue();

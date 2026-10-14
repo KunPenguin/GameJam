@@ -30,7 +30,7 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public string discardLabel = "废弃";
 
     // ===== 图 =====
-    [Header("底座图（挂ModuleCell的根物体上的Image）")]
+    [Header("底座图（拖 Base 子物体的 Image）")]
     public Image baseImage;
 
     [Header("logo图（只有模块链格有）")]
@@ -157,34 +157,34 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         // 没有模块 → 只留底座A
         if (hasModule == false)
         {
-            SetVisible(logoImage.gameObject, false);
-            SetVisible(circleImage.gameObject, false);
+            SetVisible(logoImage, false);
+            SetVisible(circleImage, false);
             SetVisible(circleAnim, false);
-            SetVisible(barImage.gameObject, false);
-            SetVisible(barNameText.gameObject, false);
+            SetVisible(barImage, false);
+            SetVisible(barNameText, false);
             return;
         }
 
         // 有模块
-        SetVisible(logoImage.gameObject, true);
+        SetVisible(logoImage, true);
         if (logoImage != null)
         {
             logoImage.sprite = (iconTable != null) ? iconTable.GetLogo(moduleName) : null;
         }
 
         // 圆形：显示动图（图由FrameAnimator换，这里只负责显隐）
-        SetVisible(circleImage.gameObject, false);
+        SetVisible(circleImage, false);
         SetVisible(circleAnim, true);
 
         // 横条：先按"是不是开火模块"选一套，再按 选中/悬停/常态 选一张
-        SetVisible(barImage.gameObject, true);
+        SetVisible(barImage, true);
         if (barImage != null)
         {
             bool isFire = ModuleBook.IsFireType(moduleName);
             barImage.sprite = Pick(isFire ? barFire : barSupport);
         }
 
-        SetVisible(barNameText.gameObject, true);
+        SetVisible(barNameText, true);
     }
 
     // 背包格：底座B + 圆形
@@ -196,15 +196,15 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (hasModule)
         {
             // 有模块：只显示圆形
-            SetVisible(baseImage.gameObject, false);
-            SetVisible(circleImage.gameObject, true);
+            SetVisible(baseImage, false);
+            SetVisible(circleImage, true);
             SetSprite(circleImage, Pick(circleState));
         }
         else
         {
             // 空格：只显示底座B（悬停时换悬停图）
-            SetVisible(circleImage.gameObject, false);
-            SetVisible(baseImage.gameObject, true);
+            SetVisible(circleImage, false);
+            SetVisible(baseImage, true);
             SetSprite(baseImage, hovered ? baseHover : baseNormal);
         }
     }
@@ -212,14 +212,14 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // 奖励格：只有圆形
     private void UpdateRewardCell()
     {
-        SetVisible(circleImage.gameObject, true);
+        SetVisible(circleImage, true);
         SetSprite(circleImage, Pick(circleState));
     }
 
     // 废弃格：一张图，两态
     private void UpdateDiscardCell()
     {
-        SetVisible(baseImage.gameObject, true);
+        SetVisible(baseImage, true);
         SetSprite(baseImage, hovered ? baseHover : baseNormal);
     }
 
@@ -234,9 +234,18 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     // 显隐（先判空，物体不存在也不崩）
+    // 显隐——接收"物体"
     private void SetVisible(GameObject go, bool visible)
     {
         if (go != null) go.SetActive(visible);
+    }
+
+    // 显隐——接收"组件"（Image / TextMeshProUGUI 都能传）
+    // 为什么需要它：组件可能是null（比如模块链格没拖circleImage），
+    // 如果调用方写 xxx.gameObject，null的时候就崩了。有了这个重载就不会。
+    private void SetVisible(Component c, bool visible)
+    {
+        if (c != null) c.gameObject.SetActive(visible);
     }
 
     // 换图（先判空）
