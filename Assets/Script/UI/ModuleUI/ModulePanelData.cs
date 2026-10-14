@@ -8,6 +8,9 @@ public static class ModulePanelData
     //奖励区：只在这个界面出现，不跨场景
     public static string[] reward = new string[1];
 
+    // 三选一的候选卡（3张），只在这个界面用，不跨场景
+    public static string[] candidates = new string[3];
+
     /// <summary>
     /// 读：读取这个区的这一格放的模块名字，如果没有放模块，返回""
     /// </summary>
@@ -30,6 +33,11 @@ public static class ModulePanelData
         {
             if (!CheckLength(reward.Length, index, area)) return "";
             return reward[index];
+        }
+        if (area == ModuleArea.Candidate)
+        {
+            if (!CheckLength(candidates.Length, index, area)) return "";
+            return candidates[index];
         }
 
         //丢弃区不存储数据，直接返回空
@@ -60,6 +68,12 @@ public static class ModulePanelData
         {
             if (!CheckLength(reward.Length, index, area)) return;
             reward[index] = moduleName;
+            return;
+        }
+        if (area == ModuleArea.Candidate)
+        {
+            if (!CheckLength(candidates.Length, index, area)) return;
+            candidates[index] = moduleName;
             return;
         }
         //丢弃区不存储数据，直接返回

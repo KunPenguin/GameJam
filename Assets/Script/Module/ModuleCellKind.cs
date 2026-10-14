@@ -9,4 +9,5 @@ public enum ModuleCellKind
     BackpackCell,   // 背包格：底座B + 圆形
     RewardCell,     // 奖励格：只有圆形
     DiscardCell,    // 废弃格：一张图
+    CandidateCell,   // 【新增】三选一的候选卡片
 }

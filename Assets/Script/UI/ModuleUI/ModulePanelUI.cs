@@ -1,6 +1,7 @@
 // 模块面板的总控，挂在 GameManager 上。
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ModulePanelUI : MonoBehaviour
 {
@@ -34,6 +35,20 @@ public class ModulePanelUI : MonoBehaviour
     [Header("整个面板（控制显示与隐藏）")]
     public GameObject panel;
 
+    [Header("三选一：3张候选卡")]
+    public ModuleCell[] candidateCells;
+
+    [Header("两段式界面：这些是候选阶段的显示区")]
+    public GameObject candidateRow;      // 三张卡所在的那一排
+    public GameObject equipRow;          // 模块链那一排
+    public GameObject backpackRow;
+    public GameObject rewardRow;
+    public GameObject discardRow;        // 废弃格
+    public GameObject continueButton;    // 返回键
+
+    // 现在处在哪个阶段
+    private bool inCandidateStage = false;
+
     [Header("面板里所有格子（13个，顺序不限）")]
     public ModuleCell[] cells;
 
@@ -56,10 +71,76 @@ public class ModulePanelUI : MonoBehaviour
         Time.timeScale = 0f;        // 暂停游戏（照 GameOverPanel 的写法）
         ClearSelection();           // 清掉上次残留的选中状态
         RefreshAll();
+        RefreshAllText();           // 再显式刷一遍文字，保证打开面板时文字一定是最新的
+        EnterCandidateStage();
+    }
+    // 第一阶段：显示3张候选卡，隐藏整理界面
+    private void EnterCandidateStage()
+    {
+        inCandidateStage = true;
+
+        // 抽3张不重复的
+        List<string> picked = ModuleBook.CreateRandomList(3);
+        for (int i = 0; i < ModulePanelData.candidates.Length; i++)
+        {
+            ModulePanelData.candidates[i] = (i < picked.Count) ? picked[i] : "";
+        }
+
+        // 显隐：只显示候选行
+        SetStageVisible(true);
+
+        ClearSelection();
+        RefreshAll();   // 刷新时会把候选卡的文字和图都填上
+    }
+
+    // 第二阶段：隐藏候选卡，显示整理界面
+    private void EnterArrangeStage()
+    {
+        inCandidateStage = false;
+        SetStageVisible(false);
+
+        ClearSelection();
+        RefreshAll();
+    }
+
+    // 统一管显隐
+    private void SetStageVisible(bool candidateStage)
+    {
+        if (candidateRow != null) candidateRow.SetActive(candidateStage);
+        if (equipRow != null) equipRow.SetActive(!candidateStage);
+        if (backpackRow != null) backpackRow.SetActive(!candidateStage);
+        if (rewardRow != null) rewardRow.SetActive(!candidateStage);
+        if (discardRow != null) discardRow.SetActive(!candidateStage);
+        if (continueButton != null) continueButton.SetActive(!candidateStage);
+    }
+    /// <summary>
+    /// 重新走一遍所有格子的"刷新文字"。
+    /// 为什么单独来一个：保证"打开面板"这个动作本身就能把文字填对，
+    /// 不依赖别的函数有没有顺手调用。以后数据变了也可以直接调它。
+    /// </summary>
+    private void RefreshAllText()
+    {
+        Debug.Log(">>> RefreshAllText：面板打开的刷新开始，cells = "
+                  + (cells == null ? "null" : cells.Length.ToString()));
+
+        if (cells == null) return;
+
+        for (int i = 0; i < cells.Length; i++)
+        {
+            if (cells[i] == null) continue;
+            cells[i].RefreshTextNow();
+        }
     }
 
     public void Close()
     {
+        // 【新】奖励区还有东西 → 不许关
+        string reward = ModulePanelData.Read(ModuleArea.Reward, 0);
+        if (string.IsNullOrEmpty(reward) == false)
+        {
+            Debug.Log("奖励区还有模块，先处理掉才能继续");
+            return;   // 直接返回，不关面板
+        }
         // 【第二个集成点】让枪重新读一遍模块。
         // 没有这一步，玩家在面板里换的顺序不会生效！
         if (PlayerShoot.Instance != null)
@@ -92,6 +173,16 @@ public class ModulePanelUI : MonoBehaviour
                                   && cells[i].area == selectedArea
                                   && cells[i].index == selectedIndex;
                 cells[i].SetSelected(isSelected);
+            }
+            // 候选卡也要刷新
+            if (candidateCells != null)
+            {
+                for (int i = 0; i < candidateCells.Length; i++)
+                {
+                    if (candidateCells[i] == null) continue;
+                    candidateCells[i].Refresh();
+                    candidateCells[i].SetSelected(false);
+                }
             }
         }
 
@@ -152,6 +243,13 @@ public class ModulePanelUI : MonoBehaviour
     {
         if (cell == null)
         {
+            // 【新】候选阶段：点卡片 = 选它
+            if (inCandidateStage)
+            {
+                OnCandidateClicked(cell);
+                return;
+            }
+
             Debug.LogWarning("OnCellClicked 收到的格子是 null，检查 Button 的参数槽有没有拖 ModuleCell");
             return;
         }
@@ -188,6 +286,28 @@ public class ModulePanelUI : MonoBehaviour
 
         // 点的是另一个格子 → 移动或交换
         SwapOrMove(area, index);
+    }
+
+    private void OnCandidateClicked(ModuleCell cell)
+    {
+        string picked = ModulePanelData.Read(ModuleArea.Candidate, cell.index);
+
+        // 点到空位 → 什么都不做
+        if (string.IsNullOrEmpty(picked)) return;
+
+        // ① 放进奖励区（奖励区只有1格，index 0）
+        ModulePanelData.Write(ModuleArea.Reward, 0, picked);
+
+        // ② 另外两张清空（不管玩家选的是哪张，三张全部清掉，因为选中的已经复制进奖励区了）
+        for (int i = 0; i < ModulePanelData.candidates.Length; i++)
+        {
+            ModulePanelData.candidates[i] = "";
+        }
+
+        Debug.Log("三选一：选了 " + picked);
+
+        // ③ 进入整理阶段
+        EnterArrangeStage();
     }
 
     /// <summary>把选中的模块移动或交换到目标格子</summary>

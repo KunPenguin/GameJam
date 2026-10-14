@@ -103,6 +103,12 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     // ===================== 内部：刷新文字 =====================
+    /// <summary>由 ModulePanelUI 在打开面板时显式调用：只刷新文字</summary>
+    public void RefreshTextNow()
+    {
+        RefreshText();
+    }
+
     private void RefreshText()
     {
         // 废弃格：显示固定文字
@@ -133,7 +139,11 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (nameText != null) nameText.text = display;
         if (descText != null) descText.text = desc;
-        if (barNameText != null) barNameText.text = display;
+        if (barNameText != null)
+        {
+            barNameText.text = display;
+            Debug.Log(">>> [格" + (int)area + "-" + index + "] 把横条文字设成【" + display + "】");
+        }
     }
 
     // ===================== 内部：刷新视觉 =====================
@@ -143,6 +153,7 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (kind == ModuleCellKind.BackpackCell) { UpdateBackpackCell(); return; }
         if (kind == ModuleCellKind.RewardCell) { UpdateRewardCell(); return; }
         if (kind == ModuleCellKind.DiscardCell) { UpdateDiscardCell(); return; }
+        if (kind == ModuleCellKind.CandidateCell) { UpdateCandidateCell(); return; }
     }
 
     // 模块链格：底座A + logo + 圆形动图 + 横条
@@ -166,11 +177,7 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
 
         // 有模块
-        SetVisible(logoImage, true);
-        if (logoImage != null)
-        {
-            logoImage.sprite = (iconTable != null) ? iconTable.GetLogo(moduleName) : null;
-        }
+        ShowLogo(moduleName, true);
 
         // 圆形：显示动图（图由FrameAnimator换，这里只负责显隐）
         SetVisible(circleImage, false);
@@ -184,7 +191,9 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             barImage.sprite = Pick(isFire ? barFire : barSupport);
         }
 
-        SetVisible(barNameText, true);
+        // 横条上的名字：只在"这个格子被悬停或被选中"时才显示
+        // 这样平时界面更干净，鼠标移上去才看到模块名
+        SetVisible(barNameText, hovered || selected);
     }
 
     // 背包格：底座B + 圆形
@@ -195,25 +204,46 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (hasModule)
         {
-            // 有模块：只显示圆形
             SetVisible(baseImage, false);
             SetVisible(circleImage, true);
             SetSprite(circleImage, Pick(circleState));
+
+            // 有模块 → 显示logo
+            ShowLogo(moduleName, true);
         }
         else
         {
-            // 空格：只显示底座B（悬停时换悬停图）
             SetVisible(circleImage, false);
             SetVisible(baseImage, true);
             SetSprite(baseImage, hovered ? baseHover : baseNormal);
+
+            // 空格 → 隐藏logo
+            ShowLogo(moduleName, false);
         }
     }
 
-    // 奖励格：只有圆形
     private void UpdateRewardCell()
     {
+        string moduleName = ModulePanelData.Read(area, index);
+        bool hasModule = string.IsNullOrEmpty(moduleName) == false;
+
         SetVisible(circleImage, true);
         SetSprite(circleImage, Pick(circleState));
+
+        // 奖励格只有1格，有模块就显示logo
+        ShowLogo(moduleName, hasModule);
+    }
+
+    // ===== 新增的小工具：显示/隐藏logo =====
+    // 三个区（模块链/背包/奖励）都要用，所以抽出来
+    private void ShowLogo(string moduleName, bool visible)
+    {
+        SetVisible(logoImage, visible);
+
+        if (visible == false) return;          // 不显示就不用查图了
+        if (logoImage == null) return;
+
+        logoImage.sprite = (iconTable != null) ? iconTable.GetLogo(moduleName) : null;
     }
 
     // 废弃格：一张图，两态
@@ -221,6 +251,27 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         SetVisible(baseImage, true);
         SetSprite(baseImage, hovered ? baseHover : baseNormal);
+    }
+
+    private void UpdateCandidateCell()
+    {
+        string moduleName = ModulePanelData.Read(area, index);
+        bool hasModule = string.IsNullOrEmpty(moduleName) == false;
+
+        // 空位：整个卡片隐藏（没抽到卡就不该显示空框）
+        if (hasModule == false)
+        {
+            SetVisible(baseImage, false);
+            SetVisible(circleImage, false);
+            SetVisible(logoImage, false);
+            return;
+        }
+
+        // 有模块：显示卡片底图 + logo
+        SetVisible(baseImage, true);
+        SetVisible(logoImage, true);
+        SetSprite(baseImage, hovered ? baseHover : baseNormal);
+        ShowLogo(moduleName, true);
     }
 
     // ===================== 小工具 =====================

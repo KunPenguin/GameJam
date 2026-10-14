@@ -5,4 +5,5 @@ public enum ModuleArea
     Backpack,//背包
     Reward,//奖励
     Discard,//废弃
+    Candidate,  // 【新增】三选一的候选卡
 }
