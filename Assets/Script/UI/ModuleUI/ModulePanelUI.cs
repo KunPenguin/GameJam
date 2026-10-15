@@ -238,6 +238,8 @@ public class ModulePanelUI : MonoBehaviour
     /// <summary>玩家点了某个格子。由每个格子的 Button 的 OnClick 调用。</summary>
     public void OnCellClicked(ModuleCell cell)
     {
+        //新增：播放"点击"音效
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayClick();
         if (cell == null)
         {
             Debug.LogWarning("OnCellClicked 收到的格子是 null，检查 Button 的参数槽有没有拖 ModuleCell");

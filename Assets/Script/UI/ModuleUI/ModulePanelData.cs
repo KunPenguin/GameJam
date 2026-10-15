@@ -56,6 +56,8 @@ public static class ModulePanelData
         {
             if (!CheckLength(GameData.Instance != null ? GameData.Instance.equipped.Length : 0, index, area)) return;
             GameData.Instance.equipped[index] = moduleName;
+            //新增：装进插槽成功时播放"放置物品"音效
+            if (string.IsNullOrEmpty(moduleName) == false && SfxPlayer.instance != null) SfxPlayer.instance.PlayPlace();
             return;
         }
         if (area == ModuleArea.Backpack)
