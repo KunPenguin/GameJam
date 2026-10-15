@@ -15,6 +15,9 @@ public static class ModuleBook
         "Test_PierceModule",
         "Test_ShotgunModule",
         "NeiBao",
+        "PaoPaoJi",
+        "HuaSaTou",
+        "FangHuShuiMu"
     };
 
     //按名字造模块
@@ -37,6 +40,18 @@ public static class ModuleBook
         else if (typeName == "NeiBao")
         {
             m = new NeiBao();
+        }
+        else if (typeName == "PaoPaoJi")
+        {
+            m = new PaoPaoJi();
+        }
+        else if (typeName == "HuaSaTou")
+        {
+            m = new HuaSaTou();
+        }
+        else if (typeName == "FangHuShuiMu")
+        {
+            m = new FangHuShuiMu();
         }
         else
         {

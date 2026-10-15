@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   moveSpeed: 2
-  maxHp: 10
+  maxHp: 15
   currentHp: 0
   damage: 1
 --- !u!114 &1743453972937269795

@@ -65,7 +65,7 @@ public class CameraFollow : MonoBehaviour
             float minY = b.min.y + halfH;
             float maxY = b.max.y - halfH;
 
-            //  如果"视野比地图还大"，min 会大于 max，Clamp 就会出错。
+            // ⚠ 如果"视野比地图还大"，min 会大于 max，Clamp 就会出错。
             //    所以这种情况下直接取地图中心（宁可不跟随，也不要乱跑）。
             if (minX > maxX) smoothed.x = b.center.x;
             else smoothed.x = Mathf.Clamp(smoothed.x, minX, maxX);

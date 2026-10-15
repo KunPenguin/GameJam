@@ -9,7 +9,7 @@ public class NeiBao : WeaponModule
     public NeiBao()
     {
         displayName = "内爆";
-        description = "失去所有波数，打出一发巨大的水弹，原地炸开、无限穿透，但伤害减半";
+        description = "失去所有波数，打出一发巨大的水弹，原地炸开、无限穿透，但伤害减半，弹射和穿透属性会以一定比例加成体积和伤害,并使之后的模块获得额外伤害加成";
     }
 
     public override void Apply(AttackContext ctx)
