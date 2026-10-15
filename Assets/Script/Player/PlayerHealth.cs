@@ -26,6 +26,8 @@ public class PlayerHealth : MonoBehaviour
 
         currentHp = currentHp - damage;
         DeviceRepair.NotifyPlayerDamaged();
+        //新增：播放"受伤"音效
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayHurt();
         if (currentHp < 0f)
         {
             currentHp = 0f;

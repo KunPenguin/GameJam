@@ -50,6 +50,7 @@ public class DeviceRepair : MonoBehaviour
     void OnDisable()
     {
         AllDevices.Remove(this);                                // 销毁/关闭时注销
+        StopRepairSoundLoop();   //新增：销毁时停掉修理音效
     }
 
     // Update is called once per frame
@@ -62,6 +63,7 @@ public class DeviceRepair : MonoBehaviour
         {
             
             PlayerInRange = false;
+            StopRepairSoundLoop();   //新增：离开范围停止修理音效
             if (resetOnLeave)
                 ResetProgress();
             return;
@@ -86,6 +88,7 @@ public class DeviceRepair : MonoBehaviour
         bool hadProgress = Progress01 > 0.0001f;
 
         Progress01 = 0f;
+        StopRepairSoundLoop();   //新增：进度清零时停止修理音效
 
         if (hadProgress) Debug.Log(  "修复进度清零", this);
     }
@@ -93,12 +96,15 @@ public class DeviceRepair : MonoBehaviour
     {
         if (IsRepaired || delta <= 0f) return;
         Progress01 = Mathf.Clamp01(Progress01 + delta);
+        StartRepairSoundLoop();   //新增：修理中循环播放修理音效
         if (Progress01 >= 1f) Complete();
        
     }//加进度
     void Complete()
     {
         IsRepaired = true;
+        StopRepairSoundLoop();   //新增：停掉修理音效
+        PlayFinishSound();       //新增：播放"装置修好"音效
         Progress01 = 1f;
         Debug.Log("[设备] " + name + " 修复完成！", this);
         ClearWater();       // 需求 3：这片水全部消失（没配 waterRoot 就什么也不做）
@@ -118,6 +124,22 @@ public class DeviceRepair : MonoBehaviour
 
         Debug.Log("[设备] " + name + " 修好，已清掉它的水 " + removed + " 格。", this);
     }//完成修理后来清除这个设备生成的水
+    //=== 新增：装置音效（Inspector 里配了 AudioSource 就用它，没配就用全局 SfxPlayer）===
+    void StartRepairSoundLoop()
+    {
+        if (repairSound != null) { repairSound.loop = true; if (repairSound.isPlaying == false) repairSound.Play(); return; }
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayRepairLoop();
+    }
+    void StopRepairSoundLoop()
+    {
+        if (repairSound != null) { if (repairSound.isPlaying) repairSound.Stop(); return; }
+        if (SfxPlayer.instance != null) SfxPlayer.instance.StopRepairLoop();
+    }
+    void PlayFinishSound()
+    {
+        if (finishSound != null) { finishSound.Play(); return; }
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayRepairDone();
+    }
     bool IsPlayerInRange()//用于测定角色与设备距离以判断是否进入修理范围内
     {
         if (_player == null) return false;
