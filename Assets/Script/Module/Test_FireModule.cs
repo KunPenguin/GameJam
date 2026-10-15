@@ -11,13 +11,13 @@ public class Test_FireModule : WeaponModule
     public override void Apply(AttackContext ctx)
     {
         //此处放置会继承给后方组件的属性修改代码，例如：
-        //ctx.damage += 10f;就会给这一发子弹与之后的模块发射的子弹都加上10点伤害
+        //ctx.damage += 0.5f;伤害+50%（永久，传给后面的模块）
 
         //此处放置不会继承给后方组件只作用于自己的属性修改代码，例如：
         preFire = delegate (AttackContext oneShot)
         {
             //如果这么写的话
-            //oneShot.damage += 10f; // 只有自己伤害加10，后续模块不会继承这个加成
+            //oneShot.damage += 0.5f; // // 伤害+50%（只有这一枪）
         };
 
         // 【必须】通知管道：我是开火模块，请发射
