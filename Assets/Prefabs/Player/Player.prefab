@@ -152,19 +152,23 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   fireInterval: 0.4
   timer: 0
+  baseDamage: 10
+  baseBulletSpeed: 14
+  baseLifeTime: 2.5
+  baseBulletSize: 1
   baseContext:
     damage: 1
     pierce: 0
     lifesteal: 0
-    bulletSize: 0
+    bulletSize: 1
     heat: 0
     bounce: 0
     waveCount: 1
     bulletsPerWave: 1
     spreadAngle: 0
     waveSpacing: 0
-    bulletSpeed: 15
-    lifeTime: 2.5
+    bulletSpeed: 1
+    lifeTime: 1
 --- !u!58 &2214827688323478820
 CircleCollider2D:
   m_ObjectHideFlags: 0

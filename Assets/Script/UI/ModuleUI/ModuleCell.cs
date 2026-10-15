@@ -226,7 +226,7 @@ public class ModuleCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         string moduleName = ModulePanelData.Read(area, index);
         bool hasModule = string.IsNullOrEmpty(moduleName) == false;
 
-        SetVisible(circleImage, true);
+        SetVisible(circleImage, hasModule);
         SetSprite(circleImage, Pick(circleState));
 
         // 奖励格只有1格，有模块就显示logo

@@ -4,6 +4,7 @@
 //      3.按穿透和弹射决定这颗子弹接下来怎么办：还有穿透就继续往前飞，穿透用完还有弹射就转向最近的另一个敌人
 //需要组件：同一个物体上要有 Rigidbody2D（Gravity Scale = 0）
 //          和 CircleCollider2D，并且把 Collider 的 Is Trigger 勾上
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaterBullet : MonoBehaviour
@@ -15,16 +16,22 @@ public class WaterBullet : MonoBehaviour
     public float aliveTime;//运行时的存活计时，不用手动改
 
     //========== 下面这些是"这一枪"带过来的数值，由 PlayerShoot 生成子弹时写入 ==========
-    public float damage = 1;//伤害（现在只用来算吸血）
+    public float damageMultiplier = 1;//伤害倍率（1 = 100%）
+    public float baseDamage = 10f;        // 这把枪的基础伤害（由 PlayerShoot 传进来）
     public float pierceLeft = 0f;//还能再命中几个敌人（初始值 = 穿透数 + 1）
     public float lifesteal = 0f;//吸血比例（0.1 = 10%）
-    public float bulletSize = 0f;//子弹大小加成（生成时已经放大过了，这里只是记录一下）
+    public float bulletSizeMultiplier = 1f;//子弹大小倍率（1 = 原始大小，暂时只是记录一下）
     public float heat = 0f;//热力值（现在只是存着，还没有实际效果）
     public int bounceLeft = 0;//还能弹射几次
     public PlayerHealth playerHealth;//玩家的血量脚本（吸血用，由 PlayerShoot 传进来）
 
     //最近打中的那个敌人：弹射的时候不要弹回它身上
     public Collider2D lastHitEnemy;
+    // 已经打中过的敌人名单：同一颗子弹不会对同一个敌人重复造成伤害。
+    // 为什么需要它：一颗子弹能穿透多个敌人时，
+    // 如果敌人身上有多个 Collider2D，或者子弹在敌人边缘反复进出，
+    // 同一个敌人就会被算好几次，伤害会翻倍。
+    private List<Collider2D> hitEnemies = new List<Collider2D>();
 
     void Start()
     {
@@ -38,21 +45,32 @@ public class WaterBullet : MonoBehaviour
     }
 
     //由 PlayerShoot 在生成子弹时调用：把这一枪的数值交给这颗子弹
-    public void Setup(AttackContext ctx, PlayerHealth health)
+    //后四个是"基础值"：真正的数值 = 基础值 × 数据包里的倍率
+    public void Setup(AttackContext ctx, PlayerHealth health,
+                      float baseDamageFromPlayer,
+                      float baseSpeedFromPlayer,
+                      float baseLifeTimeFromPlayer,
+                      float baseBulletSizeFromPlayer)
     {
         // 从数据包里取值
-        damage = ctx.damage;//伤害
+        damageMultiplier = ctx.damage;//伤害倍率
+        baseDamage = baseDamageFromPlayer; // 基础伤害
         pierceLeft = ctx.pierce + 1f; // 穿透2 = 能命中3个敌人
         lifesteal = ctx.lifesteal;//吸血
-        bulletSize = ctx.bulletSize;//子弹大小
         heat = ctx.heat;//热力值
         bounceLeft = ctx.bounce;//弹射
         playerHealth = health;//生命值
-        speed = ctx.bulletSpeed;//弹速
-        lifeTime = ctx.lifeTime;//子弹存在时间
 
-        // 子弹大小
-        transform.localScale = transform.localScale * (1f + bulletSize);
+        // ===== 基础值 × 倍率 = 这一枪真正用的数值 =====
+        // 弹速：数据包里存的是倍率（1 = 100%），所以直接乘
+        speed = baseSpeedFromPlayer * ctx.bulletSpeed;
+
+        // 存在时间：同上
+        lifeTime = baseLifeTimeFromPlayer * ctx.lifeTime;
+
+        // 子弹大小：同上。⚠️ 0 会让子弹彻底消失，所以给个很低的下限
+        bulletSizeMultiplier = Mathf.Max(0.1f, ctx.bulletSize);
+        transform.localScale = transform.localScale * bulletSizeMultiplier;
     }
 
     void Update()
@@ -81,6 +99,21 @@ public class WaterBullet : MonoBehaviour
             return;
         }
 
+        // 查重：这个敌人这一枪已经打过 → 直接跳过
+        if (hitEnemies.Contains(other))
+        {
+            return;
+        }
+
+        // ③ 记进名单（放在这里，就"登记了"）
+        hitEnemies.Add(other);
+
+
+        // 算出这一发的最终伤害
+        // Mathf.Max(0f, ...) 是保底：多个"伤害-50%"叠加时，
+        // 倍率可能掉到 0 甚至负数。不钳制的话会出现"负数伤害给敌人回血"。
+        float finalDamage = Mathf.Max(0f, baseDamage * damageMultiplier);
+
         // 触发当前被打中敌人的受击闪白效果，新增的！
         EnemyHitEffect effect = other.GetComponent<EnemyHitEffect>();
         if (effect != null)
@@ -90,12 +123,12 @@ public class WaterBullet : MonoBehaviour
 
         // 从 Setup 里存下来的伤害值，把 this.damage 传给敌人
         // SendMessage 的第二个参数，会把数据传给目标的 OnHit 方法
-        other.SendMessage("OnHit", this.damage, SendMessageOptions.DontRequireReceiver);
+        other.SendMessage("OnHit", finalDamage, SendMessageOptions.DontRequireReceiver);
 
         //2.吸血：回复量 = 伤害 × 吸血比例
         if (playerHealth != null && lifesteal > 0f)
         {
-            playerHealth.Heal(damage * lifesteal);
+            playerHealth.Heal(finalDamage * lifesteal);
         }
 
         //3.记下这次打中的是谁（弹射时不要弹回它）

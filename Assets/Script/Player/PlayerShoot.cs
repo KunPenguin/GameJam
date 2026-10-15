@@ -17,7 +17,23 @@ public class PlayerShoot : MonoBehaviour
     public Transform firePoint;//枪口位置（可以不填，不填就从玩家中心发射）
     public float fireInterval = 0.15f;//射速：隔多少秒打一发，越小打得越快
     public float timer;//运行时的冷却计时，不用手动改
-    
+    [Header("基础伤害：最终伤害 = 这个值 × 数据包里的伤害倍率")]
+    public float baseDamage = 10f;
+
+    // ===== 下面三个是"基础值"，和数据包里的"倍率"乘算 =====
+    // 为什么要这样：模块里写的是"弹速+50%"这种百分比，
+    // 如果数据包里存绝对值，加法就变成"14 + 0.5"（几乎没感觉）。
+    // 所以数据包里存倍率（1 = 100%），真正的数值 = 基础值 × 倍率。
+    // ⚠️ 这三个值等于"没有任何模块时的手感"，调它们等于调武器基础手感。
+    [Header("基础弹速（数据包里存的是倍率）")]
+    public float baseBulletSpeed = 14f;
+
+    [Header("基础存在时间（秒，数据包里存的是倍率）")]
+    public float baseLifeTime = 2.5f;
+
+    [Header("基础子弹大小（1 = 原始大小，数据包里存的是倍率）")]
+    public float baseBulletSize = 1f;
+
     [Header("基础数值模板")]//将AttackContext里的数值引到PlayerShoot的inspector面板上
     public AttackContext baseContext = new AttackContext();
 
@@ -250,6 +266,8 @@ public class PlayerShoot : MonoBehaviour
         }
 
         //把数值传给这颗子弹；吸血要回血，所以顺便把玩家身上的 PlayerHealth 也交给它
-        bulletScript.Setup(shot, GetComponent<PlayerHealth>());
+        //后面四个是"基础值"，子弹会拿去和倍率乘算
+        bulletScript.Setup(shot, GetComponent<PlayerHealth>(),
+                           baseDamage, baseBulletSpeed, baseLifeTime, baseBulletSize);
     }
 }
