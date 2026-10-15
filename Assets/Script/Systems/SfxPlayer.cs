@@ -81,7 +81,7 @@ public class SfxPlayer : MonoBehaviour
     //==================== 临时诊断按键（查完可以整段删掉）====================
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) { Debug.Log("[音效] 测试 T：怪物远程攻击"); PlayEnemyAttack(); }
+        if (Input.GetKeyDown(KeyCode.O)) { Debug.Log("[音效] 测试 T：怪物远程攻击"); PlayEnemyAttack(); }
         if (Input.GetKeyDown(KeyCode.Y)) { Debug.Log("[音效] 测试 Y：怪物死亡"); PlayEnemyDeath(); }
         if (Input.GetKeyDown(KeyCode.U)) { Debug.Log("[音效] 测试 U：装置修理中（循环）"); PlayRepairLoop(); }
         if (Input.GetKeyDown(KeyCode.I)) { Debug.Log("[音效] 测试 I：停循环 + 装置修好"); StopRepairLoop(); PlayRepairDone(); }
