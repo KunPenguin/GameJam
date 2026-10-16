@@ -19,7 +19,8 @@ public static class ModuleBook
         "HuaSaTou",
         "FangHuShuiMu",
         "QiangLiJiChuan",
-        "GaoXiaoDaoLiu"
+        "GaoXiaoDaoLiu",
+        "SanShe",
     };
 
     //按名字造模块
@@ -62,6 +63,10 @@ public static class ModuleBook
         else if (typeName == "GaoXiaoDaoLiu")
         {
             m = new GaoXiaoDaoLiu();
+        }
+        else if (typeName == "SanShe")
+        {
+            m = new SanShe();
         }
         else
         {
