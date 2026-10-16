@@ -3,21 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-  - Damaged Facility
-  - Water
-  - Players
-  - DeepWater
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Deepwater
+  - 
   - Water
   - UI
-  - Player
-  - Enemy
+  - 
+  - 
   - 
   - 
   - 
@@ -43,12 +38,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: ground
-    uniqueID: 2419106547
-    locked: 0
-  - name: water
-    uniqueID: 2112838361
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
