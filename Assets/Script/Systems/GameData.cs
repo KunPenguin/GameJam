@@ -56,6 +56,9 @@ public class GameData : MonoBehaviour
             backpack[i] = "";
         }
 
+        // 清空临时数据
+        ModulePanelData.ClearTemp();
+
         Debug.Log("新的一局：天数和模块已重置");
     }
 }
