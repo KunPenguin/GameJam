@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5235787897503137412}
   - component: {fileID: 448595153369483142}
   - component: {fileID: 5669465529064061203}
-  m_Layer: 0
+  m_Layer: 6
   m_HasEditorInfo: 1
   m_Name: WaterBullet
   m_TagString: Untagged
@@ -170,10 +170,11 @@ MonoBehaviour:
   lifeTime: 2.5
   rb: {fileID: 0}
   aliveTime: 0
-  damage: 1
+  damageMultiplier: 1
+  baseDamage: 10
   pierceLeft: 0
   lifesteal: 0
-  bulletSize: 0
+  bulletSizeMultiplier: 1
   heat: 0
   bounceLeft: 0
   playerHealth: {fileID: 0}
