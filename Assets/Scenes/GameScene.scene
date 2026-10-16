@@ -3806,12 +3806,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e849f555f51cd4d4eabb32caccea1140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointerPrefab: {fileID: 5047131738336136633, guid: 4dae62e59856d4148bdfa14cc8a5773e, type: 3}
+  uiParent: {fileID: 179274709}
+  player: {fileID: 3170709934846379281, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
   targets:
+  - {fileID: 1199246037}
   - {fileID: 1613276531}
   - {fileID: 1613276531}
-  - {fileID: 1613276531}
-  indicatorPrefab: {fileID: 5047131738336136633, guid: 4dae62e59856d4148bdfa14cc8a5773e, type: 3}
-  canvasParent: {fileID: 179274709}
+  maxIcons: 0
+  stackOffset: 0
 --- !u!4 &234470622
 Transform:
   m_ObjectHideFlags: 0
@@ -11209,7 +11212,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1875860749
   m_SortingLayer: -2
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.07999998, y: 0.100000024, z: 0}
   m_MaxChunkCount: 16
@@ -111958,7 +111961,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2112838361
   m_SortingLayer: -1
-  m_SortingOrder: 2
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
