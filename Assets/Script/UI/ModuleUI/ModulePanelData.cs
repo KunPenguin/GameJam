@@ -91,4 +91,10 @@ public static class ModulePanelData
         }
         return true;
     }
+    /// <summary>把临时数据清空（重开新游戏时调用）</summary>
+    public static void ClearTemp()
+    {
+        for (int i = 0; i < reward.Length; i++) reward[i] = "";
+        for (int i = 0; i < candidates.Length; i++) candidates[i] = "";
+    }
 }

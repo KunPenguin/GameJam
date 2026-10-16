@@ -33,4 +33,29 @@ public class GameData : MonoBehaviour
         }
         else Destroy(gameObject);
     }
+    /// <summary>
+    /// 把这一局的所有数据清空，准备开始新的一局。
+    /// 为什么要有这个方法：死亡重开 / 从主菜单开始新游戏，
+    /// 都必须把模块链和背包清回初始状态 —— 否则会"天数回到第1天，但枪还是上一局的"。
+    /// 以后 GameData 里再加新数据，也要在这里清一遍。
+    /// </summary>
+    public void ResetForNewGame()
+    {
+        // 天数回到第 1 天
+        currentDay = 1;
+
+        // 模块链：只留开局自带的基础开火模块，其余清空
+        for (int i = 0; i < equipped.Length; i++)
+        {
+            equipped[i] = (i == 0) ? "Test_FireModule" : "";
+        }
+
+        // 背包清空
+        for (int i = 0; i < backpack.Length; i++)
+        {
+            backpack[i] = "";
+        }
+
+        Debug.Log("新的一局：天数和模块已重置");
+    }
 }
