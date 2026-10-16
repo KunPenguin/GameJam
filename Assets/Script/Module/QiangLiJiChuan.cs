@@ -1,6 +1,8 @@
 //防护水幕：个数 + 1，伤害 - 50 %，吸血 + 1 %
 
 
+using Unity.VisualScripting;
+
 public class QiangLiJiChuan : WeaponModule
 {
     public QiangLiJiChuan()
@@ -13,10 +15,15 @@ public class QiangLiJiChuan : WeaponModule
     {
         ctx.pierce = 0f;
         ctx.bounce = 0;
-        preFire= delegate (AttackContext oneshot)
+        ctx.waveCount += 1;
+        preFire = delegate (AttackContext oneshot)
         {
-            oneshot.waveCount = oneshot.waveCount * (int)(2 * oneshot.damage-(2*oneshot.damage%1));
+            ctx.waveCount -= 1;
+            int plus = oneshot.damage >= 0 ? (int)(2 * oneshot.damage - (2 * oneshot.damage % 1)) : 1;
+            oneshot.waveCount *= plus;
             oneshot.damage *= 2f;
+            oneshot.bulletSpeed *= 1.5f;
+            oneshot.bulletSize *= 3f;
         };
     }
 }
