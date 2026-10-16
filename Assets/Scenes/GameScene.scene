@@ -3820,8 +3820,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234470620}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.325397, y: -32.462063, z: -0.28675738}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 28.325378, y: -32.462036, z: -0.28675738}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -109699,7 +109699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454906ef1eb36ff4b9ef55ceae0fb32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLength: 10
+  dayLength: 180
   timerText: {fileID: 0}
   bossDay: 10
   transitionSceneName: DayTransitionScence
