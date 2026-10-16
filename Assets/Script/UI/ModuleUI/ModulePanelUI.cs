@@ -77,6 +77,20 @@ public class ModulePanelUI : MonoBehaviour
         RefreshAllText();           // 再显式刷一遍文字，保证打开面板时文字一定是最新的
         EnterCandidateStage();
     }
+    /// <summary>
+    /// 直接打开"整理界面"，不抽卡。
+    /// 为什么需要它：天数过渡界面没有水泵、不该白送模块，
+    /// 但玩家需要在过渡界面整理模块。
+    /// </summary>
+    public void OpenArrangeOnly()
+    {
+        if (panel != null) panel.SetActive(true);
+
+        Time.timeScale = 0f;        // 暂停（天界面其实没在跑，但保持一致）
+        ClearSelection();
+        EnterArrangeStage();        // ← 直接进整理阶段，不抽卡
+    }
+
     // 第一阶段：显示3张候选卡，隐藏整理界面
     private void EnterCandidateStage()
     {
