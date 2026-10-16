@@ -222,27 +222,29 @@ public class PlayerShoot : MonoBehaviour
             startPosition = firePoint.position;
         }
 
-        //4."垂直于瞄准方向"的方向：把瞄准方向转 90 度就是它
-        //  用它把每一波错开，打出上下几排
-        Vector2 sideDir = new Vector2(-aimDir.y, aimDir.x);
-
-        //5.一波一波地生成子弹
+        //4.一波一波地生成子弹：沿"发射方向"错开，总跨度恒定
+        //   第 0 波在最前面（最先命中），最后一波在枪口
         for (int wave = 0; wave < shot.waveCount; wave++)
         {
-            //这一波相对"正中间那一波"的偏移量（波数=1 时偏移就是 0）
-            float offset = (wave - (shot.waveCount - 1) * 0.5f) * shot.waveSpacing;
-            Vector3 wavePosition = startPosition + (Vector3)(sideDir * offset);
-
+            // 这一波在整条波列里的位置：第一波 = 1，最后一波 = 0
+            // ⚠ 必须转 float，否则两个 int 相除会变成整除（结果只有 0 或 1）
+            float t = 0f;
+            if (shot.waveCount > 1)
+            {
+                t = (float)(shot.waveCount - 1 - wave) / (shot.waveCount - 1);
+            }
+            float offset = t * shot.waveSpacing;
+            Vector3 wavePosition = startPosition + (Vector3)(aimDir * offset);
             //这一波里的每一发子弹
             for (int i = 0; i < shot.bulletsPerWave; i++)
             {
                 //散射：把这一波的子弹在 spreadAngle 里均匀铺开
-                float t = 0f;
+                float a = 0f;
                 if (shot.bulletsPerWave > 1)
                 {
-                    t = (float)i / (shot.bulletsPerWave - 1) - 0.5f;//算出来是 -0.5 到 +0.5
+                    a = (float)i / (shot.bulletsPerWave - 1) - 0.5f;//算出来是 -0.5 到 +0.5
                 }
-                float angle = aimAngle + t * shot.spreadAngle;
+                float angle = aimAngle + a * shot.spreadAngle;
                 SpawnOneBullet(wavePosition, angle, shot);
 
                 // 注意：传的是 Shot（复印件），不是 ctx（原件）。

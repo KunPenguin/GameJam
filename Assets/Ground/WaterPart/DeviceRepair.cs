@@ -110,6 +110,15 @@ public class DeviceRepair : MonoBehaviour
         ClearWater();       // 需求 3：这片水全部消失（没配 waterRoot 就什么也不做）
         if (destroyWhenRepaired) Destroy(gameObject);
         Instantiate(CompleteDevice, transform.position, Quaternion.identity);
+        // 修好 → 发一个模块（三选一）并进入整理界面
+        if (ModulePanelUI.Instance != null)
+        {
+            ModulePanelUI.Instance.Open();
+        }
+        else
+        {
+            Debug.LogWarning("装置修好了，但场景里找不到 ModulePanelUI，模块发不出去！");
+        }
     }//修理完成
     void ClearWater()
     {
@@ -168,6 +177,7 @@ public class DeviceRepair : MonoBehaviour
     }
     void OnGUI()
     {
+        if (Time.timeScale == 0f) return;   // 游戏暂停（面板开着）时不画进度条
         if (!showBarOnScreen) return;
         if (Camera.main == null) return;
         if (showBarOnlyWhenRepairing && (Progress01 <= 0f || IsRepaired)) return;

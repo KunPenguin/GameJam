@@ -166,7 +166,7 @@ MonoBehaviour:
     waveCount: 1
     bulletsPerWave: 1
     spreadAngle: 0
-    waveSpacing: 0
+    waveSpacing: 2
     bulletSpeed: 1
     lifeTime: 1
 --- !u!58 &2214827688323478820
