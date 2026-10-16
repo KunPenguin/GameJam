@@ -110297,7 +110297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241302002554727444, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: baseContext.waveSpacing
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
