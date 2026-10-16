@@ -273,24 +273,24 @@ MonoBehaviour:
   kind: 0
   nameText: {fileID: 0}
   descText: {fileID: 0}
-  barNameText: {fileID: 0}
+  barNameText: {fileID: 8733536981941906574}
   discardLabel: "\u5E9F\u5F03"
-  baseImage: {fileID: 0}
-  logoImage: {fileID: 0}
+  baseImage: {fileID: 2393408177742655852}
+  logoImage: {fileID: 2508171226578634256}
   circleImage: {fileID: 0}
-  circleAnim: {fileID: 0}
-  barImage: {fileID: 0}
+  circleAnim: {fileID: 5065937701691411866}
+  barImage: {fileID: 6583544032324604924}
   iconTable: {fileID: 0}
-  baseNormal: {fileID: 0}
+  baseNormal: {fileID: 21300000, guid: 2fc8f0974435fb34593f04afb07d981e, type: 3}
   baseHover: {fileID: 0}
   barFire:
-    normal: {fileID: 0}
-    hover: {fileID: 0}
-    selected: {fileID: 0}
+    normal: {fileID: 21300000, guid: 18e13e3626020a54cadbdd8e53ac76e0, type: 3}
+    hover: {fileID: 21300000, guid: 99d1ee86b7bee7f40b30d4f7c1c1bf7e, type: 3}
+    selected: {fileID: 21300000, guid: 99d1ee86b7bee7f40b30d4f7c1c1bf7e, type: 3}
   barSupport:
-    normal: {fileID: 0}
-    hover: {fileID: 0}
-    selected: {fileID: 0}
+    normal: {fileID: 21300000, guid: d571aaab1c5627d429cb90d774445efd, type: 3}
+    hover: {fileID: 21300000, guid: b85e180d22084cd478996174c147e0cb, type: 3}
+    selected: {fileID: 21300000, guid: b85e180d22084cd478996174c147e0cb, type: 3}
   circleState:
     normal: {fileID: 0}
     hover: {fileID: 0}

@@ -12,11 +12,26 @@ public class PlayerHealth : MonoBehaviour
     public float currentHp = 20f;//当前血量
     public bool dead = false;//血量归零后就不再扣血了（死亡之后跳出死亡画面）
     public GameOverPanel gameOverPanel;
+
     void Start()
     {
         //开始游戏时把血回满，并打印一次，方便确认脚本挂上了
         currentHp = maxHp;
         Debug.Log("玩家血量：" + currentHp + " / " + maxHp);
+
+        // 【新增】自动找死亡面板。
+        // 为什么必须自动找：PlayerHealth 挂在 Player 预制体上，
+        // 而 GameOverPanel 是场景里的物体 —— 预制体没法引用场景物体，
+        // 所以在 Inspector 里是拖不上的，只能运行时找。
+        if (gameOverPanel == null)
+        {
+            gameOverPanel = FindObjectOfType<GameOverPanel>();
+        }
+
+        if (gameOverPanel == null)
+        {
+            Debug.LogWarning("场景里找不到 GameOverPanel，玩家死亡时不会弹面板！");
+        }
     }
 
     //被怪打的时候调用（怪物基础伤害是 1）
