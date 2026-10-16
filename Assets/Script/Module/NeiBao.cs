@@ -26,7 +26,7 @@ public class NeiBao : WeaponModule
             oneShot.damage = oneShot.damage * 0.5f;          // 五折
 
             // ---- 巨量体积（【你试了再调】这里先给 3 = 4 倍大）----
-            oneShot.bulletSize = oneShot.bulletSize + 30f;
+            oneShot.bulletSize = oneShot.bulletSize*30;
             // ---- 每点穿透/弹射，加成体积与伤害（每点 +20%）----
             //  必须在把 pierce 设为"无限"之前算，
             //  否则 100 点穿透会被当成 100 点加成，数值直接爆炸

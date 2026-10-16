@@ -21,6 +21,13 @@ public static class ModuleBook
         "QiangLiJiChuan",
         "GaoXiaoDaoLiu",
         "SanShe",
+        "WenGuDaoShui",
+        "JuJiaoMoKuai",
+        "DongNengZhengHe",
+        "LiZiHuoHua",
+        "ShuiChuiXiaoYing",
+        "JiaYaMoKuai",
+        "ErCiChongNeng",
     };
 
     //按名字造模块
@@ -67,6 +74,34 @@ public static class ModuleBook
         else if (typeName == "SanShe")
         {
             m = new SanShe();
+        }
+        else if (typeName == "WenGuDaoShui")
+        {
+            m = new WenGuDaoShui();
+        }
+        else if (typeName == "JuJiaoMoKuai")
+        {
+            m = new JuJiaoMoKuai();
+        }
+        else if (typeName == "DongNengZhengHe")
+        {
+            m = new DongNengZhengHe();
+        }
+        else if (typeName == "LiZiHuoHua")
+        {
+            m = new LiZiHuoHua();
+        }
+        else if (typeName == "ShuiChuiXiaoYing")
+        {
+            m = new ShuiChuiXiaoYing();
+        }
+        else if (typeName == "JiaYaMoKuai")
+        {
+            m = new JiaYaMoKuai();
+        }
+        else if(typeName == "ErCiChongNeng")
+        {
+            m = new ErCiChongNeng();
         }
         else
         {
