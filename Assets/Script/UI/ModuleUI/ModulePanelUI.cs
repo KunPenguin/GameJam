@@ -66,6 +66,9 @@ public class ModulePanelUI : MonoBehaviour
     // ===================== 打开 / 关闭 =====================
     public void Open()
     {
+        Debug.Log(">>> Open() 被调用了！Instance所在物体=" + gameObject.name
+          + "  panel=" + (panel == null ? "空!" : panel.name)
+          + "  panel当前激活=" + (panel != null ? panel.activeSelf.ToString() : "?"));
         if (panel != null) panel.SetActive(true);
 
         Time.timeScale = 0f;        // 暂停游戏（照 GameOverPanel 的写法）
