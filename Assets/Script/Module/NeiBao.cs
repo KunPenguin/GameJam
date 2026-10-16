@@ -38,7 +38,7 @@ public class NeiBao : WeaponModule
             oneShot.pierce = 100f;
 
             // ---- 几乎不飞、存活极短（原地炸开；想调手感改这两个）----
-            oneShot.bulletSpeed = 0f;
+            oneShot.bulletSpeed = 0.01f;
             oneShot.lifeTime = 0.01f;
 
 

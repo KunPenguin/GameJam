@@ -741,7 +741,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 634684766}
         m_TargetAssemblyTypeName: ModulePanelUI, Assembly-CSharp
-        m_MethodName: Open
+        m_MethodName: OpenArrangeOnly
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -921,7 +921,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 555152682575932193, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 555152682575932193, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -929,11 +929,11 @@ PrefabInstance:
       objectReference: {fileID: 634684766}
     - target: {fileID: 555152682575932193, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnCellClicked
+      value: Close
       objectReference: {fileID: 0}
     - target: {fileID: 555152682575932193, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: ModuleCell, Assembly-CSharp
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1131921147287719156, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

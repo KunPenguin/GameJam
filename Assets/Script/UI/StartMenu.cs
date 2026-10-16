@@ -12,7 +12,7 @@ public class StartMenu : MonoBehaviour
         // 每次从主菜单开始新游戏，都重置天数
         if (GameData.Instance != null)
         {
-            GameData.Instance.currentDay = 1;
+            GameData.Instance.ResetForNewGame();
         }
         SceneManager.LoadScene("GameScene");
     }

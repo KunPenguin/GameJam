@@ -22,7 +22,7 @@ public class GameOverPanel : MonoBehaviour
         Time.timeScale = 1f;//恢复时间流动
         if (GameData.Instance != null)
         {
-            GameData.Instance.currentDay = 1;
+            GameData.Instance.ResetForNewGame();
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//重置其所在场景
 
