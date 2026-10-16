@@ -17,7 +17,9 @@ public static class ModuleBook
         "NeiBao",
         "PaoPaoJi",
         "HuaSaTou",
-        "FangHuShuiMu"
+        "FangHuShuiMu",
+        "QiangLiJiChuan",
+        "GaoXiaoDaoLiu"
     };
 
     //按名字造模块
@@ -52,6 +54,14 @@ public static class ModuleBook
         else if (typeName == "FangHuShuiMu")
         {
             m = new FangHuShuiMu();
+        }
+        else if (typeName == "QiangLiJiChuan")
+        {
+            m = new QiangLiJiChuan();
+        }
+        else if (typeName == "GaoXiaoDaoLiu")
+        {
+            m = new GaoXiaoDaoLiu();
         }
         else
         {
