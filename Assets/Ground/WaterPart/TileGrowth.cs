@@ -29,9 +29,11 @@ public class TileGrowth : MonoBehaviour
 
     private void Awake()
     {
-        GridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x),
-                                 Mathf.RoundToInt(transform.position.y));
-        transform.position = new Vector3(GridPos.x, GridPos.y, transform.position.z);
+        // ★ 对齐格子：用 Floor 判断"我在哪一格"（格子边界在整数上），
+        //   然后把位置放到这一格的【中心】= 整数 + 0.5，这样和 Tilemap 的 tile 完全重合。
+        GridPos = new Vector2Int(Mathf.FloorToInt(transform.position.x),
+                                 Mathf.FloorToInt(transform.position.y));
+        transform.position = new Vector3(GridPos.x + 0.5f, GridPos.y + 0.5f, transform.position.z);
     }
 
     private void Start()
@@ -87,7 +89,7 @@ public class TileGrowth : MonoBehaviour
 
     private TileGrowth SpawnAt(Vector2Int pos)
     {
-        Vector3 worldPos = new Vector3(pos.x, pos.y, 0f);
+        Vector3 worldPos = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0f);   // ★ 格子中心
 
         GameObject go = Instantiate(tilePrefab, worldPos, Quaternion.identity, transform.parent);
         go.name = TileName(pos);         // 立刻命名，判重靠它
@@ -106,7 +108,7 @@ public class TileGrowth : MonoBehaviour
         if (transform.parent.Find(TileName(pos)) != null) return true;
 
         // ② 那一格上有深水/障碍物 → 也拦住（新加的）
-        Vector2 point = new Vector2(pos.x, pos.y);
+        Vector2 point = new Vector2(pos.x + 0.5f, pos.y + 0.5f);   // ★ 检测点也用格子中心
         if (Physics2D.OverlapPoint(point, blockLayers) != null) return true;
 
         return false;

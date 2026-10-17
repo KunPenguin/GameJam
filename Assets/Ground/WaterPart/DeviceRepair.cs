@@ -31,6 +31,9 @@ public class DeviceRepair : MonoBehaviour
 
     [Header("设备根物体（留空 = 自动往上找画着贴图的那一层）")]
     public Transform deviceRootOverride;
+
+    [Header("启动时把设备对齐到格子中心")]
+    public bool alignToGridOnStart = true;
     [Header("修复范围")]
     public bool showRangeInGame = false;
     private LineRenderer _ring;
@@ -49,6 +52,21 @@ public class DeviceRepair : MonoBehaviour
     private Transform _player;          // 找到的玩家（缓存起来，不要每帧去找）
     private bool _reportedMissingTag;   // 标签不存在时只报一次错
     public static event System.Action<DeviceRepair> Repaired;
+    void Awake()
+    {
+        if (alignToGridOnStart) AlignToGrid();
+    }
+
+    /// <summary>把设备（含贴图的根物体）吸附到所在格子的中心（x.5, y.5）。</summary>
+    public void AlignToGrid()
+    {
+        Transform root = GetDeviceRoot();
+        if (root == null) return;
+
+        Vector3 p = root.position;
+        root.position = new Vector3(Mathf.Floor(p.x) + 0.5f, Mathf.Floor(p.y) + 0.5f, p.z);
+    }
+
     void Start()
     {
         if (!showRangeInGame) return;
