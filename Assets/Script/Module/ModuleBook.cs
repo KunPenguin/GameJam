@@ -12,8 +12,6 @@ public static class ModuleBook
     public static string[] types = new string[]
     {
         "Test_FireModule",
-        "Test_PierceModule",
-        "Test_ShotgunModule",
         "NeiBao",
         "PaoPaoJi",
         "HuaSaTou",
@@ -38,14 +36,6 @@ public static class ModuleBook
         if (typeName == "Test_FireModule")
         {
             m = new Test_FireModule();
-        }
-        else if (typeName == "Test_PierceModule")
-        {
-            m = new Test_PierceModule();
-        }
-        else if (typeName == "Test_ShotgunModule")
-        {
-            m = new Test_ShotgunModule();
         }
         else if (typeName == "NeiBao")
         {
