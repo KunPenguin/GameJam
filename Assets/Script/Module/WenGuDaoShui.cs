@@ -7,7 +7,7 @@ public class WenGuDaoShui : WeaponModule
     public WenGuDaoShui()
     {
         displayName = "稳固导水";
-        description = "每波子弹个数变为1，然后开火，发射稍慢速子弹，本次开火发射子弹的波数*5，并使之后的模块弹射+1，穿透+1";
+        description = "每波子弹个数变为1，然后开火，发射稍慢速子弹，本次开火发射子弹的波数*4，并使之后的模块弹射+1，穿透+1";
     }
 
     public override void Apply(AttackContext ctx)
@@ -20,7 +20,7 @@ public class WenGuDaoShui : WeaponModule
             oneshot.bounce -= 1;
             oneshot.pierce -= 1;
             oneshot.bulletSpeed *= 0.7f;
-            oneshot.waveCount *= 5;
+            oneshot.waveCount *= 4;
 
         };
         isFireModule = true;

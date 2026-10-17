@@ -91647,7 +91647,7 @@ MonoBehaviour:
   - moduleName: NeiBao
     logo: {fileID: 21300000, guid: 94ca37e8ef9706d4a8958550dfc34eab, type: 3}
   - moduleName: WenGuDaoShui
-    logo: {fileID: 0}
+    logo: {fileID: 21300000, guid: f370e037e8cc8bf4da2f674db0fb4fbf, type: 3}
   - moduleName: SanShe
     logo: {fileID: 21300000, guid: b5e3efba6e3af004a8f81b020e1d6244, type: 3}
   - moduleName: QiangLiJiChuan
@@ -91657,7 +91657,7 @@ MonoBehaviour:
   - moduleName: HuaSaTou
     logo: {fileID: 0}
   - moduleName: GaoXiaoDaoLiu
-    logo: {fileID: 21300000, guid: f370e037e8cc8bf4da2f674db0fb4fbf, type: 3}
+    logo: {fileID: 0}
   - moduleName: FangHuShuiMU
     logo: {fileID: 0}
   - moduleName: JuJiaoMoKuai
@@ -91688,7 +91688,7 @@ MonoBehaviour:
   - day: 1
     spawnInterval: 100
     delayMin: 0
-    delayMax: 60
+    delayMax: 100
     close: 10
     midClose: 0
     highClose: 0
@@ -110385,7 +110385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454906ef1eb36ff4b9ef55ceae0fb32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLength: 180
+  dayLength: 60
   timerText: {fileID: 0}
   bossDay: 10
   transitionSceneName: DayTransitionScence
