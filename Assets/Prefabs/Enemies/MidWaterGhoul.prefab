@@ -171,7 +171,7 @@ MonoBehaviour:
   moveSpeed: 2.5
   maxHp: 45
   currentHp: 0
-  damage: 3
+  damage: 2
 --- !u!114 &4124568619025278517
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ public class Test_FireModule : WeaponModule
     public Test_FireModule()
     {
         displayName = "开火";
-        description = "击发一次。没有它，枪不响";
+        description = "开火一次，基础的开火模块，朴实无华没有特殊效果";
     }
 
     public override void Apply(AttackContext ctx)

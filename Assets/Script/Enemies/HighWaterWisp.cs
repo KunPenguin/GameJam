@@ -16,7 +16,7 @@ public class HighWaterWisp : MonoBehaviour
     public float fireRate = 1f;
     [Header("子弹速度")]
     public float bulletSpeed = 5f;
-    public float spawnOffset = 0.8f;
+    public float spawnOffset= 0.8f;
     //4.子弹的预制体
     public GameObject bulletPrefab;
     //5.检测部分

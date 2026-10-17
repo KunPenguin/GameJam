@@ -27,6 +27,22 @@ public static class ModuleBook
         "JiaYaMoKuai",
         "ErCiChongNeng",
     };
+    // 不进抽卡池的模块：照样能 Create、能装在法杖上，只是不会被"三选一"抽到。
+    // 加新模块时不用管这里 —— 默认都会进池子，只有特意排除的才写进来。
+    public static string[] notInPool = new string[]
+    {
+    "Test_FireModule",      // 开局自带的那一个，不需要再抽到
+    };
+
+    // 这个模块会不会出现在抽卡池里
+    public static bool IsInPool(string typeName)
+    {
+        for (int i = 0; i < notInPool.Length; i++)
+        {
+            if (notInPool[i] == typeName) return false;
+        }
+        return true;
+    }
 
     //按名字造模块
     public static WeaponModule Create(string typeName)
@@ -104,8 +120,9 @@ public static class ModuleBook
     //随机发放模块
     public static WeaponModule CreateRandom()
     {
-        int i = Random.Range(0, types.Length);
-        return Create(types[i]);
+        List<string> one = CreateRandomList(1);
+        if (one.Count == 0) return null;
+        return Create(one[0]);
     }
 
     //随机抽取count个模块
@@ -115,6 +132,7 @@ public static class ModuleBook
         List<string> pool = new List<string>();
         for (int i = 0; i < types.Length; i++)
         {
+            if (IsInPool(types[i]) == false) continue;
             pool.Add(types[i]);
         }
 

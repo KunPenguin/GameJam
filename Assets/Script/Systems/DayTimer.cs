@@ -7,7 +7,7 @@
 // 设计要点：
 //   1. 用 Time.deltaTime —— 所以模块面板打开时（Time.timeScale = 0）计时会自动暂停。
 //      这是有意为之：整理模块不该算进 3 分钟里。
-//   2. 第 10 天是 Boss 战，不限时，所以到第 10 天计时器不启动（Boss 以后再做）。
+//   2. 第 5 天是 Boss 战，不限时，所以到第 5 天计时器不启动（Boss 以后再做）。
 //   3. 到点加载的是字符串场景名 "DayTransitionScence"
 //      ⚠️ 注意 Scene 被拼成了 Scence，这是项目里一直沿用的名字，别改。
 using UnityEngine;
@@ -22,8 +22,12 @@ public class DayTimer : MonoBehaviour
     [Header("倒计时文字（暂时留空，以后换成进度条）")]
     public TextMeshProUGUI timerText;
 
-    [Header("多少天之后开始 Boss 战（第 10 天及以后不计时）")]
-    public int bossDay = 10;
+    [Header("多少天之后开始 Boss 战（第 5 天及以后不计时）")]
+    public int bossDay = 5;
+
+    [Header("Boss 相关（只在 Boss 天用）")]
+    public GameObject bossPrefab;
+    public Transform bossSpawnPoint;
 
     [Header("过渡场景的名字（别改，项目里就是拼成 Scence 的）")]
     public string transitionSceneName = "DayTransitionScence";
@@ -41,12 +45,16 @@ public class DayTimer : MonoBehaviour
     {
         int day = (GameData.Instance != null) ? GameData.Instance.currentDay : 1;
 
-        // 第 10 天及以后是 Boss 战，不限时
+        // 第 5 天及以后是 Boss 战，不限时
         if (day >= bossDay)
         {
             running = false;
             Debug.Log("第 " + day + " 天是 Boss 战，不计时");
             if (timerText != null) timerText.text = "";
+            if (bossPrefab != null && bossSpawnPoint != null)
+            {
+                Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
+            }
             return;
         }
 

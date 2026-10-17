@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a896ac51f7b11f43ab705654469b03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 30
+  maxHp: 200
   currentHp: 0
   moveSpeed: 0
-  range: 5
-  fireRate: 2
+  range: 8
+  fireRate: 1.5
   bulletSpeed: 5
   spawnOffset: 0.8
   bulletPrefab: {fileID: 729733740443261703, guid: 0a38a48ed774f0e42901a181396e0214, type: 3}

@@ -91585,6 +91585,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 356706582}
+  titleText: {fileID: 903772119}
+  loseTitle: "\u6E38\u620F\u7ED3\u675F"
+  winTitle: "\u4F60\u6210\u529F\u6491\u8FC7\u4E86 5 \u5929\uFF01"
 --- !u!114 &601786846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91643,7 +91646,7 @@ MonoBehaviour:
   - moduleName: JiaYaMoKuai
     logo: {fileID: 0}
   - moduleName: LiZiHuoHua
-    logo: {fileID: 21300000, guid: aa583bb4f6b16ce449aafa711abbbbdb, type: 3}
+    logo: {fileID: 0}
   - moduleName: NeiBao
     logo: {fileID: 21300000, guid: 94ca37e8ef9706d4a8958550dfc34eab, type: 3}
   - moduleName: WenGuDaoShui
@@ -91695,92 +91698,42 @@ MonoBehaviour:
     spawnInterval: 60
     delayMin: 0
     delayMax: 40
-    close: 7
-    midClose: 3
+    close: 5
+    midClose: 5
     highClose: 0
     far: 0.7
     midFar: 0.3
     highFar: 0
   - day: 3
-    spawnInterval: 2
+    spawnInterval: 40
     delayMin: 0
-    delayMax: 1.5
+    delayMax: 25
     close: 0
-    midClose: 0
+    midClose: 1
     highClose: 0
     far: 0
-    midFar: 0
+    midFar: 0.5
     highFar: 0
   - day: 4
-    spawnInterval: 2
+    spawnInterval: 20
     delayMin: 0
-    delayMax: 1.5
+    delayMax: 15
     close: 0
-    midClose: 0
-    highClose: 0
+    midClose: 3
+    highClose: 7
     far: 0
-    midFar: 0
-    highFar: 0
+    midFar: 1
+    highFar: 2
   - day: 5
-    spawnInterval: 2
+    spawnInterval: 30
     delayMin: 0
-    delayMax: 1.5
+    delayMax: 30
     close: 0
     midClose: 0
-    highClose: 0
+    highClose: 1
     far: 0
     midFar: 0
-    highFar: 0
-  - day: 6
-    spawnInterval: 2
-    delayMin: 0
-    delayMax: 1.5
-    close: 0
-    midClose: 0
-    highClose: 0
-    far: 0
-    midFar: 0
-    highFar: 0
-  - day: 7
-    spawnInterval: 2
-    delayMin: 0
-    delayMax: 1.5
-    close: 0
-    midClose: 0
-    highClose: 0
-    far: 0
-    midFar: 0
-    highFar: 0
-  - day: 8
-    spawnInterval: 2
-    delayMin: 0
-    delayMax: 1.5
-    close: 0
-    midClose: 0
-    highClose: 0
-    far: 0
-    midFar: 0
-    highFar: 0
-  - day: 9
-    spawnInterval: 2
-    delayMin: 0
-    delayMax: 1.5
-    close: 0
-    midClose: 0
-    highClose: 0
-    far: 0
-    midFar: 0
-    highFar: 0
-  - day: 10
-    spawnInterval: 2
-    delayMin: 0
-    delayMax: 1.5
-    close: 0
-    midClose: 0
-    highClose: 0
-    far: 0
-    midFar: 0
-    highFar: 0
+    highFar: 1
 --- !u!1001 &606856471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98094,7 +98047,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 107.66}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &903772119
 MonoBehaviour:
@@ -98151,7 +98104,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -109563,6 +109516,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2157847196226178, guid: 7930473a05541f246b4270233e9a4bb2, type: 3}
   m_PrefabInstance: {fileID: 1473855425}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1475375671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 7
+  m_Component:
+  - component: {fileID: 1475375672}
+  m_Layer: 0
+  m_HasEditorInfo: 1
+  m_Name: BOSSBorn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1475375672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475375671}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 61.45, y: -51.44, z: -0.4498206}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1475456422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110401,7 +110386,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayLength: 60
   timerText: {fileID: 0}
-  bossDay: 10
+  bossDay: 5
+  bossPrefab: {fileID: 3452446305460681580, guid: ac03a392bae653043b86759f0bca501e, type: 3}
+  bossSpawnPoint: {fileID: 1475375672}
   transitionSceneName: DayTransitionScence
 --- !u!4 &1546680415
 Transform:
@@ -110928,11 +110915,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3170709934846379281, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 16.9
       objectReference: {fileID: 0}
     - target: {fileID: 3170709934846379281, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -39
       objectReference: {fileID: 0}
     - target: {fileID: 3170709934846379281, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: m_LocalPosition.z
@@ -110973,6 +110960,10 @@ PrefabInstance:
     - target: {fileID: 7241302002554727444, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: baseContext.waveSpacing
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196052292258310054, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
+      propertyPath: waterLayers.m_Bits
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -121992,3 +121983,4 @@ SceneRoots:
   - {fileID: 234470622}
   - {fileID: 1546680415}
   - {fileID: 1143089358}
+  - {fileID: 1475375672}
