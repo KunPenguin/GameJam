@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7241302002554727444}
   - component: {fileID: 2214827688323478820}
   - component: {fileID: 6304503984906905551}
+  - component: {fileID: 8196052292258310054}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: Player
@@ -220,3 +221,21 @@ MonoBehaviour:
   currentHp: 20
   dead: 0
   gameOverPanel: {fileID: 0}
+--- !u!114 &8196052292258310054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989494601530685920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3967da88b0ce0499e0f39b256c7abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  waterSpeedMultiplier: 0.5
+  smooth: 8
+  checkRadius: 0.15
