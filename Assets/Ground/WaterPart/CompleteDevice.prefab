@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5753902923979896813}
   - component: {fileID: 369062508237534254}
+  - component: {fileID: -6419134824160596509}
   m_Layer: 0
   m_HasEditorInfo: 1
-  m_Name: Hydrated_Ghast (2)
+  m_Name: CompleteDevice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8318f9e0bbb78b34e8f32891d10d08ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4fbfa6b2b6a27640a6d117eec5ec214, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -89,3 +90,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6419134824160596509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717977098589585144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66af0d1c37e77eb4490b65202568ef83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

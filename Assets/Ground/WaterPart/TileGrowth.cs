@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ×ÔÂûÑÓµØ¿é£ºÒ»È¦Ò»È¦µØ³¤£¬ĞÎ×´ÓÀÔ¶ÊÇ¾ùÔÈµÄÁâĞÎ¡£
+/// è‡ªè”“å»¶åœ°å—ï¼šä¸€åœˆä¸€åœˆåœ°é•¿ï¼Œå½¢çŠ¶æ°¸è¿œæ˜¯å‡åŒ€çš„è±å½¢ã€‚
 /// </summary>
 public class TileGrowth : MonoBehaviour
 {
-    [Header("ÒªÂûÑÓµÄÔ¤ÖÆÌå£¨°ÑµØ¿é×Ô¼ºµÄÔ¤ÖÆÌåÍÏ½øÀ´£©")]
+    [Header("è¦è”“å»¶çš„é¢„åˆ¶ä½“ï¼ˆæŠŠåœ°å—è‡ªå·±çš„é¢„åˆ¶ä½“æ‹–è¿›æ¥ï¼‰")]
     public GameObject tilePrefab;
     public bool growOnStart = true;
-    [Header("ÕâĞ©²ã»áµ²×¡Ë®µÄÂûÑÓ£¨¹´ DeepWater / ÆäËû²»Ïë±»ÑÍµÄ²ã£©")]
+    [Header("è¿™äº›å±‚ä¼šæŒ¡ä½æ°´çš„è”“å»¶ï¼ˆå‹¾ DeepWater / å…¶ä»–ä¸æƒ³è¢«æ·¹çš„å±‚ï¼‰")]
     public LayerMask blockLayers;
-    [Header("ÎÒÊÇµÚ¼¸´ú£¨ÖÖ×Ó±£³Ö 0£¬²»ÓÃÊÖ¸Ä£©")]
+    [Header("æˆ‘æ˜¯ç¬¬å‡ ä»£ï¼ˆç§å­ä¿æŒ 0ï¼Œä¸ç”¨æ‰‹æ”¹ï¼‰")]
     public int depth = 0;
-    [Header("³¤¼¸È¦£¨1 = ÉÏÏÂ×óÓÒ¸÷Ò»¸ö£¬2 = ÔÙÍâÒ»È¦¡­£©")]
+    [Header("é•¿å‡ åœˆï¼ˆ1 = ä¸Šä¸‹å·¦å³å„ä¸€ä¸ªï¼Œ2 = å†å¤–ä¸€åœˆâ€¦ï¼‰")]
     public int maxDepth = 3;
-    [Header("Ã¿È¦Ö®¼äµÄ¼ä¸ô£¨Ãë£©")]
+    [Header("æ¯åœˆä¹‹é—´çš„é—´éš”ï¼ˆç§’ï¼‰")]
     public float time = 0.2f;
 
-    // ÉÏÏÂ×óÓÒ
+    // ä¸Šä¸‹å·¦å³
     private static readonly Vector2Int[] FourDirs =
     {
         Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right,
@@ -31,53 +31,54 @@ public class TileGrowth : MonoBehaviour
     {
         GridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x),
                                  Mathf.RoundToInt(transform.position.y));
+        transform.position = new Vector3(GridPos.x, GridPos.y, transform.position.z);
     }
 
     private void Start()
     {
-        // Ö»ÓĞÖÖ×Ó¸ºÔğÆô¶¯ÕûÌõÂûÑÓ£¬¿ËÂ¡Ìå²»×Ô¼ºÆô¶¯
+        // åªæœ‰ç§å­è´Ÿè´£å¯åŠ¨æ•´æ¡è”“å»¶ï¼Œå…‹éš†ä½“ä¸è‡ªå·±å¯åŠ¨
         if (growOnStart && depth == 0) StartCoroutine(GrowRings());
     }
 
-    /// <summary>Ò»È¦Ò»È¦µØ³¤</summary>
+    /// <summary>ä¸€åœˆä¸€åœˆåœ°é•¿</summary>
     private IEnumerator GrowRings()
     {
         if (tilePrefab == null)
         {
-            Debug.LogError("tilePrefab Ã»Ìî£¡", this);
+            Debug.LogError("tilePrefab æ²¡å¡«ï¼", this);
             yield break;
         }
         if (transform.parent == null)
         {
-            Debug.LogError("µØ¿é±ØĞëÊÇÄ³¸ö¸¸ÎïÌåµÄ×ÓÎïÌå£¨ÀıÈç Map£©¡£", this);
+            Debug.LogError("åœ°å—å¿…é¡»æ˜¯æŸä¸ªçˆ¶ç‰©ä½“çš„å­ç‰©ä½“ï¼ˆä¾‹å¦‚ Mapï¼‰ã€‚", this);
             yield break;
         }
 
-        List<TileGrowth> frontier = new List<TileGrowth> { this };   // µ±Ç°ÕâÒ»È¦
+        List<TileGrowth> frontier = new List<TileGrowth> { this };   // å½“å‰è¿™ä¸€åœˆ
 
         for (int ring = 0; ring < maxDepth; ring++)
         {
-            List<TileGrowth> next = new List<TileGrowth>();          // ÏÂÒ»È¦
+            List<TileGrowth> next = new List<TileGrowth>();          // ä¸‹ä¸€åœˆ
 
-            // °ÑÕâÒ»È¦Ã¿¸ö¸ñ×ÓµÄËÄ·½Ïò¶¼³¤³öÀ´£¨Ö»Éú£¬²»µİ¹é£©
+            // æŠŠè¿™ä¸€åœˆæ¯ä¸ªæ ¼å­çš„å››æ–¹å‘éƒ½é•¿å‡ºæ¥ï¼ˆåªç”Ÿï¼Œä¸é€’å½’ï¼‰
             for (int i = 0; i < frontier.Count; i++)
                 frontier[i].SpawnNeighbours(next);
 
-            if (next.Count == 0) break;      // ÖÜÎ§È«ÂúÁË ¡ú ½áÊø
+            if (next.Count == 0) break;      // å‘¨å›´å…¨æ»¡äº† â†’ ç»“æŸ
 
             frontier = next;
-            yield return new WaitForSeconds(time);           // ĞªÒ»ÏÂÔÙ³¤ÏÂÒ»È¦
+            yield return new WaitForSeconds(time);           // æ­‡ä¸€ä¸‹å†é•¿ä¸‹ä¸€åœˆ
         }
     }
 
-    /// <summary>°ÑÉÏÏÂ×óÓÒËÄ¸ñÀï¿Õ×ÅµÄ¶¼Éú³É³öÀ´£¬ĞÂ¸ñ×Ó¼Ç½ø next</summary>
+    /// <summary>æŠŠä¸Šä¸‹å·¦å³å››æ ¼é‡Œç©ºç€çš„éƒ½ç”Ÿæˆå‡ºæ¥ï¼Œæ–°æ ¼å­è®°è¿› next</summary>
     private void SpawnNeighbours(List<TileGrowth> next)
     {
         for (int i = 0; i < FourDirs.Length; i++)
         {
             Vector2Int target = GridPos + FourDirs[i];
 
-            if (ExistsAt(target)) continue;          // ÒÑ¾­ÓĞÈË ¡ú Ìø¹ı
+            if (ExistsAt(target)) continue;          // å·²ç»æœ‰äºº â†’ è·³è¿‡
 
             TileGrowth child = SpawnAt(target);
             if (child != null) next.Add(child);
@@ -89,22 +90,22 @@ public class TileGrowth : MonoBehaviour
         Vector3 worldPos = new Vector3(pos.x, pos.y, 0f);
 
         GameObject go = Instantiate(tilePrefab, worldPos, Quaternion.identity, transform.parent);
-        go.name = TileName(pos);         // Á¢¿ÌÃüÃû£¬ÅĞÖØ¿¿Ëü
+        go.name = TileName(pos);         // ç«‹åˆ»å‘½åï¼Œåˆ¤é‡é å®ƒ
 
         TileGrowth child = go.GetComponent<TileGrowth>();
         if (child == null) return null;
 
         child.GridPos = pos;
-        child.depth = depth + 1;       // Ö»×ö±ê¼Ç£¬²»²ÎÓëµİ¹é
+        child.depth = depth + 1;       // åªåšæ ‡è®°ï¼Œä¸å‚ä¸é€’å½’
         return child;
     }
 
     private bool ExistsAt(Vector2Int pos)
     {
-        // ¢Ù ÒÑ¾­ÓĞÍ¬ÃûµØ¿éÁË ¡ú À¹×¡£¨Ô­À´µÄÂß¼­£¬²»¶¯£©
+        // â‘  å·²ç»æœ‰åŒååœ°å—äº† â†’ æ‹¦ä½ï¼ˆåŸæ¥çš„é€»è¾‘ï¼Œä¸åŠ¨ï¼‰
         if (transform.parent.Find(TileName(pos)) != null) return true;
 
-        // ¢Ú ÄÇÒ»¸ñÉÏÓĞÉîË®/ÕÏ°­Îï ¡ú Ò²À¹×¡£¨ĞÂ¼ÓµÄ£©
+        // â‘¡ é‚£ä¸€æ ¼ä¸Šæœ‰æ·±æ°´/éšœç¢ç‰© â†’ ä¹Ÿæ‹¦ä½ï¼ˆæ–°åŠ çš„ï¼‰
         Vector2 point = new Vector2(pos.x, pos.y);
         if (Physics2D.OverlapPoint(point, blockLayers) != null) return true;
 

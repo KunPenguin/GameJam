@@ -41,7 +41,7 @@ public class DeviceRepair : MonoBehaviour
     static readonly List<DeviceRepair> AllDevices = new List<DeviceRepair>();
     private Transform _player;          // 找到的玩家（缓存起来，不要每帧去找）
     private bool _reportedMissingTag;   // 标签不存在时只报一次错
-
+    public static event System.Action<DeviceRepair> Repaired;
     void OnEnable()
     {
         if (!AllDevices.Contains(this)) AllDevices.Add(this);   // 开机登记
@@ -110,6 +110,7 @@ public class DeviceRepair : MonoBehaviour
         ClearWater();       // 需求 3：这片水全部消失（没配 waterRoot 就什么也不做）
         if (destroyWhenRepaired) Destroy(gameObject);
         Instantiate(CompleteDevice, transform.position, Quaternion.identity);
+        if (Repaired != null) Repaired(this);
         // 修好 → 发一个模块（三选一）并进入整理界面
         if (ModulePanelUI.Instance != null)
         {
