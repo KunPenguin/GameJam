@@ -91480,6 +91480,7 @@ GameObject:
   - component: {fileID: 601786845}
   - component: {fileID: 601786846}
   - component: {fileID: 601786848}
+  - component: {fileID: 601786849}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: GameManager
@@ -91603,6 +91604,119 @@ MonoBehaviour:
     logo: {fileID: 0}
   - moduleName: JiaYaMoKuai
     logo: {fileID: 0}
+--- !u!114 &601786849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601786843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f97f48968f65964cac9a908b0071ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  days:
+  - day: 1
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 10
+    midClose: 0
+    highClose: 0
+    far: 1
+    midFar: 0
+    highFar: 0
+  - day: 2
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 3
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 4
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 5
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 6
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 7
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 8
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 9
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
+  - day: 10
+    spawnInterval: 2
+    delayMin: 0
+    delayMax: 1.5
+    close: 0
+    midClose: 0
+    highClose: 0
+    far: 0
+    midFar: 0
+    highFar: 0
 --- !u!1001 &606856471
 PrefabInstance:
   m_ObjectHideFlags: 0
