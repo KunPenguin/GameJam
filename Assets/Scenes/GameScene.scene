@@ -91640,9 +91640,9 @@ MonoBehaviour:
   entries:
   - moduleName: Test_FireModule
     logo: {fileID: 21300000, guid: e425153419acf674a8b560032025fc6e, type: 3}
-  - moduleName: Test_PierceModule
-    logo: {fileID: 21300000, guid: c1d49eb51f548e2418abfc572ba661d3, type: 3}
-  - moduleName: Test_ShotgunModule
+  - moduleName: JiaYaMoKuai
+    logo: {fileID: 0}
+  - moduleName: LiZiHuoHua
     logo: {fileID: 21300000, guid: aa583bb4f6b16ce449aafa711abbbbdb, type: 3}
   - moduleName: NeiBao
     logo: {fileID: 21300000, guid: 94ca37e8ef9706d4a8958550dfc34eab, type: 3}
@@ -91668,10 +91668,6 @@ MonoBehaviour:
     logo: {fileID: 0}
   - moduleName: PaoPaoJi
     logo: {fileID: 0}
-  - moduleName: LiZiHuoHua
-    logo: {fileID: 0}
-  - moduleName: JiaYaMoKuai
-    logo: {fileID: 0}
 --- !u!114 &601786849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91696,14 +91692,14 @@ MonoBehaviour:
     midFar: 0
     highFar: 0
   - day: 2
-    spawnInterval: 2
+    spawnInterval: 60
     delayMin: 0
-    delayMax: 1.5
-    close: 0
-    midClose: 0
+    delayMax: 40
+    close: 7
+    midClose: 3
     highClose: 0
-    far: 0
-    midFar: 0
+    far: 0.7
+    midFar: 0.3
     highFar: 0
   - day: 3
     spawnInterval: 2
