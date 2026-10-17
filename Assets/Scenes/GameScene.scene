@@ -103292,6 +103292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1143089358}
   - component: {fileID: 1143089359}
+  - component: {fileID: 1143089360}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: DeviceManager
@@ -103331,6 +103332,23 @@ MonoBehaviour:
   cooldown: 0.3
   keepWorking: 1
   logEnabled: 1
+--- !u!114 &1143089360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143089357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af647a3e0af599f41a105e184fa9f867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalPrefab: {fileID: 4717977098589585144, guid: 1a49e6108f2b9ac4283e71cb7909f462, type: 3}
+  damagedPrefab: {fileID: 620182487645855532, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
+  normalCount: 3
+  waterPrefab: {fileID: 0}
+  seed: 0
 --- !u!1001 &1160010118
 PrefabInstance:
   m_ObjectHideFlags: 0
