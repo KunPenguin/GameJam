@@ -4,36 +4,36 @@ using UnityEngine;
 
 public class DeviceChaos : MonoBehaviour
 {
-    [Header("Ëğ»µÉè±¸µÄÔ¤ÖÆÌå£¨¹Ò DeviceRepair µÄÄÇ¸ö£ºDamaged Device£©")]
+    [Header("æŸåè®¾å¤‡çš„é¢„åˆ¶ä½“ï¼ˆæŒ‚ DeviceRepair çš„é‚£ä¸ªï¼šDamaged Deviceï¼‰")]
     public GameObject damagedDevicePrefab;
 
-    [Header("ÀäÈ´£¨Ãë£©£º·ÀÖ¹Í¬Ò»Ö¡Á¬Ëø´¥·¢")]
+    [Header("å†·å´ï¼ˆç§’ï¼‰ï¼šé˜²æ­¢åŒä¸€å¸§è¿é”è§¦å‘")]
     public float cooldown = 0.3f;
 
-    [Header("ÖÁÉÙ±£Áô¼¸Ì¨Õı³£Éè±¸£¨0 = ²»±£µ×£©")]
+    [Header("è‡³å°‘ä¿ç•™å‡ å°æ­£å¸¸è®¾å¤‡ï¼ˆ0 = ä¸ä¿åº•ï¼‰")]
     public int keepWorking = 1;
 
-    [Header("´òÓ¡ÈÕÖ¾")]
+    [Header("æ‰“å°æ—¥å¿—")]
     public bool logEnabled = true;
 
     float _lastTime = -999f;
     // Start is called before the first frame update
     void OnEnable()
     {
-        DeviceRepair.Repaired += OnAnyRepaired;      // ¶©ÔÄ
+        DeviceRepair.Repaired += OnAnyRepaired;      // è®¢é˜…
     }
     void OnDisable()
     {
-        DeviceRepair.Repaired -= OnAnyRepaired;      // ±ØĞëÍË¶©£¬·ñÔò³¡¾°ÖØÔØºó»áÖØ¸´´¥·¢
+        DeviceRepair.Repaired -= OnAnyRepaired;      // å¿…é¡»é€€è®¢ï¼Œå¦åˆ™åœºæ™¯é‡è½½åä¼šé‡å¤è§¦å‘
     }
     void OnAnyRepaired(DeviceRepair justRepaired)
     {
         if (damagedDevicePrefab == null) return;
-        if (Time.time - _lastTime < cooldown) return;    // ÀäÈ´ÖĞ
+        if (Time.time - _lastTime < cooldown) return;    // å†·å´ä¸­
         _lastTime = Time.time;
 
-        // ---------- 1) ÊÕ¼¯ËùÓĞ"Õı³£Éè±¸" ----------
-        DeviceMarker[] all = FindObjectsOfType<DeviceMarker>(true);   // true = º¬Î´¼¤»î
+        // ---------- 1) æ”¶é›†æ‰€æœ‰"æ­£å¸¸è®¾å¤‡" ----------
+        DeviceMarker[] all = FindObjectsOfType<DeviceMarker>(true);   // true = å«æœªæ¿€æ´»
         List<DeviceMarker> candidates = new List<DeviceMarker>();
 
         Vector3 fixedPos = justRepaired != null ? justRepaired.transform.position : Vector3.zero;
@@ -43,7 +43,7 @@ public class DeviceChaos : MonoBehaviour
             DeviceMarker m = all[i];
             if (m == null) continue;
 
-            // ¸ÕĞŞºÃµÄÄÇÌ¨£º¾ÍÔÚÕâ¸öÎ»ÖÃĞÂÉú³ÉµÄ£¬ÅÅ³ıµô£¨±ğĞŞºÃÁ¢¿ÌÓÖ»µ£©
+            // åˆšä¿®å¥½çš„é‚£å°ï¼šå°±åœ¨è¿™ä¸ªä½ç½®æ–°ç”Ÿæˆçš„ï¼Œæ’é™¤æ‰ï¼ˆåˆ«ä¿®å¥½ç«‹åˆ»åˆåï¼‰
             if (Vector3.Distance(m.transform.position, fixedPos) < 0.5f) continue;
 
             candidates.Add(m);
@@ -51,11 +51,16 @@ public class DeviceChaos : MonoBehaviour
 
         if (candidates.Count <= keepWorking)
         {
-            if (logEnabled) Debug.Log("[Éè±¸] Ã»ÓĞ¿ÉÒÔÅª»µµÄÉè±¸ÁË£¨Ê£Óà " + candidates.Count + " Ì¨Õı³££©¡£");
+            if (logEnabled)
+            {
+                Debug.Log("[è®¾å¤‡] æ²¡å¼„åï¼šåœºæ™¯é‡Œå®Œå¥½çš„è®¾å¤‡åªæœ‰ " + candidates.Count
+                          + " å°ï¼Œè€Œ Keep Working = " + keepWorking
+                          + "ï¼ˆè¦ã€å¤šäºã€‘" + keepWorking + " å°æ‰ä¼šå¼„åä¸€å° â†’ æŠŠ Keep Working è°ƒå°ï¼Œæˆ–å¤šæ”¾å‡ å°å®Œå¥½è®¾å¤‡ï¼‰");
+            }
             return;
         }
 
-        // ---------- 3) Ëæ»úÌôÒ»Ì¨ ----------
+        // ---------- 3) éšæœºæŒ‘ä¸€å° ----------
         DeviceMarker victim = candidates[Random.Range(0, candidates.Count)];
 
         Vector3 pos = victim.transform.position;
@@ -63,12 +68,24 @@ public class DeviceChaos : MonoBehaviour
         Transform parent = victim.transform.parent;
         string victimName = victim.name;
 
-        // ---------- 4) »»³ÉËğ»µÉè±¸ ----------
-        Destroy(victim.gameObject);                                  // ÏÈÒÆ³ıÕı³£Íâ¹Û
+        // ---------- 4) æ¢æˆæŸåè®¾å¤‡ ----------
+
+        // å…ˆæ¸…æ‰è¿™ä¸ªä½ç½®ä¸Š"å·²ç»ä¿®å¥½ä½†è¿˜ç•™ç€"çš„æ—§è®¾å¤‡
+        //   å¦åˆ™ä¿®å¥½çš„å®ä¾‹ä¼šä¸€ç›´å †åœ¨è¿™é‡Œï¼ŒæŒ‡å¼•å›¾æ ‡ä¹Ÿæ°¸è¿œä¸æ¶ˆå¤±
+        DeviceRepair[] olds = FindObjectsOfType<DeviceRepair>(true);
+        for (int i = 0; i < olds.Length; i++)
+        {
+            if (olds[i] == null) continue;
+            if (!olds[i].IsRepaired) continue;                              // åªæ¸…â€œå·²ä¿®å¥½â€çš„
+            if (Vector3.Distance(olds[i].transform.position, pos) > 0.1f) continue;
+            Destroy(olds[i].gameObject);
+        }
+
+        Destroy(victim.gameObject);                                  // å…ˆç§»é™¤æ­£å¸¸å¤–è§‚
         GameObject dmg = Instantiate(damagedDevicePrefab, pos, rot, parent);
         dmg.name = "Damaged_" + victimName;
 
-        if (logEnabled) Debug.Log("[Éè±¸] " + victimName + " »µµôÁË ¡ú " + dmg.name, dmg);
+        if (logEnabled) Debug.Log("[è®¾å¤‡] " + victimName + " åæ‰äº† â†’ " + dmg.name, dmg);
     }
 }
 

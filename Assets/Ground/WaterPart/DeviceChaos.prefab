@@ -47,5 +47,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagedDevicePrefab: {fileID: 620182487645855532, guid: 7cd93c70022cdb34b865a14549d487d3, type: 3}
   cooldown: 0.3
-  keepWorking: 3
+  keepWorking: 1
   logEnabled: 1

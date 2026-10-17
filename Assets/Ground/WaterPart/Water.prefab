@@ -99,11 +99,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3972108634428432100}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8c1163be75cf454f8650816876ec408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangedCheckRadius: 2
+  playerSafeRadius: 10
   closeenemy: {fileID: 2773762685130925568, guid: d5a655a2b8c314d40968ac0976baabc5, type: 3}
   Midcloseenemy: {fileID: 273040943284710431, guid: 8460b9e77bfdeff4f8919f1899ee0d9b, type: 3}
   Highcloseenemy: {fileID: 3452446305460681580, guid: 330b78b3cfa567c46a574af25aaa6409, type: 3}
