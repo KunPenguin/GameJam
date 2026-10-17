@@ -3877,13 +3877,7 @@ MonoBehaviour:
   pointerPrefab: {fileID: 5047131738336136633, guid: 4dae62e59856d4148bdfa14cc8a5773e, type: 3}
   uiParent: {fileID: 179274709}
   player: {fileID: 1564521705}
-  targets:
-  - {fileID: 1199246037}
-  - {fileID: 191257611}
-  - {fileID: 1880958678}
-  - {fileID: 129807590}
-  - {fileID: 586859795}
-  - {fileID: 1693431640}
+  targets: []
   autoDetect: 1
   scanInterval: 0.5
   maxIcons: 0
@@ -91547,7 +91541,7 @@ MonoBehaviour:
   continueButton: {fileID: 55046575}
   cells:
   - {fileID: 4341395451002760111}
-  - {fileID: 0}
+  - {fileID: 793351700}
   - {fileID: 547822307}
   - {fileID: 320312524}
   - {fileID: 1760029508}
@@ -95413,6 +95407,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2157847196226178, guid: 7930473a05541f246b4270233e9a4bb2, type: 3}
   m_PrefabInstance: {fileID: 789049994}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &793351700 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2543773327730460314, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
+  m_PrefabInstance: {fileID: 8055080997270767140}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31382c8d60b14f24eb6d893be19ebc55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &800657679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121513,7 +121518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1268715559224725851, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 31.499878
+      value: 31.499847
       objectReference: {fileID: 0}
     - target: {fileID: 1925785190899095721, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
