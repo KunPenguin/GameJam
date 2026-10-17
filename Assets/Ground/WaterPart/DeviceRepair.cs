@@ -4,53 +4,53 @@ using UnityEngine;
 
 public class DeviceRepair : MonoBehaviour
 {
-    [Header("ĞŞ¸´·¶Î§")]
-    [Tooltip("Íæ¼Ò½øµ½Õâ¸ö°ë¾¶ÄÚ²Å¿ªÊ¼ĞŞ£¨ÊÀ½çµ¥Î»£¬1 = Ò»¸ñ£©¡£")]
+    [Header("ä¿®å¤èŒƒå›´")]
+    [Tooltip("ç©å®¶è¿›åˆ°è¿™ä¸ªåŠå¾„å†…æ‰å¼€å§‹ä¿®ï¼ˆä¸–ç•Œå•ä½ï¼Œ1 = ä¸€æ ¼ï¼‰ã€‚")]
     public float repairRadius = 2f;
-    [Header("Íæ¼Ò±êÇ©")]
+    [Header("ç©å®¶æ ‡ç­¾")]
     public string playerTag = "Player";
-    [Header("ĞŞ¸´ËùĞèÊ±¼ä")]
+    [Header("ä¿®å¤æ‰€éœ€æ—¶é—´")]
     public float repairSeconds = 5f;
-    private bool resetOnLeave = true;
-    private bool resetWhenDamaged = true;
-    [Header("ÍÏÕâÆ¬Ë®µÄ¸¸ÎïÌå£¨¼ÇµÃ´ò¹´£©")]
+    [SerializeField] private bool resetOnLeave = true;
+    [SerializeField] private bool resetWhenDamaged = true;
+    [Header("æ‹–è¿™ç‰‡æ°´çš„çˆ¶ç‰©ä½“ï¼ˆè®°å¾—æ‰“å‹¾ï¼‰")]
     public Transform waterRoot;
-    private bool destroyWhenRepaired = false;
-    [Header("½ø¶ÈÌõÏÔÊ¾")]
+    [SerializeField] private bool destroyWhenRepaired = true;
+    [Header("è¿›åº¦æ¡æ˜¾ç¤º")]
     public bool showBarOnScreen = true;
-    [Tooltip("Ö»ÓĞÕıÔÚĞŞµÄÊ±ºò²ÅÏÔÊ¾£¨²»ĞŞ¾Í²»ÏÔÊ¾£¬»­Ãæ¸É¾»£©¡£")]
+    [Tooltip("åªæœ‰æ­£åœ¨ä¿®çš„æ—¶å€™æ‰æ˜¾ç¤ºï¼ˆä¸ä¿®å°±ä¸æ˜¾ç¤ºï¼Œç”»é¢å¹²å‡€ï¼‰ã€‚")]
     public bool showBarOnlyWhenRepairing = true;
-    [Header("²âÊÔÓÃ£¬°´ H = ¼Ù×°Íæ¼ÒÊÜÉË")]
+    [Header("æµ‹è¯•ç”¨ï¼ŒæŒ‰ H = å‡è£…ç©å®¶å—ä¼¤")]
     public bool debugKey = true;
-    [Header("ĞŞÀíºÃµÄÉè±¸")]
+    [Header("ä¿®ç†å¥½çš„è®¾å¤‡")]
     public GameObject CompleteDevice;
-    [Header("ĞŞÀíÉùÒô£©")]
+    [Header("ä¿®ç†å£°éŸ³ï¼‰")]
     public AudioSource repairSound;
-    [Header("ĞŞÀíÍê³ÉÉùÒô")]
+    [Header("ä¿®ç†å®Œæˆå£°éŸ³")]
     public AudioSource finishSound;
-    /// <summary>ĞŞ¸´½ø¶È£º0 = Ã»¿ªÊ¼£¬1 = ĞŞºÃÁË¡£</summary>
+    /// <summary>ä¿®å¤è¿›åº¦ï¼š0 = æ²¡å¼€å§‹ï¼Œ1 = ä¿®å¥½äº†ã€‚</summary>
     public float Progress01 { get; private set; }
     
-    /// <summary>ÊÇ·ñÒÑ¾­ĞŞºÃ¡£</summary>
+    /// <summary>æ˜¯å¦å·²ç»ä¿®å¥½ã€‚</summary>
     public bool IsRepaired { get; private set; }
     
-    /// <summary>Íæ¼Ò´Ë¿ÌÔÚ²»ÔÚ·¶Î§Àï¡£</summary>
+    /// <summary>ç©å®¶æ­¤åˆ»åœ¨ä¸åœ¨èŒƒå›´é‡Œã€‚</summary>
     public bool PlayerInRange { get; private set; }
     
-    /// <summary>µÇ¼ÇËùÓĞË®Éè±¸¡£</summary>
+    /// <summary>ç™»è®°æ‰€æœ‰æ°´è®¾å¤‡ã€‚</summary>
     static readonly List<DeviceRepair> AllDevices = new List<DeviceRepair>();
-    private Transform _player;          // ÕÒµ½µÄÍæ¼Ò£¨»º´æÆğÀ´£¬²»ÒªÃ¿Ö¡È¥ÕÒ£©
-    private bool _reportedMissingTag;   // ±êÇ©²»´æÔÚÊ±Ö»±¨Ò»´Î´í
+    private Transform _player;          // æ‰¾åˆ°çš„ç©å®¶ï¼ˆç¼“å­˜èµ·æ¥ï¼Œä¸è¦æ¯å¸§å»æ‰¾ï¼‰
+    private bool _reportedMissingTag;   // æ ‡ç­¾ä¸å­˜åœ¨æ—¶åªæŠ¥ä¸€æ¬¡é”™
     public static event System.Action<DeviceRepair> Repaired;
     void OnEnable()
     {
-        if (!AllDevices.Contains(this)) AllDevices.Add(this);   // ¿ª»úµÇ¼Ç
+        if (!AllDevices.Contains(this)) AllDevices.Add(this);   // å¼€æœºç™»è®°
     }
 
     void OnDisable()
     {
-        AllDevices.Remove(this);                                // Ïú»Ù/¹Ø±ÕÊ±×¢Ïú
-        StopRepairSoundLoop();   //ĞÂÔö£ºÏú»ÙÊ±Í£µôĞŞÀíÒôĞ§
+        AllDevices.Remove(this);                                // é”€æ¯/å…³é—­æ—¶æ³¨é”€
+        StopRepairSoundLoop();   //æ–°å¢ï¼šé”€æ¯æ—¶åœæ‰ä¿®ç†éŸ³æ•ˆ
     }
 
     // Update is called once per frame
@@ -63,7 +63,7 @@ public class DeviceRepair : MonoBehaviour
         {
             
             PlayerInRange = false;
-            StopRepairSoundLoop();   //ĞÂÔö£ºÀë¿ª·¶Î§Í£Ö¹ĞŞÀíÒôĞ§
+            StopRepairSoundLoop();   //æ–°å¢ï¼šç¦»å¼€èŒƒå›´åœæ­¢ä¿®ç†éŸ³æ•ˆ
             if (resetOnLeave)
                 ResetProgress();
             return;
@@ -81,46 +81,62 @@ public class DeviceRepair : MonoBehaviour
 
             d.ResetProgress();
         }
-    }//½ÇÉ«ÊÜÉËÖØÖÃ½ø¶È
-    public void ResetProgress()//ÖØÖÃ½ø¶È
+    }//è§’è‰²å—ä¼¤é‡ç½®è¿›åº¦
+    public void ResetProgress()//é‡ç½®è¿›åº¦
     {
         if (IsRepaired) return;
         bool hadProgress = Progress01 > 0.0001f;
 
         Progress01 = 0f;
-        StopRepairSoundLoop();   //ĞÂÔö£º½ø¶ÈÇåÁãÊ±Í£Ö¹ĞŞÀíÒôĞ§
+        StopRepairSoundLoop();   //æ–°å¢ï¼šè¿›åº¦æ¸…é›¶æ—¶åœæ­¢ä¿®ç†éŸ³æ•ˆ
 
-        if (hadProgress) Debug.Log(  "ĞŞ¸´½ø¶ÈÇåÁã", this);
+        if (hadProgress) Debug.Log(  "ä¿®å¤è¿›åº¦æ¸…é›¶", this);
     }
     public void AddProgress(float delta)
     {
         if (IsRepaired || delta <= 0f) return;
         Progress01 = Mathf.Clamp01(Progress01 + delta);
-        StartRepairSoundLoop();   //ĞÂÔö£ºĞŞÀíÖĞÑ­»·²¥·ÅĞŞÀíÒôĞ§
+        StartRepairSoundLoop();   //æ–°å¢ï¼šä¿®ç†ä¸­å¾ªç¯æ’­æ”¾ä¿®ç†éŸ³æ•ˆ
         if (Progress01 >= 1f) Complete();
        
-    }//¼Ó½ø¶È
+    }//åŠ è¿›åº¦
     void Complete()
     {
         IsRepaired = true;
-        StopRepairSoundLoop();   //ĞÂÔö£ºÍ£µôĞŞÀíÒôĞ§
-        PlayFinishSound();       //ĞÂÔö£º²¥·Å"×°ÖÃĞŞºÃ"ÒôĞ§
+        StopRepairSoundLoop();   //åœæ‰ä¿®ç†éŸ³æ•ˆ
+        PlayFinishSound();       //æ’­æ”¾"è£…ç½®ä¿®å¥½"éŸ³æ•ˆ
         Progress01 = 1f;
-        Debug.Log("[Éè±¸] " + name + " ĞŞ¸´Íê³É£¡", this);
-        ClearWater();       // ĞèÇó 3£ºÕâÆ¬Ë®È«²¿ÏûÊ§£¨Ã»Åä waterRoot ¾ÍÊ²Ã´Ò²²»×ö£©
-        if (destroyWhenRepaired) Destroy(gameObject);
-        Instantiate(CompleteDevice, transform.position, Quaternion.identity);
+        Debug.Log("[è®¾å¤‡] " + name + " ä¿®å¤å®Œæˆï¼", this);
+
+        ClearWater();            // è¿™ç‰‡æ°´å…¨éƒ¨æ¶ˆå¤±
+
+        // ç”Ÿæˆ"ä¿®å¥½åçš„å¤–è§‚"ï¼ˆæ²¡é…å°±è·³è¿‡ï¼Œåˆ«æŠ›å¼‚å¸¸ï¼‰
+        if (CompleteDevice != null)
+        {
+            GameObject done = Instantiate(CompleteDevice, transform.position, Quaternion.identity, transform.parent);
+            done.name = "Fixed_" + name;
+        }
+        else
+        {
+            Debug.LogWarning("[è®¾å¤‡] æ²¡é… CompleteDeviceï¼Œä¿®å¥½äº†ä½†çœ‹ä¸è§å˜åŒ–ã€‚", this);
+        }
+
+        // â˜… åªå¹¿æ’­ä¸€æ¬¡ï¼ˆåŸæ¥è¿™é‡Œå†™äº†ä¸¤éï¼Œé  DeviceChaos çš„ cooldown æ‰æ²¡ç‚¸ï¼‰
         if (Repaired != null) Repaired(this);
-        // ĞŞºÃ ¡ú ·¢Ò»¸öÄ£¿é£¨ÈıÑ¡Ò»£©²¢½øÈëÕûÀí½çÃæ
+
+        // ä¿®å¥½ â†’ å‘ä¸€ä¸ªæ¨¡å—ï¼ˆä¸‰é€‰ä¸€ï¼‰å¹¶è¿›å…¥æ•´ç†ç•Œé¢
         if (ModulePanelUI.Instance != null)
         {
             ModulePanelUI.Instance.Open();
         }
         else
         {
-            Debug.LogWarning("×°ÖÃĞŞºÃÁË£¬µ«³¡¾°ÀïÕÒ²»µ½ ModulePanelUI£¬Ä£¿é·¢²»³öÈ¥£¡");
+            Debug.LogWarning("è£…ç½®ä¿®å¥½äº†ï¼Œä½†åœºæ™¯é‡Œæ‰¾ä¸åˆ° ModulePanelUIï¼Œæ¨¡å—å‘ä¸å‡ºå»ï¼");
         }
-    }//ĞŞÀíÍê³É
+
+        // ä¿®å¥½ä¹‹åè¿™ä¸ª"æŸåè®¾å¤‡"å°±æ²¡ç”¨äº† â†’ é”€æ¯ï¼ˆæ”¾åœ¨å¹¿æ’­ä¹‹åï¼Œä¿è¯åˆ«äººæ‹¿å¾—åˆ°ä½ç½®ï¼‰
+        if (destroyWhenRepaired) Destroy(gameObject);
+    }//ä¿®ç†å®Œæˆ
     void ClearWater()
     {
         if (waterRoot == null) return; 
@@ -132,9 +148,9 @@ public class DeviceRepair : MonoBehaviour
             removed++;
         }
 
-        Debug.Log("[Éè±¸] " + name + " ĞŞºÃ£¬ÒÑÇåµôËüµÄË® " + removed + " ¸ñ¡£", this);
-    }//Íê³ÉĞŞÀíºóÀ´Çå³ıÕâ¸öÉè±¸Éú³ÉµÄË®
-    //=== ĞÂÔö£º×°ÖÃÒôĞ§£¨Inspector ÀïÅäÁË AudioSource ¾ÍÓÃËü£¬Ã»Åä¾ÍÓÃÈ«¾Ö SfxPlayer£©===
+        Debug.Log("[è®¾å¤‡] " + name + " ä¿®å¥½ï¼Œå·²æ¸…æ‰å®ƒçš„æ°´ " + removed + " æ ¼ã€‚", this);
+    }//å®Œæˆä¿®ç†åæ¥æ¸…é™¤è¿™ä¸ªè®¾å¤‡ç”Ÿæˆçš„æ°´
+    //=== æ–°å¢ï¼šè£…ç½®éŸ³æ•ˆï¼ˆInspector é‡Œé…äº† AudioSource å°±ç”¨å®ƒï¼Œæ²¡é…å°±ç”¨å…¨å±€ SfxPlayerï¼‰===
     void StartRepairSoundLoop()
     {
         if (repairSound != null) { repairSound.loop = true; if (repairSound.isPlaying == false) repairSound.Play(); return; }
@@ -150,14 +166,14 @@ public class DeviceRepair : MonoBehaviour
         if (finishSound != null) { finishSound.Play(); return; }
         if (SfxPlayer.instance != null) SfxPlayer.instance.PlayRepairDone();
     }
-    bool IsPlayerInRange()//ÓÃÓÚ²â¶¨½ÇÉ«ÓëÉè±¸¾àÀëÒÔÅĞ¶ÏÊÇ·ñ½øÈëĞŞÀí·¶Î§ÄÚ
+    bool IsPlayerInRange()//ç”¨äºæµ‹å®šè§’è‰²ä¸è®¾å¤‡è·ç¦»ä»¥åˆ¤æ–­æ˜¯å¦è¿›å…¥ä¿®ç†èŒƒå›´å†…
     {
         if (_player == null) return false;
         Vector2 diff = (Vector2)_player.position - (Vector2)transform.position;
         float r = Mathf.Max(0.01f, repairRadius);
         return diff.sqrMagnitude <= r * r;
     }
-    Transform FindPlayer()//ÕÒÍæ¼ÒµÄÎ»ÖÃ
+    Transform FindPlayer()//æ‰¾ç©å®¶çš„ä½ç½®
     {
         if (string.IsNullOrEmpty(playerTag)) return null;
 
@@ -171,24 +187,24 @@ public class DeviceRepair : MonoBehaviour
             if (!_reportedMissingTag)
             {
                 _reportedMissingTag = true;
-                Debug.LogError("Ã»ÓĞ \""+ playerTag+this);
+                Debug.LogError("å·¥ç¨‹é‡Œæ²¡æœ‰ \"" + playerTag + "\" è¿™ä¸ªæ ‡ç­¾ï¼Œæ‰¾ä¸åˆ°ç©å®¶ã€‚", this);
             }
             return null;
         }
     }
     void OnGUI()
     {
-        if (Time.timeScale == 0f) return;   // ÓÎÏ·ÔİÍ££¨Ãæ°å¿ª×Å£©Ê±²»»­½ø¶ÈÌõ
+        if (Time.timeScale == 0f) return;   // æ¸¸æˆæš‚åœï¼ˆé¢æ¿å¼€ç€ï¼‰æ—¶ä¸ç”»è¿›åº¦æ¡
         if (!showBarOnScreen) return;
         if (Camera.main == null) return;
         if (showBarOnlyWhenRepairing && (Progress01 <= 0f || IsRepaired)) return;
 
-        // ÊÀ½ç×ø±ê ¡ú ÆÁÄ»×ø±ê¡£
-        // ×¢Òâ£ºÆÁÄ»×ø±ê×óÏÂ½ÇÊÇ (0,0)£¬¶ø OnGUI µÄ×óÉÏ½ÇÊÇ (0,0)£¬ËùÒÔ y Òª·­¹ıÀ´¡£
+        // ä¸–ç•Œåæ ‡ â†’ å±å¹•åæ ‡ã€‚
+        // æ³¨æ„ï¼šå±å¹•åæ ‡å·¦ä¸‹è§’æ˜¯ (0,0)ï¼Œè€Œ OnGUI çš„å·¦ä¸Šè§’æ˜¯ (0,0)ï¼Œæ‰€ä»¥ y è¦ç¿»è¿‡æ¥ã€‚
         Vector3 screenPos = Camera.main.WorldToScreenPoint(
             transform.position + Vector3.up * 1.2f);
 
-        if (screenPos.z < 0f) return;      // ÔÚÏà»ú±³ºó¾Í²»»­
+        if (screenPos.z < 0f) return;      // åœ¨ç›¸æœºèƒŒåå°±ä¸ç”»
 
         const float width = 90f;
         const float height = 12f;
@@ -197,15 +213,15 @@ public class DeviceRepair : MonoBehaviour
                              Screen.height - screenPos.y - height * 0.5f,
                              width, height);
 
-        GUI.color = new Color(0f, 0f, 0f, 0.6f);      // µ×£º°ëÍ¸Ã÷ºÚ
+        GUI.color = new Color(0f, 0f, 0f, 0.6f);      // åº•ï¼šåŠé€æ˜é»‘
         GUI.Box(back, GUIContent.none);
 
-        GUI.color = new Color(0.3f, 1f, 0.4f, 0.95f); // Ç°£ºÂÌÉ«½ø¶È
+        GUI.color = new Color(0.3f, 1f, 0.4f, 0.95f); // å‰ï¼šç»¿è‰²è¿›åº¦
         GUI.Box(new Rect(back.x, back.y, back.width * Progress01, back.height),
                 GUIContent.none);
 
-        GUI.color = Color.white;                      // ÓÃÍê»¹Ô­£¬·ñÔòÓ°Ïì±ğµÄ GUI
-    }//½ø¶ÈUI
+        GUI.color = Color.white;                      // ç”¨å®Œè¿˜åŸï¼Œå¦åˆ™å½±å“åˆ«çš„ GUI
+    }//è¿›åº¦UI
 
 }
 
