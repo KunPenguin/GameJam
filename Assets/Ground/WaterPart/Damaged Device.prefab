@@ -195,10 +195,16 @@ MonoBehaviour:
   repairRadius: 5
   playerTag: Player
   repairSeconds: 5
+  resetOnLeave: 1
+  resetWhenDamaged: 1
   waterRoot: {fileID: 4810676002028842603}
+  destroyWhenRepaired: 1
   showBarOnScreen: 1
   showBarOnlyWhenRepairing: 1
   debugKey: 1
   CompleteDevice: {fileID: 4717977098589585144, guid: 1a49e6108f2b9ac4283e71cb7909f462, type: 3}
   repairSound: {fileID: 0}
   finishSound: {fileID: 0}
+  deviceRootOverride: {fileID: 0}
+  showRangeInGame: 1
+  rangeColor: {r: 0.014017418, g: 0.990566, b: 0.9469712, a: 0.45}

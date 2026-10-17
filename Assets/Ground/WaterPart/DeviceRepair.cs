@@ -28,6 +28,13 @@ public class DeviceRepair : MonoBehaviour
     public AudioSource repairSound;
     [Header("修理完成声音")]
     public AudioSource finishSound;
+
+    [Header("设备根物体（留空 = 自动往上找画着贴图的那一层）")]
+    public Transform deviceRootOverride;
+    [Header("修复范围")]
+    public bool showRangeInGame = false;
+    private LineRenderer _ring;
+    public Color rangeColor = new Color(0.2f, 1f, 0.5f, 0.45f);
     /// <summary>修复进度：0 = 没开始，1 = 修好了。</summary>
     public float Progress01 { get; private set; }
     
@@ -42,6 +49,26 @@ public class DeviceRepair : MonoBehaviour
     private Transform _player;          // 找到的玩家（缓存起来，不要每帧去找）
     private bool _reportedMissingTag;   // 标签不存在时只报一次错
     public static event System.Action<DeviceRepair> Repaired;
+    void Start()
+    {
+        if (!showRangeInGame) return;
+
+        _ring = gameObject.AddComponent<LineRenderer>();
+        _ring.useWorldSpace = false;      // 跟着设备走
+        _ring.loop = true;                // 闭合圆
+        _ring.widthMultiplier = 0.05f;
+        _ring.material = new Material(Shader.Find("Sprites/Default"));
+        _ring.startColor = _ring.endColor = rangeColor;
+        _ring.sortingOrder = 1000;        // 画在最前面
+
+        _ring.positionCount = 48;
+        for (int i = 0; i < 48; i++)
+        {
+            float a = 2f * Mathf.PI * i / 48f;
+            _ring.SetPosition(i, new Vector3(Mathf.Cos(a) * repairRadius,
+                                             Mathf.Sin(a) * repairRadius, 0f));
+        }
+    }
     void OnEnable()
     {
         if (!AllDevices.Contains(this)) AllDevices.Add(this);   // 开机登记
@@ -110,10 +137,15 @@ public class DeviceRepair : MonoBehaviour
 
         ClearWater();            // 这片水全部消失
 
+        // ★ 本脚本挂在子物体（Trident）上，而"损坏贴图"画在父物体（Damaged Device）上。
+        //   所以这里要先找到"设备根物体"：只删子物体的话，根上那张损坏贴图会一直留着。
+        Transform deviceRoot = GetDeviceRoot();
+        Transform spawnParent = deviceRoot.parent;   // 根所在的层级（通常是场景里的一个容器）
+
         // 生成"修好后的外观"（没配就跳过，别抛异常）
         if (CompleteDevice != null)
         {
-            GameObject done = Instantiate(CompleteDevice, transform.position, Quaternion.identity, transform.parent);
+            GameObject done = Instantiate(CompleteDevice, deviceRoot.position, Quaternion.identity, spawnParent);
             done.name = "Fixed_" + name;
         }
         else
@@ -134,9 +166,29 @@ public class DeviceRepair : MonoBehaviour
             Debug.LogWarning("装置修好了，但场景里找不到 ModulePanelUI，模块发不出去！");
         }
 
-        // 修好之后这个"损坏设备"就没用了 → 销毁（放在广播之后，保证别人拿得到位置）
-        if (destroyWhenRepaired) Destroy(gameObject);
+        // 修好之后整个"损坏设备"（含贴图）就没用了 → 销毁【根物体】
+        if (destroyWhenRepaired)
+        {
+            Debug.Log("[设备] " + name + " 已销毁根物体：" + deviceRoot.name, this);
+            Destroy(deviceRoot.gameObject);
+        }
     }//修理完成
+
+    /// <summary>
+    /// 找"设备根物体"（画着损坏贴图的那一层）。
+    /// 规则：一路往上找，只要父物体上也有 SpriteRenderer，就说明还没到根。
+    /// 也可以在 Inspector 的 Device Root Override 里手动指定。
+    /// </summary>
+    Transform GetDeviceRoot()
+    {
+        if (deviceRootOverride != null) return deviceRootOverride;
+
+        Transform t = transform;
+        while (t.parent != null && t.parent.GetComponent<SpriteRenderer>() != null)
+            t = t.parent;
+
+        return t;
+    }
     void ClearWater()
     {
         if (waterRoot == null) return; 
@@ -222,6 +274,34 @@ public class DeviceRepair : MonoBehaviour
 
         GUI.color = Color.white;                      // 用完还原，否则影响别的 GUI
     }//进度UI
+
+    // ============================================================
+    // 在 Scene 视图里显示修复半径（不用运行游戏就能看到范围）
+    // ============================================================
+
+    // 没选中时：淡淡的一圈绿线，在场景里一直能看到
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0.2f, 1f, 0.5f, 0.35f);
+        Gizmos.DrawWireSphere(transform.position, repairRadius);
+    }
+
+    // 选中时：更亮 + 半透明填充 + 旁边显示数值（改 Repair Radius 圈会实时变大变小）
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(0.2f, 1f, 0.5f, 0.9f);
+        Gizmos.DrawWireSphere(transform.position, repairRadius);
+
+#if UNITY_EDITOR
+        // 半透明填充，看得更直观
+        UnityEditor.Handles.color = new Color(0.2f, 1f, 0.5f, 0.08f);
+        UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, repairRadius);
+
+        // 在圆的右边写一行字
+        UnityEditor.Handles.Label(transform.position + Vector3.right * repairRadius,
+                                  "修复半径 " + repairRadius);
+#endif
+    }
 
 }
 
