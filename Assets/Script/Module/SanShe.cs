@@ -6,7 +6,7 @@ public class SanShe : WeaponModule
     public SanShe()
     {
         displayName = "散射";
-        description = "失去所有子弹伤害加成，然后开火，以更大的散射角度发射小型存在时间短的子弹，并且本次射击实际发射子弹个数等于子弹个数属性*5。最后使之后的模块波数+1";
+        description = "失去所有子弹伤害加成，然后开火，以更大的散射角度发射小型存在时间短的子弹，并且本次射击实际发射子弹个数等于子弹个数属性*3。最后使之后的模块波数+1";
     }
 
     public override void Apply(AttackContext ctx)
@@ -19,7 +19,7 @@ public class SanShe : WeaponModule
             oneshot.spreadAngle += 60;
             oneshot.lifeTime *= 0.3f;
             oneshot.bulletSize *= 0.5f;
-            oneshot.bulletsPerWave *= 5;
+            oneshot.bulletsPerWave *= 3;
         };
         isFireModule = true;
     }
