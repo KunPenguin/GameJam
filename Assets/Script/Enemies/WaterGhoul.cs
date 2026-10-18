@@ -25,10 +25,30 @@ public class WaterGhoul : MonoBehaviour
         rb=GetComponent<Rigidbody2D>();
     }
 
+    [Header("攻击")]
+    public float attackRange = 0f;      // 贴上这个距离就开始反复造成伤害
+    public float attackInterval = 1f;     // 每隔多少秒造成一次伤害
+    private float attackTimer = 0f;
+
     // Update is called once per frame
     void Update()
     {
-        chase();
+        if (attackTimer > 0f) attackTimer -= Time.deltaTime;
+
+        chase();                          // 移动逻辑不变：走过去、贴上、停住
+
+        if (player == null) return;
+
+        // 贴着玩家 → 按冷却反复造成伤害
+        // 为什么用距离而不是碰撞回调：碰撞的 Enter 只触发一次，Stay 在刚体睡着后可能不再触发；
+        // "贴着"是一个持续状态，用距离判断最稳。
+        if (Vector2.Distance(transform.position, player.position) <= attackRange && attackTimer <= 0f)
+        {
+            attackTimer = attackInterval;
+
+            PlayerHealth ph = player.GetComponent<PlayerHealth>();
+            if (ph != null) ph.TakeDamage(damage);
+        }
     }
     
     void Flip()
@@ -46,16 +66,11 @@ public class WaterGhoul : MonoBehaviour
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
     }
-    void OnTriggerEnter2D(Collider2D other)  //攻击
-    {
-        if (other.CompareTag("Player"))     //撞到的tag是不是player
-        {
-            Debug.Log("玩家被击中！");
-            //新增：真的扣玩家血（调用玩家身上 PlayerHealth 脚本的 TakeDamage）
-            other.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
-
-        }
-    }
+    // 【原来的 OnTriggerEnter2D 已删除】
+    // 原因：Enter 只在"开始重叠"那一帧触发一次，贴上玩家后就不再触发，
+    //       表现为"只掉一次血，然后两个一起站着"。
+    // 现在改由 Update 里的"距离 + 冷却"负责伤害。
+    // ⚠️ 不要再加回来，否则会和冷却判断叠加，造成双倍伤害。
     // 被玩家水弹打中时调用
     // 为什么加这个：水弹会通过 SendMessage("OnHit", 伤害值) 来通知敌人。
     public void OnHit(float finalDamage)

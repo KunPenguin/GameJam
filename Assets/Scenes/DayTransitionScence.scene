@@ -443,6 +443,7 @@ GameObject:
   - component: {fileID: 634684764}
   - component: {fileID: 634684765}
   - component: {fileID: 634684766}
+  - component: {fileID: 634684767}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: TransitionManager
@@ -519,6 +520,49 @@ MonoBehaviour:
   infoPanel: {fileID: 1257058681}
   infoNameText: {fileID: 1257058680}
   infoDescText: {fileID: 1257058679}
+--- !u!114 &634684767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634684763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec8e7a839c970a44998037ec225f13e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entries:
+  - moduleName: Test_FireModule
+    logo: {fileID: 21300000, guid: e425153419acf674a8b560032025fc6e, type: 3}
+  - moduleName: JiaYaMoKuai
+    logo: {fileID: 0}
+  - moduleName: LiZiHuoHua
+    logo: {fileID: 21300000, guid: aa583bb4f6b16ce449aafa711abbbbdb, type: 3}
+  - moduleName: NeiBao
+    logo: {fileID: 21300000, guid: 94ca37e8ef9706d4a8958550dfc34eab, type: 3}
+  - moduleName: WenGuDaoShui
+    logo: {fileID: 21300000, guid: f370e037e8cc8bf4da2f674db0fb4fbf, type: 3}
+  - moduleName: SanShe
+    logo: {fileID: 21300000, guid: b5e3efba6e3af004a8f81b020e1d6244, type: 3}
+  - moduleName: QiangLiJiChuan
+    logo: {fileID: 21300000, guid: a1865449c4f46cb468d5d658e803ac1c, type: 3}
+  - moduleName: NeiBao
+    logo: {fileID: 0}
+  - moduleName: HuaSaTou
+    logo: {fileID: 0}
+  - moduleName: GaoXiaoDaoLiu
+    logo: {fileID: 0}
+  - moduleName: FangHuShuiMU
+    logo: {fileID: 0}
+  - moduleName: JuJiaoMoKuai
+    logo: {fileID: 0}
+  - moduleName: DongNengZhengHe
+    logo: {fileID: 0}
+  - moduleName: ShuiChuiXiaoYing
+    logo: {fileID: 0}
+  - moduleName: PaoPaoJi
+    logo: {fileID: 0}
 --- !u!114 &730730255 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 702054704961542697, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
@@ -797,7 +841,7 @@ PrefabInstance:
     - target: {fileID: 112305475184227742, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 555152682575932193, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -817,11 +861,11 @@ PrefabInstance:
     - target: {fileID: 702054704961542697, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 1128577739619323068, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 1131921147287719156, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -833,7 +877,7 @@ PrefabInstance:
     - target: {fileID: 1156864466040033245, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 1156864466040033245, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: logoImage
       value: 
@@ -857,7 +901,7 @@ PrefabInstance:
     - target: {fileID: 2400525676670309433, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 2509925892588241312, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -869,7 +913,7 @@ PrefabInstance:
     - target: {fileID: 2543773327730460314, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 2557452390824313589, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20
@@ -885,7 +929,7 @@ PrefabInstance:
     - target: {fileID: 2656660939567175549, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 3091090547913731607, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -897,7 +941,7 @@ PrefabInstance:
     - target: {fileID: 3590209102894547744, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 4102970415998996984, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -909,7 +953,7 @@ PrefabInstance:
     - target: {fileID: 4185749589110395592, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 4737312025526422196, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1025,7 +1069,7 @@ PrefabInstance:
     - target: {fileID: 5650797143152531615, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 6176647736831886112, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_SizeDelta.x
       value: 40
@@ -1049,7 +1093,7 @@ PrefabInstance:
     - target: {fileID: 6796639979560784455, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 6866268564332957900, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1077,7 +1121,7 @@ PrefabInstance:
     - target: {fileID: 7698181690017485117, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 7863675763049389935, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20
@@ -1085,7 +1129,7 @@ PrefabInstance:
     - target: {fileID: 7959867824703677586, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: iconTable
       value: 
-      objectReference: {fileID: 1839672235}
+      objectReference: {fileID: 634684767}
     - target: {fileID: 7996461525483014230, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_Name
       value: ModulePanel
@@ -1608,7 +1652,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1839672234}
   - component: {fileID: 1839672233}
-  - component: {fileID: 1839672235}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: GameManager
@@ -1658,49 +1701,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1839672235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839672232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ec8e7a839c970a44998037ec225f13e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entries:
-  - moduleName: Test_FireModule
-    logo: {fileID: 21300000, guid: e425153419acf674a8b560032025fc6e, type: 3}
-  - moduleName: JiaYaMoKuai
-    logo: {fileID: 0}
-  - moduleName: LiZiHuoHua
-    logo: {fileID: 21300000, guid: aa583bb4f6b16ce449aafa711abbbbdb, type: 3}
-  - moduleName: NeiBao
-    logo: {fileID: 21300000, guid: 94ca37e8ef9706d4a8958550dfc34eab, type: 3}
-  - moduleName: WenGuDaoShui
-    logo: {fileID: 21300000, guid: f370e037e8cc8bf4da2f674db0fb4fbf, type: 3}
-  - moduleName: SanShe
-    logo: {fileID: 21300000, guid: b5e3efba6e3af004a8f81b020e1d6244, type: 3}
-  - moduleName: QiangLiJiChuan
-    logo: {fileID: 21300000, guid: a1865449c4f46cb468d5d658e803ac1c, type: 3}
-  - moduleName: NeiBao
-    logo: {fileID: 0}
-  - moduleName: HuaSaTou
-    logo: {fileID: 0}
-  - moduleName: GaoXiaoDaoLiu
-    logo: {fileID: 0}
-  - moduleName: FangHuShuiMU
-    logo: {fileID: 0}
-  - moduleName: JuJiaoMoKuai
-    logo: {fileID: 0}
-  - moduleName: DongNengZhengHe
-    logo: {fileID: 0}
-  - moduleName: ShuiChuiXiaoYing
-    logo: {fileID: 0}
-  - moduleName: PaoPaoJi
-    logo: {fileID: 0}
 --- !u!114 &1967669057 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5936297877549365713, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}

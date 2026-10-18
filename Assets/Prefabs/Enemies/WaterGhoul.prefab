@@ -172,6 +172,8 @@ MonoBehaviour:
   maxHp: 15
   currentHp: 0
   damage: 1
+  attackRange: 0.7
+  attackInterval: 1
 --- !u!114 &1743453972937269795
 MonoBehaviour:
   m_ObjectHideFlags: 0

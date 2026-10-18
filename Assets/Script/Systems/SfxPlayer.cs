@@ -78,7 +78,8 @@ public class SfxPlayer : MonoBehaviour
 
     static string Show(AudioClip c) { return c != null ? c.name : "【空!】"; }
 
-    //==================== 临时诊断按键（查完可以整段删掉）====================
+    //==================== 临时诊断按键（上架版已关闭；想恢复就删掉下面的 /* 和 */ ）====================
+    /*
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.O)) { Debug.Log("[音效] 测试 T：怪物远程攻击"); PlayEnemyAttack(); }
@@ -89,6 +90,7 @@ public class SfxPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha8)) { Debug.Log("[音效] 测试 8：放置物品"); PlayPlace(); }
         if (Input.GetKeyDown(KeyCode.Alpha9)) { Debug.Log("[音效] 测试 9：UI 点击"); PlayClick(); }
     }
+    */
 
     //==================== 给别的脚本调用的方法 ====================
 

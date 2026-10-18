@@ -124,7 +124,8 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-        // 临时测试：按 P 打开面板
+        // 【上架版已关闭：测试用按键】想恢复就删掉下面这对 /* 和 */
+        /*
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (ModulePanelUI.Instance != null)
@@ -138,6 +139,7 @@ public class PlayerShoot : MonoBehaviour
                 Debug.Log("按P失败。场景里能搜到的 ModulePanelUI = " + (found == null ? "一个都没有" : found.gameObject.name));
             }
         }
+        */
         AdvanceQueue();
         //计时器一直往下减，减到 0 以下就可以再打一发
         timer = timer - Time.deltaTime;

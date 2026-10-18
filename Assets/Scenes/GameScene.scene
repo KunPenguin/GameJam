@@ -9346,6 +9346,7 @@ GameObject:
   - component: {fileID: 485321254}
   - component: {fileID: 485321256}
   - component: {fileID: 485321255}
+  - component: {fileID: 485321257}
   m_Layer: 5
   m_HasEditorInfo: 1
   m_Name: TutorialTip
@@ -9471,6 +9472,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 485321253}
   m_CullTransparentMesh: 1
+--- !u!223 &485321257
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485321253}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 20
+  m_TargetDisplay: 0
 --- !u!1001 &487762649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109027,7 +109051,7 @@ MonoBehaviour:
   tipText: {fileID: 485321255}
   player: {fileID: 0}
   minTimePerStep: 2
-  alwaysPlay: 1
+  alwaysPlay: 0
 --- !u!1 &1422255787
 GameObject:
   m_ObjectHideFlags: 0
@@ -121928,7 +121952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1268715559224725851, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 31.499878
+      value: 31.499847
       objectReference: {fileID: 0}
     - target: {fileID: 1645793151953963940, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_SizeDelta.x

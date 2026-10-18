@@ -1,42 +1,52 @@
-// 文字版新手教程。挂在 GameScene 里新建的空物体 "Tutorial" 上。
-// 设计原则：不暂停游戏、不改任何现有脚本、条件达标就前进、超时也前进（不会卡住人）。
+// 文字版新手教程 v2。
+// 关键改动：
+//   1. "修好装置"改用 DeviceRepair.Repaired 事件判断（准确，不扫描场景）
+//   2. 模块界面改成 3 步"操作指引"（选卡 → 拖进模块链 → 关闭）
+//   3. 计时用 unscaledDeltaTime —— 因为模块面板会 Time.timeScale = 0
 using UnityEngine;
 using TMPro;
 
 public class TutorialText : MonoBehaviour
 {
-    [Header("屏幕下方的提示文字（拖一个 TMP 进去）")]
+    [Header("屏幕顶部的提示文字（拖一个 TMP 进去）")]
     public TextMeshProUGUI tipText;
 
     [Header("玩家（留空会自动按 Player 标签找）")]
     public Transform player;
 
-    [Header("每条提示至少显示几秒（即使已经做到，也让玩家看完）")]
+    [Header("每条提示至少显示几秒（即使已经做到）")]
     public float minTimePerStep = 2f;
 
-    [Header("调试：勾上就忽略存档，每次进游戏都播")]
+    [Header("调试：勾上就无视天数，任何天都播")]
     public bool alwaysPlay = false;
 
     private string[] tips =
     {
         "WASD 移动",
         "按住左键，朝鼠标方向发射水弹",
-        "水会让你变慢 —— 蓝色区域就是水",
-        "走近坏掉的装置，站在范围里就会自动修理",
-        "修好了！选一张模块卡",
-        "把模块拖进模块链。顺序决定效果，放好点关闭",
-        "撑过 5 天。第 5 天，它会来。",
+        "灰白色的浅水会让你变慢，蓝紫色的深水不能通过，水地块会周期性涌出敌人",
+        "跟随屏幕上的指引走近坏掉的水泵，站在范围里就会自动修理，坏掉的水泵会不断产生越来越多的浅水",
+        "【模块界面】点上面三张卡里的任意一张",
+        "选好后奖励区会出现一个模块，通过点击把它移入【模块链】，只有没有模块时才能退出此界面",
+        "模块链上的模块会从上到下依次生效。不需要的模块可以移入左侧加号处的背包区，或者移入左下角废弃区，调整好后点左上角退出此界面",
+        "右上角进度条归零会进入下一天，请撑过 5 天",
     };
 
-    // 每步最多等几秒（超出就强制前进，避免卡住玩家）
-    private float[] timeouts = { 8f, 10f, 12f, 25f, 30f, 35f, 5f };
+    // 每步最多等几秒；<= 0 表示不超时（模块界面那几步靠玩家操作推进）
+    private float[] timeouts = { 8f, 10f, 12f, 30f, 0f, 0f, 0f, 6f };
 
     private int step = 0;
     private float stepTimer = 0f;
     private Vector3 startPos;
     private bool fired = false;
     private bool inWater = false;
+    private bool repairedInTutorial = false;
     private bool finished = false;
+
+    // ===== 订阅"装置被修好"事件（比扫描场景准确）=====
+    private void OnEnable() { DeviceRepair.Repaired += OnDeviceRepaired; }
+    private void OnDisable() { DeviceRepair.Repaired -= OnDeviceRepaired; }
+    private void OnDeviceRepaired(DeviceRepair d) { repairedInTutorial = true; }
 
     private void Start()
     {
@@ -47,11 +57,18 @@ public class TutorialText : MonoBehaviour
         }
         if (player != null) startPos = player.position;
 
-        // 看过就不再播（alwaysPlay 勾上则强制播）
-        if (alwaysPlay == false && PlayerPrefs.GetInt("TutorialDone", 0) == 1)
+        // ===== 什么时候播 =====
+        // 只在第 1 天播（第 2 天起重载场景不该再教一遍）。
+        // 不做"看过就记住"—— 教程不产生额外决策负担，每局都看一遍反而更保险。
+        // alwaysPlay 勾上 = 无视天数，任何天都播（调试用）。
+        if (alwaysPlay == false)
         {
-            EndTutorial(false);
-            return;
+            int day = (GameData.Instance != null) ? GameData.Instance.currentDay : 1;
+            if (day > 1)
+            {
+                SkipSilently();
+                return;
+            }
         }
 
         ShowStep();
@@ -61,7 +78,6 @@ public class TutorialText : MonoBehaviour
     {
         if (finished) return;
 
-        // 玩家死了就停（不拦着结束面板）
         if (player != null)
         {
             PlayerHealth ph = player.GetComponent<PlayerHealth>();
@@ -73,61 +89,60 @@ public class TutorialText : MonoBehaviour
 
         if (Input.GetMouseButton(0)) fired = true;
 
-        // 按 Esc 跳过
         if (Input.GetKeyDown(KeyCode.Escape)) { EndTutorial(true); return; }
 
-        stepTimer += Time.deltaTime;
+        //  用 unscaledDeltaTime：模块面板打开时 timeScale = 0，
+        //    如果用 deltaTime，计时会停住，教程就卡在那里不动了
+        stepTimer += Time.unscaledDeltaTime;
 
-        // 至少显示 minTimePerStep，再检查条件
         if (stepTimer >= minTimePerStep && IsStepDone()) { NextStep(); return; }
 
-        // 超时也前进
-        if (stepTimer >= timeouts[step]) NextStep();
+        if (timeouts[step] > 0f && stepTimer >= timeouts[step]) NextStep();
     }
 
-    // 这一步玩家做到了吗
     private bool IsStepDone()
     {
         switch (step)
         {
-            case 0:   // 移动
-                return player != null && Vector2.Distance(player.position, startPos) > 2f;
-
-            case 1:   // 射击
-                return fired;
-
-            case 2:   // 进水
-                return inWater;
-
-            case 3:   // 修好任意一台装置
-                return AnyDeviceRepaired();
-
-            case 4:   // 奖励区有模块了（= 玩家选了一张卡）
-                return string.IsNullOrEmpty(ModulePanelData.Read(ModuleArea.Reward, 0)) == false;
-
-            case 5:   // 面板关掉了
-                return ModulePanelUI.Instance == null || ModulePanelUI.Instance.panel.activeSelf == false;
-
-            default:  // 最后一条纯文字，靠超时结束
-                return false;
+            case 0: return player != null && Vector2.Distance(player.position, startPos) > 2f;
+            case 1: return fired;
+            case 2: return inWater;
+            case 3: return repairedInTutorial;                     // ← 用事件，准确
+            case 4: return string.IsNullOrEmpty(ModulePanelData.Read(ModuleArea.Reward, 0)) == false;
+            case 5: return ModulePutIntoChain();
+            case 6: return PanelClosed();
+            default: return false;
         }
     }
 
-    private bool AnyDeviceRepaired()
+    // 模块链里出现了"开局自带的 Test_FireModule 之外"的模块 = 玩家装上了新模块
+    private bool ModulePutIntoChain()
     {
-        DeviceRepair[] all = FindObjectsOfType<DeviceRepair>();
-        for (int i = 0; i < all.Length; i++)
+        if (GameData.Instance == null) return false;
+
+        for (int i = 0; i < GameData.Instance.equipped.Length; i++)
         {
-            if (all[i] != null && all[i].IsRepaired) return true;
+            string n = GameData.Instance.equipped[i];
+            if (string.IsNullOrEmpty(n)) continue;
+            if (n == "Test_FireModule") continue;                  // 开局自带的，跳过
+            return true;
         }
         return false;
+    }
+
+    private bool PanelClosed()
+    {
+        ModulePanelUI ui = ModulePanelUI.Instance;
+        if (ui == null) return true;                               // 场景里没有面板，算它关了
+        if (ui.panel == null) return true;
+        return ui.panel.activeSelf == false;
     }
 
     private void ShowStep()
     {
         stepTimer = 0f;
         if (tipText != null) tipText.text = tips[step];
-        Debug.Log("[教程] 第 " + (step + 1) + " 步：" + tips[step]);
+        Debug.Log("[教程] 第 " + (step + 1) + "/" + tips.Length + " 步：" + tips[step]);
     }
 
     private void NextStep()
@@ -137,12 +152,20 @@ public class TutorialText : MonoBehaviour
         ShowStep();
     }
 
+    // 教程正常结束（走完 或 玩家按 Esc 跳过）
+    // 注意：这里不写任何"已看过"的记录 —— 每次开新局都该再看一遍
     private void EndTutorial(bool bySkip)
     {
         finished = true;
         if (tipText != null) tipText.text = "";
-        PlayerPrefs.SetInt("TutorialDone", 1);
-        PlayerPrefs.Save();
         Debug.Log("[教程] 结束" + (bySkip ? "（玩家跳过）" : ""));
+    }
+
+    // 不该播的时候安静退出：不显示、也不写存档
+    // （和第 1 天无关的情况不该被记成"看过了"，否则以后第 1 天也不会播）
+    private void SkipSilently()
+    {
+        finished = true;
+        if (tipText != null) tipText.text = "";
     }
 }

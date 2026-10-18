@@ -184,3 +184,5 @@ MonoBehaviour:
   maxHp: 100000
   damage: 1
   gameOverPanel: {fileID: 0}
+  attackRange: 7
+  attackInterval: 4
