@@ -91858,7 +91858,7 @@ MonoBehaviour:
   - day: 2
     spawnInterval: 60
     delayMin: 0
-    delayMax: 40
+    delayMax: 50
     close: 5
     midClose: 5
     highClose: 0
@@ -111174,6 +111174,10 @@ PrefabInstance:
     - target: {fileID: 8196052292258310054, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: waterLayers.m_Bits
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196052292258310054, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
+      propertyPath: waterSpeedMultiplier
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

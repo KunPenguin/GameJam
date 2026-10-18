@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2.5
   player: {fileID: 0}
-  maxHp: 100000
+  maxHp: 40000
   damage: 1
   gameOverPanel: {fileID: 0}
   attackRange: 7
