@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -187,11 +187,42 @@ public class ObjectivePointer : MonoBehaviour
 
         _rect.anchoredPosition = localPoint;      // 注意：不要再往外加半个图标尺寸，那会把图标推出屏幕
 
-        // ---------- 8. 朝向 ----------
+        // ---------- 8. 朝向：指向【设备方向】（玩家 → 设备）----------
         if (rotateToDirection)
         {
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             _rect.localRotation = Quaternion.Euler(0f, 0f, angle + rotationOffset);
+        }
+
+        // ---------- 9. 诊断 + 校准（勾上 Log Reason 才生效）----------
+        if (logReason)
+        {
+            // 按 - / = 或 [ / ] 微调偏移，一次 15°
+            if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.LeftBracket))
+            {
+                rotationOffset -= 15f;
+                Debug.Log("[指引] rotationOffset = " + rotationOffset, this);
+            }
+            if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.RightBracket))
+            {
+                rotationOffset += 15f;
+                Debug.Log("[指引] rotationOffset = " + rotationOffset, this);
+            }
+
+            // 每整秒打印一次坐标和方向
+            if (Time.time - Mathf.Floor(Time.time) < Time.deltaTime)
+            {
+                float a = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                Debug.Log("[指引DEBUG] " + name
+                          + " | 设备[" + target.name + "] 世界=" + target.position
+                          + " 屏幕=(" + to.x.ToString("F0") + "," + to.y.ToString("F0") + ")"
+                          + " | 玩家[" + player.name + "] 世界=" + player.position
+                          + " 屏幕=(" + from.x.ToString("F0") + "," + from.y.ToString("F0") + ")"
+                          + " | 方向=" + dir.ToString("F2")
+                          + " 角度=" + a.ToString("F1")
+                          + " 偏移=" + rotationOffset
+                          + " 最终Z=" + _rect.localEulerAngles.z.ToString("F1"), this);
+            }
         }
 
         Show();
