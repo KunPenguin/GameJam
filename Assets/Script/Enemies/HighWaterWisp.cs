@@ -24,7 +24,7 @@ public class HighWaterWisp : MonoBehaviour
     public Transform player;
     public Rigidbody2D rb;
     public float fireTimer;
-
+     Transform _player;    
     // ★高级专属：散射角度
     [Header("三发散射的角度")]
     public float spreadAngle = 60f;              //角度，以中间的那个子弹为中心哈
@@ -33,8 +33,9 @@ public class HighWaterWisp : MonoBehaviour
     {
         currentHp = maxHp;                       //寻找玩家
         rb = GetComponent<Rigidbody2D>();
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null) player = p.transform;
+        if (PlayerMove.Instance != null)
+            _player = PlayerMove.Instance.transform;
+        if (_player != null) player = _player.transform;
     }
 
     void Update()

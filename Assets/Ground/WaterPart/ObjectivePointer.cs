@@ -38,6 +38,9 @@ public class ObjectivePointer : MonoBehaviour
     [Tooltip("目的地被销毁时，图标也一起销毁（手动摆图标时建议勾上）。")]
     public bool destroyWhenTargetMissing = true;
 
+    [Tooltip("目标进入画面时自动隐藏。设备指引保持勾选；BOSS 追踪图标建议取消勾选（一直显示）。")]
+    public bool hideWhenOnScreen = true;
+
     [Tooltip("打开后会在 Console 打印「为什么隐藏」，排查用。")]
     public bool logReason = false;
 
@@ -150,8 +153,8 @@ public class ObjectivePointer : MonoBehaviour
         if (targetBehind) { to.x = Screen.width - to.x; to.y = Screen.height - to.y; }
         if (playerBehind) { from.x = Screen.width - from.x; from.y = Screen.height - from.y; }
 
-        // ---------- 3. 目的地在画面里 → 隐藏 ----------
-        if (!targetBehind && IsOnScreen(to)) { Hide("目的地在画面内"); return; }
+        // ---------- 3. 目的地在画面里 → 隐藏（可用 hideWhenOnScreen 关掉）----------
+        if (hideWhenOnScreen && !targetBehind && IsOnScreen(to)) { Hide("目的地在画面内"); return; }
 
         // ---------- 4. 方向（角色 → 目的地）----------
         Vector2 dir = to - from;

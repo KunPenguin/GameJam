@@ -8,7 +8,6 @@ public class WaterGhoul : MonoBehaviour
     public enum EnemyState
     { chase,attack,hurt,dead}
     private Rigidbody2D rb;
-    public Transform player;
     private int facingDirection = -1;
     [Header("速度")]
     public float moveSpeed;
@@ -17,12 +16,14 @@ public class WaterGhoul : MonoBehaviour
     public float currentHp;
     private EnemyState enemyState;
     public float damage = 1f;
+    Transform _player;
     // Start is called before the first frame update
     void Start()
     {
         currentHp = maxHp;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        rb=GetComponent<Rigidbody2D>();
+        if (PlayerMove.Instance != null)
+            _player = PlayerMove.Instance.transform;
+        rb =GetComponent<Rigidbody2D>();
     }
 
     [Header("攻击")]
@@ -33,20 +34,18 @@ public class WaterGhoul : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_player == null) return;
         if (attackTimer > 0f) attackTimer -= Time.deltaTime;
 
         chase();                          // 移动逻辑不变：走过去、贴上、停住
-
-        if (player == null) return;
-
         // 贴着玩家 → 按冷却反复造成伤害
         // 为什么用距离而不是碰撞回调：碰撞的 Enter 只触发一次，Stay 在刚体睡着后可能不再触发；
         // "贴着"是一个持续状态，用距离判断最稳。
-        if (Vector2.Distance(transform.position, player.position) <= attackRange && attackTimer <= 0f)
+        if (Vector2.Distance(transform.position, _player.position) <= attackRange && attackTimer <= 0f)
         {
             attackTimer = attackInterval;
 
-            PlayerHealth ph = player.GetComponent<PlayerHealth>();
+            PlayerHealth ph = _player.GetComponent<PlayerHealth>();
             if (ph != null) ph.TakeDamage(damage);
         }
     }
@@ -58,12 +57,12 @@ public class WaterGhoul : MonoBehaviour
     }
     void chase()
     {
-        if (player.position.x > transform.position.x && facingDirection == -1 ||
-                player.position.x < transform.position.x && facingDirection == 1)
+        if (_player.position.x > transform.position.x && facingDirection == -1 ||
+                _player.position.x < transform.position.x && facingDirection == 1)
         {
             Flip();
         }
-        Vector2 direction = (player.position - transform.position).normalized;
+        Vector2 direction = (_player.position - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
     }
     // 【原来的 OnTriggerEnter2D 已删除】

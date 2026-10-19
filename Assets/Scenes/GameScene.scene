@@ -3793,6 +3793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 234470622}
   - component: {fileID: 234470621}
+  - component: {fileID: 234470623}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: DevicUIManager
@@ -3836,6 +3837,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &234470623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234470620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b222f0cbcf0e6cf49b384630fcb0f44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerPrefab: {fileID: 5047131738336136633, guid: 8a91ce0ea8ec4d04f864bf3b2e00ee73, type: 3}
+  uiParent: {fileID: 179274709}
+  rescanInterval: 1
 --- !u!1001 &242701122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11427,7 +11443,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5e9800f00057b0e42ae4669c4531792e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110594,7 +110610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454906ef1eb36ff4b9ef55ceae0fb32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLength: 60
+  dayLength: 3
   timerText: {fileID: 0}
   bossDay: 5
   bossPrefab: {fileID: 3452446305460681580, guid: ac03a392bae653043b86759f0bca501e, type: 3}
@@ -111166,6 +111182,14 @@ PrefabInstance:
     - target: {fileID: 7241302002554727444, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: baseLifeTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241302002554727444, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
+      propertyPath: fireInterval
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241302002554727444, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
+      propertyPath: baseBulletSpeed
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7241302002554727444, guid: 9378fb755c1038b41954a5994c463e67, type: 3}
       propertyPath: baseContext.waveSpacing

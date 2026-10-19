@@ -31,8 +31,7 @@ public class enemycreate : MonoBehaviour
     }
     void Start()
     {
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null) playerTransform = p.transform;
+        playerTransform = PlayerMove.T;   // 玩家引用（PlayerMove 在 Awake 里登记）
         // 查当天配置（currentDay 是 Awake 里读的）
         if (EnemySpawnTable.Instance != null)
         {

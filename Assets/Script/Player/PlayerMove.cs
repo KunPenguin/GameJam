@@ -8,6 +8,18 @@ public class PlayerMove : MonoBehaviour
     public float moveSpeed = 5f;//移动速度（单位/秒），在 Inspector 里改
     public Rigidbody2D rb;//刚体组件（Inspector 里留空的话，会自动找自己身上的）
     private WaterSlowdown waterSlow;
+    public static PlayerMove Instance { get; private set; }
+    public static Transform T => Instance != null ? Instance.transform : null;
+    void Awake()
+    {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;                    // 玩家一出生就登记，不用别人去找
+    }
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;   // ★ 不写这个，玩家销毁后会留下"假 null"
+    }
+
     void Start()
     {
         //忘了拖的话就自动拿自己身上的 Rigidbody2D

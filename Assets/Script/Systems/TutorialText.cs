@@ -1,4 +1,4 @@
-// 文字版新手教程 v2。
+﻿// 文字版新手教程 v2。
 // 关键改动：
 //   1. "修好装置"改用 DeviceRepair.Repaired 事件判断（准确，不扫描场景）
 //   2. 模块界面改成 3 步"操作指引"（选卡 → 拖进模块链 → 关闭）
@@ -50,11 +50,7 @@ public class TutorialText : MonoBehaviour
 
     private void Start()
     {
-        if (player == null)
-        {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
-        }
+        if (player == null) player = PlayerMove.T;    // 玩家在 Awake 里已登记，不用遍历场景
         if (player != null) startPos = player.position;
 
         // ===== 什么时候播 =====
