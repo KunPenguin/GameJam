@@ -23,25 +23,24 @@ public class WaterWisp : MonoBehaviour              //依旧填写一些数值�
     public GameObject bulletPrefab;
     //5.检测部分
     public string playerTag = "Player";
-    public Transform player;
     public Rigidbody2D rb;
     public float fireTimer;
-
+    Transform _player;
     void Start()
     {
         currentHp = maxHp;
         rb = GetComponent<Rigidbody2D>();
         GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null) player = p.transform;
+        if (p != null) _player = p.transform;
     }
 
     void Update()
     {
-        if (player == null) return;                                            //新修正的，寻敌加攻击范围检测
-        Vector2 dir = (player.position - transform.position).normalized;       
+        if (_player == null) return;                                            //新修正的，寻敌加攻击范围检测
+        Vector2 dir = (_player.position - transform.position).normalized;       
         rb.velocity = dir * moveSpeed;
 
-        if (Vector2.Distance(transform.position, player.position) <= range)
+        if (Vector2.Distance(transform.position, _player.position) <= range)
         {
             fireTimer -= Time.deltaTime;    //冷却倒计时
             if (fireTimer <= 0f)
@@ -55,7 +54,7 @@ public class WaterWisp : MonoBehaviour              //依旧填写一些数值�
     void Fire()
     {
         if (bulletPrefab == null) return;                                      //后面三个我拿ds跑的，虽然看不懂但我觉得不影响，主要是起个完善效果
-        Vector2 dir = (player.position - transform.position).normalized;
+        Vector2 dir = (_player.position - transform.position).normalized;
 
         Vector2 spawnPos = (Vector2)transform.position + dir * spawnOffset;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

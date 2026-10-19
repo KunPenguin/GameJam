@@ -151,7 +151,7 @@ MonoBehaviour:
   moduleFireGap: 0.05
   bulletPrefab: {fileID: 2469700867511535609, guid: 63a93176cb97d774cbd7b4d1059548e3, type: 3}
   firePoint: {fileID: 0}
-  fireInterval: 0.4
+  fireInterval: 11.06
   timer: 0
   baseDamage: 10
   baseBulletSpeed: 14
