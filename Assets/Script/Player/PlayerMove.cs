@@ -12,7 +12,12 @@ public class PlayerMove : MonoBehaviour
     public static Transform T => Instance != null ? Instance.transform : null;
     void Awake()
     {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;                    // 玩家一出生就登记，不用别人去找
+    }
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;   // ★ 不写这个，玩家销毁后会留下"假 null"
     }
 
     void Start()
@@ -53,9 +58,5 @@ public class PlayerMove : MonoBehaviour
         //  注意：不能写 transform.Translate，那样会穿过墙和敌人
         float multiplier = (waterSlow != null) ? waterSlow.SpeedMultiplier : 1f;
         rb.velocity = dir * moveSpeed * multiplier;
-    }
-    void OnDestroy()
-    {
-        if (Instance == this) Instance = null;   // ★ 关键：销毁时清空，否则留下"假 null"
     }
 }

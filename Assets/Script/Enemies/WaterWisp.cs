@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,8 +30,8 @@ public class WaterWisp : MonoBehaviour              //依旧填写一些数值�
     {
         currentHp = maxHp;
         rb = GetComponent<Rigidbody2D>();
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null) _player = p.transform;
+        // 直接用玩家登记的引用（PlayerMove 在 Awake 里登记），不用每次遍历场景找
+        _player = PlayerMove.T;
     }
 
     void Update()

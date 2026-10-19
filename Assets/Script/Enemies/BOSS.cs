@@ -1,4 +1,4 @@
-// Boss 专用脚本，挂在 Test_Boss 预制体上。
+﻿// Boss 专用脚本，挂在 Test_Boss 预制体上。
 // 为什么不能复用 WaterGhoul：那样 Boss 死了只会被 Destroy，
 // 没有任何地方能喊"玩家赢了"。
 using System.Collections;
@@ -73,7 +73,8 @@ public class BOSS : MonoBehaviour
     {
         currentHp = maxHp;
         Debug.Log("[Boss] 出场，血量 " + maxHp);
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        player = PlayerMove.T;      // 已经是 Transform，不用再 GetComponent，也不用遍历场景
+        if (player == null) Debug.LogWarning("[BOSS] 没找到玩家（PlayerMove 还没登记，或场景里没有玩家）", this);
         rb = GetComponent<Rigidbody2D>();
 
         // 预制体不能引用场景物体 → 这里自己找一次（Inspector 拖了就优先用拖的）
