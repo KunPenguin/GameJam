@@ -15,18 +15,17 @@ public class SfxPlayer : MonoBehaviour
 
     [Header("怪物音效")]
     public AudioClip enemyAttackClip;//怪物远程攻击
-    public AudioClip enemyDeathClip;//怪物死亡
     [Header("玩家音效")]
     public AudioClip hurtClip;//玩家受伤
     [Header("装置/UI 音效")]
-    public AudioClip repairLoopClip;//装置修理中（循环）
+    public AudioClip repairLoopClip;//装置修理中（进入范围播一遍，离开暂停）
     public AudioClip repairDoneClip;//装置修好
     public AudioClip placeClip;//放置物品（模块装进插槽）
     public AudioClip clickClip;//UI 点击
 
     [Header("播放器（留空会自动加）")]
     public AudioSource oneShotSource;//放"响一下就完"的音效
-    public AudioSource loopSource;//放"一直循环"的修理声
+    public AudioSource loopSource;//放"装置修理中"的音效（要能暂停）
 
     [Header("音量")]
     public float volume = 1f;
@@ -57,19 +56,18 @@ public class SfxPlayer : MonoBehaviour
         if (loopSource == null) loopSource = gameObject.AddComponent<AudioSource>();
         oneShotSource.playOnAwake = false;
         loopSource.playOnAwake = false;
-        loopSource.loop = true;
+        loopSource.loop = false;   //修理音效由 DeviceRepair 控制（进入范围循环播、离开/修好立刻停）
 
         //格子空着就从 Resources 里按名字加载
         if (enemyAttackClip == null) enemyAttackClip = Resources.Load<AudioClip>("Audio/怪物远程攻击");
-        if (enemyDeathClip == null) enemyDeathClip = Resources.Load<AudioClip>("Audio/怪物死亡");
         if (hurtClip == null) hurtClip = Resources.Load<AudioClip>("Audio/受伤");
         if (repairLoopClip == null) repairLoopClip = Resources.Load<AudioClip>("Audio/装置修理中");
         if (repairDoneClip == null) repairDoneClip = Resources.Load<AudioClip>("Audio/装置被修好");
         if (placeClip == null) placeClip = Resources.Load<AudioClip>("Audio/放置物品");
         if (clickClip == null) clickClip = Resources.Load<AudioClip>("Audio/点击音效");
 
-        Debug.Log("[音效] 加载情况 → 怪攻击:" + Show(enemyAttackClip) + " 怪死亡:" + Show(enemyDeathClip)
-                + " 受伤:" + Show(hurtClip) + " 修理中:" + Show(repairLoopClip) + " 修好:" + Show(repairDoneClip)
+        Debug.Log("[音效] 加载情况 → 怪攻击:" + Show(enemyAttackClip) + " 受伤:" + Show(hurtClip)
+                + " 修理中:" + Show(repairLoopClip) + " 修好:" + Show(repairDoneClip)
                 + " 放置:" + Show(placeClip) + " 点击:" + Show(clickClip));
 
         if (FindObjectOfType<AudioListener>() == null)
@@ -82,10 +80,9 @@ public class SfxPlayer : MonoBehaviour
     /*
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) { Debug.Log("[音效] 测试 T：怪物远程攻击"); PlayEnemyAttack(); }
-        if (Input.GetKeyDown(KeyCode.Y)) { Debug.Log("[音效] 测试 Y：怪物死亡"); PlayEnemyDeath(); }
-        if (Input.GetKeyDown(KeyCode.U)) { Debug.Log("[音效] 测试 U：装置修理中（循环）"); PlayRepairLoop(); }
-        if (Input.GetKeyDown(KeyCode.I)) { Debug.Log("[音效] 测试 I：停循环 + 装置修好"); StopRepairLoop(); PlayRepairDone(); }
+        if (Input.GetKeyDown(KeyCode.O)) { Debug.Log("[音效] 测试 O：怪物远程攻击"); PlayEnemyAttack(); }
+        if (Input.GetKeyDown(KeyCode.U)) { Debug.Log("[音效] 测试 U：装置修理中（循环播放）"); PlayRepairSound(); }
+        if (Input.GetKeyDown(KeyCode.I)) { Debug.Log("[音效] 测试 I：暂停修理声 + 装置修好"); StopRepairSound(); PlayRepairDone(); }
         if (Input.GetKeyDown(KeyCode.Alpha7)) { Debug.Log("[音效] 测试 7：玩家受伤"); PlayHurt(); }
         if (Input.GetKeyDown(KeyCode.Alpha8)) { Debug.Log("[音效] 测试 8：放置物品"); PlayPlace(); }
         if (Input.GetKeyDown(KeyCode.Alpha9)) { Debug.Log("[音效] 测试 9：UI 点击"); PlayClick(); }
@@ -95,14 +92,13 @@ public class SfxPlayer : MonoBehaviour
     //==================== 给别的脚本调用的方法 ====================
 
     public void PlayEnemyAttack() { PlayOneShot(enemyAttackClip); }//怪物远程攻击
-    public void PlayEnemyDeath() { PlayOneShot(enemyDeathClip); }//怪物死亡
     public void PlayHurt() { PlayOneShot(hurtClip); }//玩家受伤
     public void PlayPlace() { PlayOneShot(placeClip); }//放置物品（模块装进插槽）
     public void PlayClick() { PlayOneShot(clickClip); }//UI 点击
     public void PlayRepairDone() { PlayOneShot(repairDoneClip); }//装置修好
 
-    //装置开始修理：循环播放（重复调用不会叠加）
-    public void PlayRepairLoop()
+    //进入修理范围：开始循环播放"装置修理中"音效（在范围内就一直播，重复调用不会叠加）
+    public void PlayRepairSound()
     {
         if (repairLoopClip == null) return;
         loopSource.clip = repairLoopClip;
@@ -110,10 +106,11 @@ public class SfxPlayer : MonoBehaviour
         if (loopSource.isPlaying == false) loopSource.Play();
     }
 
-    //装置修理中断/结束：停掉循环声
-    public void StopRepairLoop()
+    //修好/设备销毁：彻底停掉
+    public void StopRepairSound()
     {
         if (loopSource.isPlaying) loopSource.Stop();
+        loopSource.clip = null;
     }
 
     void PlayOneShot(AudioClip clip)

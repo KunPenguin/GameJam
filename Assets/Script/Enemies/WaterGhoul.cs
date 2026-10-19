@@ -80,8 +80,6 @@ public class WaterGhoul : MonoBehaviour
 
         if (currentHp <= 0f)
         {
-            //新增：播放"怪物死亡"音效（必须在 Destroy 之前调用）
-            if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyDeath();
             Debug.Log("水鬼死亡！");
             Destroy(gameObject);
         }

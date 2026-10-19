@@ -95,7 +95,7 @@ public class DeviceRepair : MonoBehaviour
     void OnDisable()
     {
         AllDevices.Remove(this);                                // 销毁/关闭时注销
-        StopRepairSoundLoop();   //新增：销毁时停掉修理音效
+        StopRepairSoundNow();   //新增：销毁时停掉修理音效
     }
 
     // Update is called once per frame
@@ -104,15 +104,23 @@ public class DeviceRepair : MonoBehaviour
         if (IsRepaired) return;
         if (debugKey && Input.GetKeyDown(KeyCode.H)) NotifyPlayerDamaged();
         if (_player == null) _player = FindPlayer();
-        if(!IsPlayerInRange())
+        bool inRange = IsPlayerInRange();
+
+        if (!inRange)
         {
-            
+            //新增：离开修理范围 → 立刻停掉"装置修理中"音效
+            if (PlayerInRange) StopRepairSoundNow();
+
             PlayerInRange = false;
-            StopRepairSoundLoop();   //新增：离开范围停止修理音效
             if (resetOnLeave)
                 ResetProgress();
             return;
         }
+
+        //新增：进入修理范围 → 开始循环播放"装置修理中"音效（在范围内就一直播）
+        if (PlayerInRange == false) PlayRepairSoundNow();
+        PlayerInRange = true;
+
         AddProgress(Time.deltaTime / Mathf.Max(0.01f, repairSeconds));
     }
     public static void NotifyPlayerDamaged()
@@ -133,7 +141,6 @@ public class DeviceRepair : MonoBehaviour
         bool hadProgress = Progress01 > 0.0001f;
 
         Progress01 = 0f;
-        StopRepairSoundLoop();   //新增：进度清零时停止修理音效
 
         if (hadProgress) Debug.Log(  "修复进度清零", this);
     }
@@ -141,15 +148,14 @@ public class DeviceRepair : MonoBehaviour
     {
         if (IsRepaired || delta <= 0f) return;
         Progress01 = Mathf.Clamp01(Progress01 + delta);
-        StartRepairSoundLoop();   //新增：修理中循环播放修理音效
         if (Progress01 >= 1f) Complete();
        
     }//加进度
     void Complete()
     {
         IsRepaired = true;
-        StopRepairSoundLoop();   //停掉修理音效
-        PlayFinishSound();       //播放"装置修好"音效
+        StopRepairSoundNow();   //新增：立刻停掉"装置修理中"音效
+        PlayFinishSound();       //新增：播放"装置修好"音效
         Progress01 = 1f;
         Debug.Log("[设备] " + name + " 修复完成！", this);
 
@@ -220,20 +226,24 @@ public class DeviceRepair : MonoBehaviour
 
         Debug.Log("[设备] " + name + " 修好，已清掉它的水 " + removed + " 格。", this);
     }//完成修理后来清除这个设备生成的水
-    //=== 新增：装置音效（Inspector 里配了 AudioSource 就用它，没配就用全局 SfxPlayer）===
-    void StartRepairSoundLoop()
+    void PlayRepairSoundNow()
     {
-        if (repairSound != null) { repairSound.loop = true; if (repairSound.isPlaying == false) repairSound.Play(); return; }
-        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayRepairLoop();
+        if (repairSound != null && repairSound.clip != null)
+        {
+            repairSound.loop = true;                            //循环播放
+            if (repairSound.isPlaying == false) repairSound.Play();
+            return;
+        }
+        if (SfxPlayer.instance != null) SfxPlayer.instance.PlayRepairSound();
     }
-    void StopRepairSoundLoop()
+    void StopRepairSoundNow()
     {
-        if (repairSound != null) { if (repairSound.isPlaying) repairSound.Stop(); return; }
-        if (SfxPlayer.instance != null) SfxPlayer.instance.StopRepairLoop();
+        if (repairSound != null && repairSound.clip != null) { repairSound.Stop(); return; }
+        if (SfxPlayer.instance != null) SfxPlayer.instance.StopRepairSound();
     }
     void PlayFinishSound()
     {
-        if (finishSound != null) { finishSound.Play(); return; }
+        if (finishSound != null && finishSound.clip != null) { finishSound.Play(); return; }
         if (SfxPlayer.instance != null) SfxPlayer.instance.PlayRepairDone();
     }
     bool IsPlayerInRange()//用于测定角色与设备距离以判断是否进入修理范围内

@@ -70,8 +70,6 @@ public class WaterWisp : MonoBehaviour              //依旧填写一些数值�
         currentHp -= finalDamage;
         if (currentHp <= 0f)
         {
-            //新增：播放"怪物死亡"音效（必须在 Destroy 之前调用）
-            if (SfxPlayer.instance != null) SfxPlayer.instance.PlayEnemyDeath();
             Destroy(gameObject);
         }
         //应该炮塔是写完了，需要啥功能欢迎添加，与啥不懂的来qq私我就行了
