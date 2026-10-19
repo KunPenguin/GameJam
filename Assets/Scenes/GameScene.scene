@@ -3815,7 +3815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointerPrefab: {fileID: 5047131738336136633, guid: 4dae62e59856d4148bdfa14cc8a5773e, type: 3}
   uiParent: {fileID: 179274709}
-  player: {fileID: 1564521705}
+  player: {fileID: 0}
   targets: []
   autoDetect: 1
   scanInterval: 0.5
@@ -121956,7 +121956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1268715559224725851, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 31.499847
+      value: 31.499878
       objectReference: {fileID: 0}
     - target: {fileID: 1645793151953963940, guid: e86c6ab3055e4334b8f34caed870e146, type: 3}
       propertyPath: m_SizeDelta.x
