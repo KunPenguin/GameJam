@@ -12,6 +12,22 @@ using TMPro;                                      // ★ 改动1：新增这一�
 
 public class GameOverPanel : MonoBehaviour
 {
+
+    /// <summary>回到开始界面（死亡/胜利界面的按钮用）</summary>
+    public void BackToStart()
+    {
+        // ⚠️ 必须先恢复时间：面板把 timeScale 设成了 0，
+        //    不恢复的话，进新场景后整个游戏是"暂停"的（UI 能点，但什么都不动）。
+        Time.timeScale = 1f;
+
+        // 清空这一局的数据（天数、模块链、背包）
+        if (GameData.Instance != null)
+        {
+            GameData.Instance.ResetForNewGame();
+        }
+
+        SceneManager.LoadScene("StartScene");
+    }
     public GameObject panel;//将其与GameOverPanel关联
 
     [Header("标题文字（拖面板里那个 Text (TMP)）")]   // ★ 改动2：新增这4行

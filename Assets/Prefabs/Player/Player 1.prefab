@@ -35,8 +35,8 @@ Transform:
   m_GameObject: {fileID: 4447679007950826881}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6407084, y: 0.5207106, z: 0}
-  m_LocalScale: {x: 0.11461728, y: 0.09669209, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -237,8 +237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterLayers:
     serializedVersion: 2
-    m_Bits: 0
-  waterSpeedMultiplier: 0.5
+    m_Bits: 16
+  waterSpeedMultiplier: 0.7
   smooth: 8
   checkRadius: 0.15
 --- !u!95 &429018995706229116

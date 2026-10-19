@@ -155,7 +155,7 @@ MonoBehaviour:
   timer: 0
   baseDamage: 10
   baseBulletSpeed: 14
-  baseLifeTime: 2.5
+  baseLifeTime: 1
   baseBulletSize: 1
   baseContext:
     damage: 1
