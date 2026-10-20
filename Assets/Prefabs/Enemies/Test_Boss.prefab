@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 1167087237945433885}
   - component: {fileID: 4905687083812704410}
   - component: {fileID: -241891642113830534}
-  - component: {fileID: 7101983981303234649}
+  - component: {fileID: -6669249712512830297}
+  - component: {fileID: 3767454307999315667}
+  - component: {fileID: 6152306175879463984}
   m_Layer: 7
   m_HasEditorInfo: 1
   m_Name: Test_Boss
@@ -101,7 +103,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3452446305460681580}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -167,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8885f25602fcedf42aa6d61875087de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7101983981303234649
+--- !u!114 &-6669249712512830297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,13 +178,73 @@ MonoBehaviour:
   m_GameObject: {fileID: 3452446305460681580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc9f3f9e329dbc644915af722e88e716, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d559d3f48533044c87dad6b21bff817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
+  attackDamage: 5
+  attackInterval: 1
+  autoRadius: 1
+  attackRadius: 0.5
+  radiusScale: 1
+  fireRate: 1
+  bulletsPerVolley: 5
+  spawnRadius: 1.2
+  castTime: 0.6
+  castRange: 14
+  waterBulletDamage: 2
+  waterBulletSpeed: 5.5
+  waterBulletLifeTime: 6
+  waterBulletHp: 1
+  waterBulletRadius: 0.22
+  waterBulletColor: {r: 0.15, g: 0.45, b: 1, a: 1}
+  ultimateHpThreshold: 0.3
+  ultimateWindup: 2.5
+  ultimateRadius: 6
+  ultimateDamage: 8
   player: {fileID: 0}
-  maxHp: 40000
-  damage: 1
+--- !u!114 &3767454307999315667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452446305460681580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc60454a448d104bb455657cf99562e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  chaseRange: 10000000
+  loseRange: 10000000
+  contactFactor: 0.9
+  sizeMultiplier: 3
+  autoScaleToPlayer: 1
+  player: {fileID: 0}
+  faceTarget: 1
+--- !u!114 &6152306175879463984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452446305460681580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd261e642cc2894aa78663a2b3a4d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 30000
+  currentHp: 2000
+  invincible: 0
+  destroyOnDeath: 1
+  destroyDelay: 1.5
   gameOverPanel: {fileID: 0}
-  attackRange: 7
-  attackInterval: 4
+  showWinOnDeath: 1
+  showHpBar: 1
+  barWidth: 1.8
+  barHeight: 0.18
+  barOffsetY: 0.15
+  barColor: {r: 1, g: 0, b: 0, a: 1}
+  barBackgroundColor: {r: 0, g: 0, b: 0, a: 0.65}
+  barSortingOrder: 200

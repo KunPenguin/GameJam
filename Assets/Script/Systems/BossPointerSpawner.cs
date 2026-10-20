@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// BOSS 指引：在 UI 上生成一个红色箭头图标，指向场景里的 BOSS。
@@ -78,7 +78,9 @@ public class BossPointerSpawner : MonoBehaviour
     {
         bool hadBoss = _boss != null;
 
-        BOSS boss = FindObjectOfType<BOSS>(true);
+        // ⚠️ 这里原来找的是 BOSS（老脚本）。Boss 换成新的 BossHealth 之后，
+        //    找 BOSS 就永远找不到，红色指引箭头会一直隐藏，所以改成找 BossHealth。
+        BossHealth boss = FindObjectOfType<BossHealth>(true);
         _boss = boss != null ? boss.transform : null;
 
         if (hadBoss != (_boss != null))

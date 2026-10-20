@@ -111041,7 +111041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454906ef1eb36ff4b9ef55ceae0fb32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLength: 60
+  dayLength: 10
   timerText: {fileID: 0}
   bossDay: 5
   bossPrefab: {fileID: 3452446305460681580, guid: ac03a392bae653043b86759f0bca501e, type: 3}
