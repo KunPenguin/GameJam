@@ -68,7 +68,19 @@ public class GameOverPanel : MonoBehaviour
         // 两个面板互斥：先关掉死亡面板
         if (panel != null) panel.SetActive(false);
 
-        if (winPanel != null) winPanel.SetActive(true);
+        if (winPanel != null)
+        {
+            winPanel.SetActive(true);
+        }
+        else
+        {
+            // 兜底：winPanel 没拖的时候，原来是「死亡面板关了 + 胜利面板是空的 + 时间冻结」
+            // → 屏幕一片空白、什么都点不了，看起来就像"卡住"。
+            // 这里改为退回去显示死亡面板，至少让玩家能看到一个能点的界面。
+            Debug.LogError("[GameOverPanel] Win Panel 没有拖！胜利时会退回显示死亡面板。请把 WinPanel 拖进 Win Panel 字段。");
+            if (panel != null) panel.SetActive(true);
+        }
+
         if (titleText != null) titleText.text = winTitle;    // ★ 改动4：新增
         Time.timeScale = 0f;
     }
