@@ -13,17 +13,27 @@ public class PlayerHealth : MonoBehaviour
     public bool dead = false;//血量归零后就不再扣血了（死亡之后跳出死亡画面）
     public GameOverPanel gameOverPanel;
 
+    // ✨【新增这两行】
+    private SpriteRenderer sr;
+    private Coroutine flashCoroutine;
     void Start()
     {
         //开始游戏时把血回满，并打印一次，方便确认脚本挂上了
         currentHp = maxHp;
         Debug.Log("玩家血量：" + currentHp + " / " + maxHp);
 
-        // 【新增】自动找死亡面板。
-        // 为什么必须自动找：PlayerHealth 挂在 Player 预制体上，
-        // 而 GameOverPanel 是场景里的物体 —— 预制体没法引用场景物体，
-        // 所以在 Inspector 里是拖不上的，只能运行时找。
+        // ✨【新增这一行】获取玩家身上的图片渲染器
+        sr = GetComponent<SpriteRenderer>();
+
+        // 【新增】自动找死亡面板...
         if (gameOverPanel == null)
+            
+
+            // 【新增】自动找死亡面板。
+            // 为什么必须自动找：PlayerHealth 挂在 Player 预制体上，
+            // 而 GameOverPanel 是场景里的物体 —— 预制体没法引用场景物体，
+            // 所以在 Inspector 里是拖不上的，只能运行时找。
+            if (gameOverPanel == null)
         {
             gameOverPanel = FindObjectOfType<GameOverPanel>();
         }
@@ -40,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
         if (dead) return;
 
         currentHp = currentHp - damage;
+        StartFlashRed(); //闪红
         DeviceRepair.NotifyPlayerDamaged();
         //新增：播放"受伤"音效
         if (SfxPlayer.instance != null) SfxPlayer.instance.PlayHurt();
@@ -78,5 +89,30 @@ public class PlayerHealth : MonoBehaviour
         }
 
         Debug.Log("吸血回复 " + amount + " 点，当前血量 " + currentHp + " / " + maxHp);
+    }
+    // ✨【新增】纯代码实现闪红逻辑
+    private void StartFlashRed()
+    {
+        if (sr == null) return;
+
+        // 如果之前正在闪，先停掉，防止颜色卡住
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+        }
+        // 开始新的闪红
+        flashCoroutine = StartCoroutine(FlashRoutine());
+    }
+
+    private System.Collections.IEnumerator FlashRoutine()
+    {
+        // 将图片颜色设为红色
+        sr.color = Color.red;
+
+        // 等待 0.15 秒
+        yield return new WaitForSeconds(0.15f);
+
+        // 恢复原色（白色代表不改变原图颜色）
+        sr.color = Color.white;
     }
 }
